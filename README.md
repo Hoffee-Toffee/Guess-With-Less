@@ -1,35 +1,44 @@
-# Boilerplate: Fullstack with Sass
+# Planning
+# What do we want out of this time?
+We want to get to a point that has multiple users interacting. We want this to be a project where we all push ourselves and make a project that we are all proud of. 
 
-## Setup
+# What hours do we want to keep?
+Minimum 9-5. Most of us are going to be staying late most evenings, but there are no set expectations around this. During this time we will be sure to communicate with anyone who isnt in on that particular day. On the weekend, especially Sunday, we are keen to have a meeting to just make sure everyone is on the same page, and/or prepared for whats coming up in the next few days. 
 
-### What's included
+# How will work be handled over the weekend?
+Tristan - Pretty much whenever, not too late. Probably 8+ hours each day. 
+Sean - ~5 hours on Saturday, ~5 hours on Sunday
+Murphy - ~5 hours on Saturday, ~5 hours on Sunday
+Raidon - Available to meet on Saturday but no coding, coding all day Sunday.
 
-This repo includes:
+# How will we make decisions and how will we handle conflict?
+When conflict arises, we are going to have a stand up to discuss the best way forward. As an entire group, when difficult decisions have to be made we will have as much discussion as needed for everyone to be informed. After this we will have a vote on brainstormed solutions. As a group we will stick with these solutions and respect the process. 
 
-* a single, simple API endpoint (`/api/v1/fruits`)
-* a single React component (`<App />`)
-* an example database module (`server/db/fruits.js`)
-* an API client module (`client/apis/fruits.js`)
-* configuration for Vitest and testing library
-* configuration for server-side debugging in VS Code
-* configuration for preprocessing Sass
+# How will we individually and as a team get the help we need? Technically?
+In order: 
+1. Google
+2. Docs
+3. Teammate
+4. ChatGPT
+5. Facilitators
 
-### Installation
+# How will we individually and as a team get the help we need? Non-technically?
+We've all agreed to take time away from the project, and keep taking consistent breaks. If any major issues arise we can talk to each other, our personal support network, facilitators, and Rosie and Joseph.  
 
-#### **From the Github UI**
+# How will we make sure everyone is included? 
+We will divide tasks on a Kanban and make sure everyone is assigned a task (not necessarily a task they have to do alone). In stand-ups, everyone gets a chance to speak uninterrupted for an equal period of time. 
 
-See the instructions [here](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) to use Github's feature to create a new repo from a template.
+# How will you decide who needs to be present for which conversations? 
+For conversations about the wider project (beyond the scope of a singular task), it is opt-out. These sorts of conversations will include the entire group, and if anyone feels as though their time would be better spent not in that meeting, they are free to do so. 
 
-#### **From the command line**
+# How will we work? 
+Sean - Vibe Watcher
+Tristan - Git Keeper
+Raidon - Scrum Facilitator
+Murphy - Product Owner
 
-```
-git clone https://github.com/dev-academy-challenges/boilerplate-fullstack-query [your-project-name]
-cd [your-project-name]
-npm install # to install dependencies
-npm run dev # to start the dev server
-```
+We are going to be doing an agile sort of workflow. Morning stand up, midday stand up, end of day evaluation. Impromptu stand ups whenever anyone wants. We expect each sprint to be roughly 2 days. At the end of each sprint we will reassess and create a new MVP (after having achieved the previous one).
 
-You can find the server running on [http://localhost:3000](http://localhost:3000) and the client running on [http://localhost:5173](http://localhost:5173).
+# How will we survive? 
+We are going to have toastie time. Sean will bring a football in and we can muck around on the grass. Also during lunchtimes we can have times when we're not allowed to talk about the technical parts of the project at all. Also we will change the scenery and work in different places to keep it fresh ie. working in a cafe, library, at home. 
 
----
-[Provide feedback on this repo](https://docs.google.com/forms/d/e/1FAIpQLSfw4FGdWkLwMLlUaNQ8FtP2CTJdGDUv6Xoxrh19zIrJSkvT4Q/viewform?usp=pp_url&entry.1958421517=boilerplate-fullstack-query)
