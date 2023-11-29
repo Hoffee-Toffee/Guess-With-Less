@@ -22,6 +22,12 @@ In order:
 4. ChatGPT
 5. Facilitators
 
+# Conflict Resolution Plan
+Sean - When I get stressed or frustrated, I will bottle up and get into my shell. To get out of this I will take a break, step back, maybe chat and come back with a fresh mind
+Tristan - Same as above, and also toasties for stress reduction 
+Murphy - When I get stressed I can be agitated and hyperfixated. At this point I can usually identify that I need to take a break. When I need help from a teammate I'll always ask, and I will also need my team to help me get out of that mindspace.
+Raidon - When I am stressed my body will feel tight. I will take time to stretch and clear my mind away from any technology to ensure that I stay on top of this before it becomes a problem. Also physical exercise and talking to people help alleviate my stress. I'll grab people in my group to have a chat whenever I feel I need to and lucky for me they are happy to help
+
 # How will we individually and as a team get the help we need? Non-technically?
 We've all agreed to take time away from the project, and keep taking consistent breaks. If any major issues arise we can talk to each other, our personal support network, facilitators, and Rosie and Joseph.  
 
