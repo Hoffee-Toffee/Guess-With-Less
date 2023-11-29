@@ -80,3 +80,84 @@ We will use prompts such as "Panda", and save the body of the response into a lo
 - As a user I want to be able to choose from multiple gamemodes to get a different flavour on the classic Guess With Less experience. 
 
 ## Documentation
+
+## Workflow
+
+- Write your name on the ticket you choose to work on, and update the team on this.
+- Move the tickets along the KANBAN as you progress.
+- Create a new feature branch off dev, making sure to set up the ENV file before you start.
+- When you commit to the branch, create a pull request into dev, and notify the Git Keeper.
+
+
+## Git workflow
+
+Branch structure:
+
+Main -> Dev -> Feature Branch
+
+Make sure that:
+
+- file and function naming conventions are maintained across the app
+- errors are well handled
+- no sensitive data should be exposed on the client side
+- it passes npm run lint without any code-related warnings or errors
+- no unnecessary comments or log messages are remaining
+- that Types are used where applicable, and any Type issues should be resolved
+- user-facing updates (front end/ css crew) should be checked for accessibility concerns (using the WAVE tool)
+
+## Naming conventions
+
+Each function in a stack will share the same name along the layers.
+E.G. GetAllCharacters would be the name of the function in the API Client and DB.
+
+Function names: 
+- getAllPrompts
+
+Component names
+- StartForm.tsx
+- App.tsx
+
+
+### Views (Client Side)
+
+| name | MVP | purpose |
+| --- | --- | --- |
+| Home | Yes | Shows short instructions, as well as options for which category to play with|
+| Game | Yes | Display the image, switching every 10 seconds or so, showing the score / round, and allowing guesses |
+
+### API (Client - Server)
+
+| Method | Endpoint | Protected | Usage | Response |
+| --- | --- | --- | --- | --- |
+| Get | /api/v1/prompts | No | Get all prompts from all categories | Array of Prompt Objects |
+
+Endpoints with a * are stretch
+
+### DB (Server Side)
+
+### Prompts
+
+| Column Name | Data Type | Purpose |
+| --- | --- | --- |
+| id | integer | Unique identifier for each prompt |
+| name | string | Prompt text |
+| category | string | Which category the prompt will be in |
+| images | string | Array of image options, stored in text form |
+
+## Database functions
+
+getAllPrompts()
+
+Returns:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Red Panda",
+    "category": "Animals",
+    "images": "['URL', 'URL', 'URL', 'URL', 'URL', 'URL', 'URL']",
+  },
+  // ...
+]
+```
