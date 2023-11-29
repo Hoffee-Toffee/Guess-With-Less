@@ -54,7 +54,8 @@ We are going to have toastie time. Sean will bring a football in and we can muck
 
 # Technical PLanning
 -# MVP 
-Single page app, where you can choose from one of two categories to get a random prompt from within that category. Once this is chosen, the game will start. Each game consists of rounds. Each round is a single photo that has to be guessed. You can guess once in each stage within this round. In each stage, the photo becomes progressively less blurred. The goal is to guess each round's photo in as few stages as possible. These images in our MVP are pre-generated from an AI image generator. This API is free, and requests will be limited because we only use it to populate a database that we will then use to populate our game. This is our endpoint https://api.replicate.com/v1/predictions/
+Single page app, where you can choose from one of two categories to get a random prompt from within that category. Once this is chosen, the game will start. Each game consists of rounds. Each round is a single photo that has to be guessed. You can guess once in each stage within this round. In each stage, the photo becomes progressively less blurred. The goal is to guess each round's photo in as few stages as possible. These images in our MVP are pre-generated from an AI image generator. This API is free, and requests will be limited because we only use it to populate a database that we will then use to populate our game. This is our endpoint https://api.replicate.com/v1/predictions/.
+We will use prompts such as "Panda", and save the body of the response into a local database, which is what we will use in the actual game. The response is a series of progressively less blurry inages. 
 
 - # Stretch
 - Multiple gamemodes
