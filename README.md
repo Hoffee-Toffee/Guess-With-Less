@@ -51,3 +51,21 @@ We are going to be doing an agile sort of workflow. Morning stand up, midday sta
 # How will we survive? 
 We are going to have toastie time. Sean will bring a football in and we can muck around on the grass. Also during lunchtimes we can have times when we're not allowed to talk about the technical parts of the project at all. Also we will change the scenery and work in different places to keep it fresh ie. working in a cafe, library, at home. 
 
+
+# Technical PLanning
+-# MVP 
+Single page app, where you can choose from one of two categories to get a random prompt from within that category. Once this is chosen, the game will start. Each game consists of rounds. Each round is a single photo that has to be guessed. You can guess once in each stage within this round. In each stage, the photo becomes progressively less blurred. The goal is to guess each round's photo in as few stages as possible. 
+
+-# Wireframes
+![image](https://github.com/roa-2023/guess-with-less/assets/142761066/b42eda7c-b297-46ad-9365-acb3569707ba)
+
+-# User Stories
+- As a user, I want to be able to guess what a random photo is. I want to be able to clearly see how to play the game, and to be able to play it without any confusion. I want the page to be nice to look at. 
+
+- As a user, I want to have a feeling of stress (like a countdown) so I feel time pressure to put in a guess. I want there to feel like there is stakes. 
+
+- I want to dunk on my friends and show them how good I am at guessing images when theyre super blurry. I want to be able to choose what category of image I'll have to guess. 
+
+- As a user I want to be able to choose from multiple gamemodes to get a different flavour on the classic Guess With Less experience. 
+
+
