@@ -2,7 +2,7 @@ export interface Prompt {
   id: number
   name: string
   category: string
-  images: string
+  images: string | string[]
 }
 
 export interface PromptData {
