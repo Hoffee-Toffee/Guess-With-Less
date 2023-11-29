@@ -54,7 +54,20 @@ We are going to have toastie time. Sean will bring a football in and we can muck
 
 # Technical PLanning
 -# MVP 
-Single page app, where you can choose from one of two categories to get a random prompt from within that category. Once this is chosen, the game will start. Each game consists of rounds. Each round is a single photo that has to be guessed. You can guess once in each stage within this round. In each stage, the photo becomes progressively less blurred. The goal is to guess each round's photo in as few stages as possible. 
+Single page app, where you can choose from one of two categories to get a random prompt from within that category. Once this is chosen, the game will start. Each game consists of rounds. Each round is a single photo that has to be guessed. You can guess once in each stage within this round. In each stage, the photo becomes progressively less blurred. The goal is to guess each round's photo in as few stages as possible. These images in our MVP are pre-generated from an AI image generator. This API is free, and requests will be limited because we only use it to populate a database that we will then use to populate our game. This is our endpoint https://api.replicate.com/v1/predictions/
+
+- # Stretch
+- Multiple gamemodes
+  - Image continuously gets less blurry over a period of time, rather than in stages
+  - Mulitplayer modes
+  - Change stages/ rounds
+  - More than one image result for each round
+- Custom prompts
+- Hints per game that reveal the first letter, or length of word (Get two hints per game, can use them whenever you want)
+- Actually requesting the API and generating the image as you play the game
+- Choose difficulty (longer prompts)
+- Dark mode
+- Shows game information at the end of a game - stats like you took 3 seconds on average to guess!, or you guessed 6 times on round 3, and only twice on round 5
 
 -# Wireframes
 ![image](https://github.com/roa-2023/guess-with-less/assets/142761066/b42eda7c-b297-46ad-9365-acb3569707ba)
