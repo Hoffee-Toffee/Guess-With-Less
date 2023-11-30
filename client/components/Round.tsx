@@ -1,11 +1,14 @@
-import { useState } from 'react'
+import { FormEvent, FormEventHandler, useState } from 'react'
 import * as models from '../../models/prompts.js'
 import * as api from '../apis/prompts.js'
 import { useQuery } from '@tanstack/react-query'
 import { GuessForm } from './GuessForm.js'
+interface Categories {
+  [category: string]: models.Prompt[]
+}
 
 function Round() {
-  const [category, setCategory] = useState(null)
+  const [category, setCategory] = useState<string | null>(null)
   const [gameState, setGameState] = useState({
     currentPrompt: undefined,
     prompts: undefined,
@@ -30,7 +33,7 @@ function Round() {
     return <p>Stuff</p>
   }
 
-  const categories = {}
+  const categories: Categories = {}
 
   prompts.forEach((prompt) => {
     if (categories[prompt.category]) {
@@ -42,7 +45,7 @@ function Round() {
 
   console.log(gameState)
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const categoryPrompts = category ? categories[category] : prompts
     setGameState({
@@ -52,7 +55,7 @@ function Round() {
     })
   }
 
-  async function handleChange(event) {
+  async function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setCategory(event.target.value)
   }
 
@@ -70,7 +73,7 @@ function Round() {
           <button>Start</button>
         </form>
       ) : (
-        <GuessForm {...gameState} {...setGameState} />
+        <GuessForm gameState={gameState} setGameState={setGameState} />
       )}
     </>
   )
