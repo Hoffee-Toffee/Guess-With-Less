@@ -1,9 +1,9 @@
 import request from 'superagent'
-import { Prompt } from '../../models/prompts'
+import * as models from '../../models/prompts'
 
 const rootUrl = '/api/v1'
 
-export function getPrompts(): Promise<Prompt[]> {
+export function getPrompts(): Promise<models.Prompt[]> {
   request.get(rootUrl + '/prompts').then((res) => {
     return res.body
   })
