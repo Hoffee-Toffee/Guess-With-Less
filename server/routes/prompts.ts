@@ -7,8 +7,11 @@ const router = Router()
 router.get('/', async (req, res) => {
   try {
     const prompts = await db.getAllPrompts()
-
-    res.json(prompts)
+    
+    res.json(prompts.map(prompt => ({
+      ...prompt,
+      images: JSON.parse(prompt.images || "[]")
+    })))
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Something went wrong' })
