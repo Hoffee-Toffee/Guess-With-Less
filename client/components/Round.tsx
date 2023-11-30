@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import * as models from '../../models/prompts.js'
 import * as api from '../apis/prompts.js'
+import { useQuery } from '@tanstack/react-query'
+import { GuessForm } from './GuessForm.js'
 
 function Round() {
   const [category, setCategory] = useState(null)
@@ -10,7 +12,23 @@ function Round() {
     currentStage: undefined,
     guessInfo: undefined,
   } as models.GameState)
-  const prompts = api.getAllPrompts() as models.Prompt[]
+
+  const {
+    data: prompts,
+    isError,
+    isLoading,
+  }: {
+    data: models.Prompt[] | undefined
+    isError: boolean
+    isLoading: boolean
+  } = useQuery({
+    queryKey: ['prompts'],
+    queryFn: api.getAllPrompts,
+  })
+
+  if (isError || isLoading || !prompts) {
+    return <p>Stuff</p>
+  }
 
   const categories = {}
 
@@ -52,7 +70,7 @@ function Round() {
           <button>Start</button>
         </form>
       ) : (
-        <p>Weeee!</p>
+        <GuessForm {...gameState} {...setGameState} />
       )}
     </>
   )
