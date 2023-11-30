@@ -1,34 +1,14 @@
 import { useFruits } from '../hooks/useFruits.ts'
-import { GuessForm } from './GuessForm.tsx'
 
 function App() {
-  /*
-  gameStateRoughIdea = {
-    currentPrompt: Prompt
-    currentStage: number
-    guesses = [{
-      stage: number
-      guess: string
-      wasCorrect: boolean
-    }]
-  }
-
-  gameState.guesses((...prev) => [...prev, currentGuess])
-  currentGuess could be a useState
-  */
+  const { data } = useFruits()
 
   return (
     <>
-      {/* Stage component to be passed a prompt and a number */}
-      {/* GuessForm to be passed a prompt*/}
-      <GuessForm
-        answer={{
-          id: 1,
-          name: 'apple',
-          category: '',
-          images: '',
-        }}
-      />
+      <div className="app">
+        <h1>Fullstack Boilerplate - with Fruits!</h1>
+        <ul>{data && data.map((fruit) => <li key={fruit}>{fruit}</li>)}</ul>
+      </div>
     </>
   )
 }
