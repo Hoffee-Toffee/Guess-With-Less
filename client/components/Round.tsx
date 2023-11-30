@@ -33,6 +33,72 @@ function Round() {
     return <p>Stuff</p>
   }
 
+  
+
+  function checkGuessInfo(){
+    //If guessinfo doesn't exist and no currentPrompt creates first prompt
+    if(!gameState.guessInfo && !gameState.currentPrompt){
+      nextPrompt()
+      return
+    }else if(gameState.currentPrompt){
+      //if lastGuess wasCorrect next Prompt, if false Next Stage
+      const lastGuessIndex = gameState.guessInfo.length -1
+      const lastGuess = gameState.guessInfo[lastGuessIndex]
+      if(lastGuess.stage === gameState.currentStage){
+        if(lastGuess.wasCorrect){
+          nextPrompt()
+        }else{
+          nextStage()
+        }
+      }
+    }
+  }
+  console.log(gameState)
+
+  function nextPrompt(){
+    const promptLength = gameState.prompts.length
+    if(promptLength){
+      //choose random prompt. update current Prompt and remove current promp from gameState.prompts
+      const randomPromptIndex = randomNumber(promptLength)
+      setGameState({
+        ...gameState,
+        currentPrompt: gameState.prompts[randomPromptIndex],
+        prompts: gameState.prompts.splice([randomPromptIndex],1)
+      })
+      //If there are no prompts left, sets currentPrompt to null
+    } else {
+      setGameState({
+        ...gameState,
+        currentPrompt:null
+      })
+    }
+
+  }
+
+  function randomNumber(max){
+    return Math.floor(Math.random()* max)
+  }
+
+  //If there aren't any stages left go to next Prompt
+  function nextStage(){
+    const maxStages = gameState.currentPrompt.images.length
+    if(maxStages === gameState.currentStage){
+      nextPrompt()
+    } else {
+      setGameState({
+        ...gameState,
+        currentStage: gameState.currentStage + 1
+      })
+    }
+  }
+
+  if(gameState.prompts){
+    checkGuessInfo()
+  } else if (gameState.guessInfo && !gameState.currentPrompt) {
+    return <p>game over man game over</p>
+    // endGame()
+  }
+
   const categories: Categories = {}
 
   prompts.forEach((prompt) => {
@@ -43,7 +109,9 @@ function Round() {
     }
   })
 
-  console.log(gameState)
+  console.log('this is prompts' + prompts)
+
+
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
