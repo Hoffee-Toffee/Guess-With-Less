@@ -33,8 +33,10 @@ Function names:
 - getAllPrompts
 
 Component names
-- StartForm.tsx
 - App.tsx
+- GuessForm.tsx
+- Stage.tsx
+- Round.tsx
 
 
 ### Views (Client Side)
