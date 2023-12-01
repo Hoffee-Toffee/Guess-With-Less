@@ -1,12 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
 
-export interface Prompt {
-  id: number
-  name: string
-  category: string
-  images: string | string[]
-}
-
 export interface PromptData {
   name: string
   category: string
@@ -20,8 +13,8 @@ export interface GuessInfo {
 }
 
 export interface GameState {
-  currentPrompt: Prompt | undefined
-  prompts: Prompt[]
+  currentPrompt: string | undefined
+  prompts: string[]
   currentStage: number | undefined
   guessInfo: GuessInfo[]
   currentRound: number | undefined
@@ -30,4 +23,10 @@ export interface GameState {
 export interface GameStateProps {
   gameState: GameState
   setGameState: Dispatch<SetStateAction<GameState>>
+  initialGameState?: GameState
+}
+
+export interface StageImageProps {
+  image: string
+  stage: number
 }

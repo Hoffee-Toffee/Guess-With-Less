@@ -9,12 +9,12 @@ export function GuessForm(props: models.GameStateProps) {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    checkAnswer(currentPrompt?.name, guess)
+    checkAnswer(currentPrompt, guess)
     // setGuess('')
   }
 
   function checkAnswer(
-    correctName: models.Prompt['name'] | undefined,
+    correctName: string | undefined,
     guess: string | undefined,
   ) {
     if (correctName?.toLowerCase() === guess?.toLowerCase()) {
