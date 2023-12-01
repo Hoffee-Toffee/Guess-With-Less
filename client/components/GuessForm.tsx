@@ -1,9 +1,10 @@
 import { useState, FormEvent, ChangeEvent, useEffect } from 'react'
-import * as Models from '../../models/prompts'
+import * as models from '../../models/prompts'
 import { useQueryClient } from '@tanstack/react-query'
 
-export function GuessForm({ gameState, setGameState }) {
-  const { prompt } = gameState
+export function GuessForm(props: models.GameStateProps) {
+  const { gameState, setGameState } = props
+  const { currentPrompt } = gameState
 
   const [guess, setGuess] = useState<string>('')
   const [isCorrect, setIsCorrect] = useState<boolean>(false)
@@ -11,24 +12,39 @@ export function GuessForm({ gameState, setGameState }) {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log(prompt.name, guess)
-    checkAnswer(prompt.name, guess)
-    setGuess('')
+    console.log(currentPrompt?.name, guess)
+    checkAnswer(currentPrompt?.name, guess)
+    // setGuess('')
   }
 
-  function checkAnswer(correctName: Models.Prompt['name'], guess: string) {
-    if (correctName.toLowerCase() === guess.toLowerCase()) {
-      setIsCorrect(true)
+  function checkAnswer(
+    correctName: models.Prompt['name'] | undefined,
+    guess: string | undefined,
+  ) {
+    if (correctName?.toLowerCase() === guess?.toLowerCase()) {
+      logGuess(true)
     } else {
-      setIsCorrect(false)
+      logGuess(false)
     }
   }
 
-  function ifCorrect() {
-    isCorrect ? alert('youre correct') : null
+  function logGuess(isCorrect: boolean) {
+    // console.log('before', gameState)
+    setGameState((prevGameState) => ({
+      ...prevGameState,
+      guessInfo: [
+        ...prevGameState.guessInfo,
+        {
+          stage: prevGameState.currentStage as number,
+          guess: guess,
+          wasCorrect: isCorrect,
+          prompt: currentPrompt?.name as models.Prompt['name'],
+        },
+      ],
+    }))
+    // console.log(gameState)
+    setGuess('')
   }
-
-  useEffect(ifCorrect, [isCorrect])
 
   return (
     <>

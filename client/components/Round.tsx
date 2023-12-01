@@ -3,6 +3,7 @@ import * as models from '../../models/prompts.js'
 import * as api from '../apis/prompts.js'
 import { useQuery } from '@tanstack/react-query'
 import { GuessForm } from './GuessForm.js'
+import { Stage } from './Stage.js'
 interface Categories {
   [category: string]: models.Prompt[]
 }
@@ -11,9 +12,9 @@ function Round() {
   const [category, setCategory] = useState<string | null>(null)
   const [gameState, setGameState] = useState({
     currentPrompt: undefined,
-    prompts: undefined,
+    prompts: [],
     currentStage: undefined,
-    guessInfo: undefined,
+    guessInfo: [],
   } as models.GameState)
 
   const {
@@ -33,68 +34,72 @@ function Round() {
     return <p>Stuff</p>
   }
 
-  
-
-  function checkGuessInfo(){
+  function checkGuessInfo() {
     //If guessinfo doesn't exist and no currentPrompt creates first prompt
-    if(!gameState.guessInfo && !gameState.currentPrompt){
+    if (!gameState.guessInfo?.length && !gameState.currentPrompt) {
       nextPrompt()
+      console.log('39')
       return
-    }else if(gameState.currentPrompt){
+    } else if (gameState.currentPrompt && gameState.guessInfo?.length) {
       //if lastGuess wasCorrect next Prompt, if false Next Stage
-      const lastGuessIndex = gameState.guessInfo.length -1
+      const lastGuessIndex = gameState.guessInfo.length - 1
       const lastGuess = gameState.guessInfo[lastGuessIndex]
-      if(lastGuess.stage === gameState.currentStage){
-        if(lastGuess.wasCorrect){
+      if (
+        lastGuess.stage === gameState.currentStage &&
+        gameState.currentPrompt.name == lastGuess.prompt
+      ) {
+        if (lastGuess.wasCorrect) {
           nextPrompt()
-        }else{
+          console.log('47')
+        } else {
           nextStage()
         }
       }
     }
   }
-  console.log(gameState)
 
-  function nextPrompt(){
+  function nextPrompt() {
     const promptLength = gameState.prompts.length
-    if(promptLength){
+    if (promptLength) {
+      console.log('before pop', JSON.stringify(gameState.prompts))
       //choose random prompt. update current Prompt and remove current promp from gameState.prompts
-      const randomPromptIndex = randomNumber(promptLength)
+      const prompts = gameState.prompts
+      const currentPrompt = prompts.pop()
+      console.log('after pop', JSON.stringify(prompts))
+      // console.log(currentPrompt)
       setGameState({
         ...gameState,
-        currentPrompt: gameState.prompts[randomPromptIndex],
-        prompts: gameState.prompts.splice([randomPromptIndex],1)
+        currentPrompt,
+        prompts,
+        currentStage: 1,
       })
-      //If there are no prompts left, sets currentPrompt to null
+      //If there are no prompts left, sets currentPrompt to undefined
     } else {
+      console.log('66')
       setGameState({
         ...gameState,
-        currentPrompt:null
+        currentPrompt: undefined,
       })
     }
-
-  }
-
-  function randomNumber(max){
-    return Math.floor(Math.random()* max)
   }
 
   //If there aren't any stages left go to next Prompt
-  function nextStage(){
-    const maxStages = gameState.currentPrompt.images.length
-    if(maxStages === gameState.currentStage){
+  function nextStage() {
+    const maxStages = gameState.currentPrompt?.images.length
+    if (maxStages === gameState.currentStage) {
       nextPrompt()
+      console.log('82')
     } else {
       setGameState({
         ...gameState,
-        currentStage: gameState.currentStage + 1
+        currentStage: (gameState.currentStage || 0) + 1,
       })
     }
   }
 
-  if(gameState.prompts){
+  if (gameState.prompts?.length || gameState.currentPrompt) {
     checkGuessInfo()
-  } else if (gameState.guessInfo && !gameState.currentPrompt) {
+  } else if (gameState.guessInfo?.length && !gameState.currentPrompt) {
     return <p>game over man game over</p>
     // endGame()
   }
@@ -109,16 +114,12 @@ function Round() {
     }
   })
 
-  console.log('this is prompts' + prompts)
-
-
-
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const categoryPrompts = category ? categories[category] : prompts
     setGameState({
       ...gameState,
-      prompts: categoryPrompts,
+      prompts: categoryPrompts as models.Prompt[],
       currentStage: 1,
     })
   }
@@ -141,7 +142,10 @@ function Round() {
           <button>Start</button>
         </form>
       ) : (
-        <GuessForm gameState={gameState} setGameState={setGameState} />
+        <>
+          <Stage gameState={gameState} setGameState={setGameState} />
+          <GuessForm gameState={gameState} setGameState={setGameState} />
+        </>
       )}
     </>
   )

@@ -4,8 +4,12 @@ export async function seed(knex) {
 
   // Inserts seed entries
   await knex('prompts').insert([
-    { id: 1, name: 'banana', category: 'fruit', images: '' },
-    { id: 2, name: 'apple', category: 'fruit', images: `[
+    { id: 1, name: 'banana', category: 'fruit', images: '[]' },
+    {
+      id: 2,
+      name: 'apple',
+      category: 'fruit',
+      images: `[
       "https://replicate.delivery/pbxt/rUXreqOTy4zATSbOW3OZtldCiC0FJAy7rcAv4G7gbscgzqeRA/tempfile.png",
       "https://replicate.delivery/pbxt/TXvGuGiOdq5PNNSB0SkN84BtVgml2jwAUcTsDXdvK892ZVfIA/tempfile.png",
       "https://replicate.delivery/pbxt/ZxOL8nvYeOX1Z6FLZ7QOBFjgnIrcn6OJR3qfJUHoo821nV9RA/tempfile.png",
@@ -22,8 +26,13 @@ export async function seed(knex) {
       "https://replicate.delivery/pbxt/SaDKtFA5MXKUK1G6rg0iy81WrtSiZDpdufNPMR4Ty7PR2qeRA/tempfile.png",
       "https://replicate.delivery/pbxt/Qo8iTRTVBE4wGRMVj2eGeetWni3v3xi5LsGPvXzUw40Ear6jA/tempfile.png",
       "https://replicate.delivery/pbxt/4rkOKRozN3KVNBFGHS9tcOo12NfyuPHKnRZ32YbfPeCNar6jA/tempfile.png"
-    ]` },
-    { id: 3, name: 'watermelon', category: 'fruit', images: `[
+    ]`,
+    },
+    {
+      id: 3,
+      name: 'watermelon',
+      category: 'fruit',
+      images: `[
       "https://replicate.delivery/pbxt/AJeuIGg0OPXHSy4eQzeVdw6VrQukfKdT0dBD6XIXAZYR2W1HB/tempfile.png",
       "https://replicate.delivery/pbxt/ZEscenHIH3UcFqfRkQxTg5c9A14PXiuVh4Ek85jfHAYBcr6jA/tempfile.png",
       "https://replicate.delivery/pbxt/dIRJcY9CeFynJiatGEKctlFrwdzu6d4uufSPqCrM2Kf6cr6jA/tempfile.png",
@@ -40,10 +49,15 @@ export async function seed(knex) {
       "https://replicate.delivery/pbxt/hneqB6WTRjTJF6pcgtKHkKWyOdL7N4SsW6T2417Ufes7mr6jA/tempfile.png",
       "https://replicate.delivery/pbxt/Mf2uhG6LCYRYfUDLMQyZ2oMs8Hn1rbGinQfV1GoHBxu3nr6jA/tempfile.png",
       "https://replicate.delivery/pbxt/gLacpkhhC7KrHJxl1yOhwyPhoTUPhe7yre2AtcYmDUoenr6jA/tempfile.png"
-    ]` },
-    { id: 4, name: 'panda', category: 'animal', images: '' },
-    { id: 5, name: 'tiger', category: 'animal', images: '' },
-    { id: 6, name: 'octopus', category: 'animal', images: `[
+    ]`,
+    },
+    { id: 4, name: 'panda', category: 'animal', images: '[]' },
+    { id: 5, name: 'tiger', category: 'animal', images: '[]' },
+    {
+      id: 6,
+      name: 'octopus',
+      category: 'animal',
+      images: `[
       "https://replicate.delivery/pbxt/t2ujpsgGXgagLlifqs2KYemoea6dzdZhZWWAfzJPw8pyLX1HB/tempfile.png",
       "https://replicate.delivery/pbxt/fGXgabXL6x0lY6DkummEfwCnRdS5H5urHXYRNbdnETDazV9RA/tempfile.png",
       "https://replicate.delivery/pbxt/vRlABNPNLxLcCF3E7hVYV0eU1FawXHIs8jSQkTaARcc85qeRA/tempfile.png",
@@ -60,6 +74,7 @@ export async function seed(knex) {
       "https://replicate.delivery/pbxt/32p8y6eik7U1ESfVYVZvZiOLmljupqlZpfjbJM1yiyFMxr6jA/tempfile.png",
       "https://replicate.delivery/pbxt/UdTTeiGWPw3jdCpa6Wdu0usO3F9t691OqezPmHmAqQGG5V9RA/tempfile.png",
       "https://replicate.delivery/pbxt/6dRH2tBkII6uLNfabfH5xiH4ANfv2tWt1hNANsQN825Xyr6jA/tempfile.png"
-    ]` },
+    ]`,
+    },
   ])
 }
