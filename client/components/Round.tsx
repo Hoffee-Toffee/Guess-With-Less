@@ -1,9 +1,10 @@
-import { FormEvent, FormEventHandler, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import * as models from '../../models/prompts.js'
 import * as api from '../apis/prompts.js'
 import { useQuery } from '@tanstack/react-query'
 import { GuessForm } from './GuessForm.js'
 import { Stage } from './Stage.js'
+import { GameEnding } from './GameEnding.js'
 interface Categories {
   [category: string]: models.Prompt[]
 }
@@ -95,8 +96,7 @@ function Round() {
   if (gameState.prompts?.length || gameState.currentPrompt) {
     checkGuessInfo()
   } else if (gameState.guessInfo?.length && !gameState.currentPrompt) {
-    return <p>game over man game over</p>
-    // endGame()
+    return <GameEnding gameState={gameState} setGameState={setGameState} />
   }
 
   const categories: Categories = {}
