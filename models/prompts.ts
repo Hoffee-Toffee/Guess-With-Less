@@ -16,7 +16,7 @@ export interface GuessInfo {
   stage: number
   guess: string
   wasCorrect: boolean
-  prompt: Prompt["name"]
+  round: number
 }
 
 export interface GameState {
@@ -24,6 +24,7 @@ export interface GameState {
   prompts: Prompt[]
   currentStage: number | undefined
   guessInfo: GuessInfo[]
+  currentRound: number | undefined
 }
 
 export interface GameStateProps {
