@@ -26,3 +26,28 @@ canvas {
   image-rendering: crisp-edges;
   -ms-interpolation-mode: nearest-neighbor;
 }
+
+#bar {
+  width: 500px;
+  height: 1em;
+  background-color: white;
+  border: black solid;
+  border-radius: 1em;
+}
+
+#round, #stage {
+  border-radius: 1em;
+  width: 500px;
+  height: 1em;
+  display: block;
+  position: absolute;
+  outline: black solid 5px;
+}
+
+#stage {
+  background-color: red;
+}
+
+#round {
+  background-color: blue;
+}
