@@ -15,6 +15,7 @@ function Round() {
     prompts: [],
     currentStage: undefined,
     guessInfo: [],
+    currentRound: undefined,
   } as models.GameState)
 
   const {
@@ -38,7 +39,6 @@ function Round() {
     //If guessinfo doesn't exist and no currentPrompt creates first prompt
     if (!gameState.guessInfo?.length && !gameState.currentPrompt) {
       nextPrompt()
-      console.log('39')
       return
     } else if (gameState.currentPrompt && gameState.guessInfo?.length) {
       //if lastGuess wasCorrect next Prompt, if false Next Stage
@@ -46,11 +46,10 @@ function Round() {
       const lastGuess = gameState.guessInfo[lastGuessIndex]
       if (
         lastGuess.stage === gameState.currentStage &&
-        gameState.currentPrompt.name == lastGuess.prompt
+        gameState.currentRound === lastGuess.round
       ) {
         if (lastGuess.wasCorrect) {
           nextPrompt()
-          console.log('47')
         } else {
           nextStage()
         }
@@ -61,21 +60,18 @@ function Round() {
   function nextPrompt() {
     const promptLength = gameState.prompts.length
     if (promptLength) {
-      console.log('before pop', JSON.stringify(gameState.prompts))
       //choose random prompt. update current Prompt and remove current promp from gameState.prompts
       const prompts = gameState.prompts
       const currentPrompt = prompts.pop()
-      console.log('after pop', JSON.stringify(prompts))
-      // console.log(currentPrompt)
       setGameState({
         ...gameState,
         currentPrompt,
         prompts,
         currentStage: 1,
+        currentRound: (gameState.currentRound || 0) + 1,
       })
       //If there are no prompts left, sets currentPrompt to undefined
     } else {
-      console.log('66')
       setGameState({
         ...gameState,
         currentPrompt: undefined,
@@ -88,7 +84,6 @@ function Round() {
     const maxStages = gameState.currentPrompt?.images.length
     if (maxStages === gameState.currentStage) {
       nextPrompt()
-      console.log('82')
     } else {
       setGameState({
         ...gameState,
@@ -117,10 +112,12 @@ function Round() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const categoryPrompts = category ? categories[category] : prompts
+    const shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
     setGameState({
       ...gameState,
-      prompts: categoryPrompts as models.Prompt[],
+      prompts: shufflePrompts as models.Prompt[],
       currentStage: 1,
+      currentRound: 0,
     })
   }
 

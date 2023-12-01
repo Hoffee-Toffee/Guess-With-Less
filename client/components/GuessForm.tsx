@@ -12,7 +12,6 @@ export function GuessForm(props: models.GameStateProps) {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log(currentPrompt?.name, guess)
     checkAnswer(currentPrompt?.name, guess)
     // setGuess('')
   }
@@ -29,7 +28,6 @@ export function GuessForm(props: models.GameStateProps) {
   }
 
   function logGuess(isCorrect: boolean) {
-    // console.log('before', gameState)
     setGameState((prevGameState) => ({
       ...prevGameState,
       guessInfo: [
@@ -38,11 +36,10 @@ export function GuessForm(props: models.GameStateProps) {
           stage: prevGameState.currentStage as number,
           guess: guess,
           wasCorrect: isCorrect,
-          prompt: currentPrompt?.name as models.Prompt['name'],
+          round: prevGameState.currentRound as number,
         },
       ],
     }))
-    // console.log(gameState)
     setGuess('')
   }
 
