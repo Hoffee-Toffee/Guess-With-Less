@@ -4,3 +4,16 @@ html,
 body {
   font-family: 'Montserrat', sans-serif;
 }
+
+@keyframes blur {
+  0% {
+    filter: blur(40px) grayscale(1);
+  }
+  100% {
+    filter: blur(0px) grayscale(0);
+  }
+}
+
+img[data-blur='20']{
+  animation: blur 10s infinite;
+}
