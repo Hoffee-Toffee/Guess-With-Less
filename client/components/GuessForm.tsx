@@ -1,14 +1,11 @@
-import { useState, FormEvent, ChangeEvent, useEffect } from 'react'
+import { useState, FormEvent, ChangeEvent } from 'react'
 import * as models from '../../models/prompts'
-import { useQueryClient } from '@tanstack/react-query'
 
 export function GuessForm(props: models.GameStateProps) {
   const { gameState, setGameState } = props
   const { currentPrompt } = gameState
 
   const [guess, setGuess] = useState<string>('')
-  const [isCorrect, setIsCorrect] = useState<boolean>(false)
-  const queryClient = useQueryClient()
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
