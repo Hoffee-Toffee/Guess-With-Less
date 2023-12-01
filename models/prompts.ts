@@ -17,6 +17,7 @@ export interface GuessInfo {
   guess: string
   wasCorrect: boolean
   round: number
+  prompt: Prompt['name']
 }
 
 export interface GameState {
@@ -30,4 +31,5 @@ export interface GameState {
 export interface GameStateProps {
   gameState: GameState
   setGameState: Dispatch<SetStateAction<GameState>>
+  initialGameState?: GameState | undefined
 }
