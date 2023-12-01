@@ -11,7 +11,7 @@ export function GameEnding({
   )
 
   function handleReset() {
-    setGameState(initialGameState)
+    setGameState(initialGameState as models.GameState) 
   }
 
   return (
