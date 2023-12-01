@@ -11,13 +11,16 @@ interface Categories {
 
 function Round() {
   const [category, setCategory] = useState<string | null>(null)
-  const [gameState, setGameState] = useState({
+
+  const initialGameState = {
     currentPrompt: undefined,
     prompts: [],
     currentStage: undefined,
     guessInfo: [],
     currentRound: undefined,
-  } as models.GameState)
+  } as models.GameState
+
+  const [gameState, setGameState] = useState(initialGameState)
 
   const {
     data: prompts,
@@ -96,7 +99,13 @@ function Round() {
   if (gameState.prompts?.length || gameState.currentPrompt) {
     checkGuessInfo()
   } else if (gameState.guessInfo?.length && !gameState.currentPrompt) {
-    return <GameEnding gameState={gameState} setGameState={setGameState} />
+    return (
+      <GameEnding
+        gameState={gameState}
+        setGameState={setGameState}
+        initialGameState={initialGameState}
+      />
+    )
   }
 
   const categories: Categories = {}
