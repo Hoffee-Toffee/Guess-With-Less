@@ -3,6 +3,7 @@
 html, 
 body {
   font-family: 'Montserrat', sans-serif;
+  margin: 0;
 }
 
 @keyframes blur {
@@ -25,4 +26,86 @@ canvas {
   image-rendering: -o-crisp-edges;
   image-rendering: crisp-edges;
   -ms-interpolation-mode: nearest-neighbor;
+}
+
+#app {
+  max-width: 600px;
+  min-height: 50em;
+  height: 100%;
+  align-items: center;
+  outline: solid darkblue;
+  border-radius: 1em;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transform: translateX(calc(50vw - 50%)) translateY(calc(50vh - 50%));
+}
+
+#bar {
+  width: 500px;
+  height: 1em;
+  background-color: lightgrey;
+  border: white solid 5px;
+  border-radius: 1em;
+  outline: solid darkblue;
+  --padding: 0em;
+  padding: var(--padding) calc(0.5em + var(--padding));
+  margin: 0.5em 0 1.5em;
+}
+
+#round, #stage {
+  border-radius: 1em;
+  width: 500px;
+  height: 1em;
+  display: block;
+  position: absolute;
+  padding-left: 1em;
+  margin-left: -0.5em;
+}
+
+#stage {
+  background-color: #0044ff80;
+}
+
+#round {
+  background-color: #ff440080;
+}
+
+h1, footer {
+  background-color: lightgray;
+  width: 100%;
+  padding: 0.5em 0em;
+  margin: 0;
+}
+
+h1 {
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  margin-bottom: 0.5em;
+  border-bottom: solid grey;
+}
+
+footer {
+  border-bottom-left-radius:1em;
+  border-bottom-right-radius: 1em;
+  margin-top: 1em;
+  border-top: solid grey;
+  position: absolute;
+  bottom: 0;
+}
+
+#stageBlock p {
+  margin: 0.5em;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+form input, button {
+  border: 2px solid darkmagenta;
+  border-radius: 0.25em;
 }
