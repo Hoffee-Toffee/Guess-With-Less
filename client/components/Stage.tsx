@@ -4,6 +4,7 @@ import { StageImage } from './StageImage'
 export function Stage(props: models.GameStateProps) {
   const { gameState } = props
   const image = `/images/${gameState.currentPrompt}.png`
+  
   console.log(image)
 
   const roundStyle = {
@@ -22,7 +23,7 @@ export function Stage(props: models.GameStateProps) {
     <div id="stageBlock">
       <p>Stage: {`${gameState.currentStage}`}</p>
       <p>Round: {`${gameState.currentRound}`}</p>
-      <StageImage image={image} stage={gameState.currentStage as number} />
+      <StageImage image={image} stage={gameState.currentStage as number} jigsaw={gameState.jigsaw as number[]}/>
       <div id="bar">
         <span id="round" style={roundStyle} />
         <span id="stage" style={stageStyle} />

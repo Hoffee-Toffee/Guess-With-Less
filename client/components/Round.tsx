@@ -11,6 +11,7 @@ function Round() {
     currentStage: undefined,
     guessInfo: [],
     currentRound: undefined,
+    jigsaw: [],
   } as models.GameState
 
   const [gameState, setGameState] = useState(initialGameState)
@@ -49,6 +50,7 @@ function Round() {
         prompts,
         currentStage: 1,
         currentRound: (gameState.currentRound || 0) + 1,
+        jigsaw: Array(16).fill(1),
       })
       //If there are no prompts left, sets currentPrompt to undefined
     } else {
@@ -94,8 +96,6 @@ function Round() {
       currentRound: 0,
     })
   }
-
-  console.log(gameState)
 
   return (
     <>
