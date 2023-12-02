@@ -18,6 +18,7 @@ export interface GameState {
   currentStage: number | undefined
   guessInfo: GuessInfo[]
   currentRound: number | undefined
+  jigsaw: number[]
 }
 
 export interface GameStateProps {
@@ -29,4 +30,5 @@ export interface GameStateProps {
 export interface StageImageProps {
   image: string
   stage: number
+  jigsaw: number[]
 }
