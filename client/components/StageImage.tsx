@@ -18,57 +18,57 @@ export function StageImage(props: models.StageImageProps) {
     // wait until image is actually available
     img.onload = jigsawFn
     img.src = image
-    const pieceIndices = [] //contains locations of all the pieces
+    let pieceIndices = [] //contains locations of all the pieces
     //If element === 1 add its index into pieceINdices array
     jigsaw.forEach((element, index) => {
-      if(element === 1 ){
+      if (element === 1) {
         pieceIndices.push(index)
       }
     })
-    console.log(pieceIndices)
 
-    function getRandomInt(max: number){
-      return pieceIndices[Math.floor(Math.random() * max)]
+    function getRandomInt(max: number) {
+      const chosenIndex = pieceIndices[Math.floor(Math.random() * max)]
+      pieceIndices = pieceIndices.filter(element => element !== chosenIndex)
+      return chosenIndex
     }
-    console.log(jigsaw)
     function jigsawFn() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-      ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height)
-      const amountOfPiecesBlocking = pieceIndices.length
-      
-      const piecesToChange1 = getRandomInt(amountOfPiecesBlocking)
+      ctx.drawImage(
+        canvas,
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      )
+      const amountToReveal = Math.floor(jigsaw.length / 6)
+        console.log(amountToReveal)
+      const amountToRevealArray = Array(amountToReveal).fill(amountToReveal)
+      amountToRevealArray.forEach(_ => {
+        const piecesToChange1 = getRandomInt(pieceIndices.length)
         console.log(piecesToChange1)
         jigsaw[piecesToChange1] = 0
+      })
       
-  console.log(jigsaw)
+
+
+
+      console.log(jigsaw)
       jigsaw.forEach((element, index) => {
-        if(element === 1){
-        const x = index % 3 * 167
-        const y = Math.floor(index / 3)* 167
-        ctx.fillRect(x,y,167,167)
+        if (element === 1) {
+          const rowLength = Math.sqrt(jigsaw.length)
+          const blockSize = 500 / rowLength
 
-    }})     
-  }
-
-
-    // function pixelate() {
-    //   ctx.clearRect(0, 0, canvas.width, canvas.height)
-    //   const size = stage == 6 ? 1 : Math.pow(3, stage * 0.75 + 0.25) / 243
-    //   const w = canvas.width * size
-    //   const h = canvas.height * size
-
-    //   console.log(size)
-
-    //   ctx.drawImage(img, 0, 0, w, h)
-    //   ctx.drawImage(canvas, 0, 0, w, h, 0, 0, canvas.width, canvas.height)
-    //   // ctx.fillRect(0, 0, 167, 167)
-    //   if (jigsaw[0] === 0){
-    //     ctx.fillRect(167, 167, 167, 167)
-    //   }
-    // }
-
+          const x = (index % rowLength) * blockSize
+          const y = Math.floor(index / rowLength) * blockSize
+          ctx.fillRect(x, y, blockSize, blockSize)
+        }
+      })
+    }
     // poly-fill for requestAnmationFrame with fallback for older
     // browsers which do not support rAF.
     window.requestAnimationFrame = (function () {
@@ -77,7 +77,7 @@ export function StageImage(props: models.StageImageProps) {
         function (callback) {
           window.setTimeout(callback, 1000 / 60)
         }
-      ) })()
-   
+      )
+    })()
   }
 }
