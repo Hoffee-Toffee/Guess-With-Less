@@ -43,7 +43,7 @@ export function GuessForm(props: models.GameStateProps) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="guess">Guess the Image!</label>
+        <label htmlFor="guess">Enter a guess: </label>
         <input
           id="guess"
           type="text"
@@ -52,7 +52,7 @@ export function GuessForm(props: models.GameStateProps) {
             setGuess(e.target.value)
           }
         />
-        <button type="submit">Submit Guess</button>
+        <button type="submit">Submit</button>
       </form>
     </>
   )

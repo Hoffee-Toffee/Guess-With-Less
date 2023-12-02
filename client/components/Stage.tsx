@@ -19,9 +19,9 @@ export function Stage(props: models.GameStateProps) {
   }
 
   return (
-    <div>
-      <p>Current Stage: {`${gameState.currentStage}`}</p>
-      <p>Current Round: {`${gameState.currentRound}`}</p>
+    <div id="stageBlock">
+      <p>Stage: {`${gameState.currentStage}`}</p>
+      <p>Round: {`${gameState.currentRound}`}</p>
       <StageImage image={image} stage={gameState.currentStage as number} />
       <div id="bar">
         <span id="round" style={roundStyle} />
