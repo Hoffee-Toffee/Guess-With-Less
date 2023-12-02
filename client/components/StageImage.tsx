@@ -16,7 +16,7 @@ export function StageImage(props: models.StageImageProps) {
     ctx.imageSmoothingEnabled = false
 
     // wait until image is actually available
-    img.onload = jigsawFn
+    img.onload = jigBlurFn
     img.src = image
     let pieceIndices = [] //contains locations of all the pieces
     //If element === 1 add its index into pieceINdices array
@@ -28,34 +28,28 @@ export function StageImage(props: models.StageImageProps) {
 
     function getRandomInt(max: number) {
       const chosenIndex = pieceIndices[Math.floor(Math.random() * max)]
-      pieceIndices = pieceIndices.filter(element => element !== chosenIndex)
+      pieceIndices = pieceIndices.filter((element) => element !== chosenIndex)
       return chosenIndex
     }
-    function jigsawFn() {
+    function jigBlurFn() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-      ctx.drawImage(
-        canvas,
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-      )
+      const size = stage == 6 ? 1 : Math.pow(3, stage * 0.75 + 0.25) / 243
+      const w = canvas.width * size
+      const h = canvas.height * size
+
+      console.log(size)
+
+      ctx.drawImage(img, 0, 0, w, h)
+      ctx.drawImage(canvas, 0, 0, w, h, 0, 0, canvas.width, canvas.height)
+
       const amountToReveal = Math.floor(jigsaw.length / 6)
-        console.log(amountToReveal)
+      console.log(amountToReveal)
       const amountToRevealArray = Array(amountToReveal).fill(amountToReveal)
-      amountToRevealArray.forEach(_ => {
+      amountToRevealArray.forEach((_) => {
         const piecesToChange1 = getRandomInt(pieceIndices.length)
         console.log(piecesToChange1)
         jigsaw[piecesToChange1] = 0
       })
-      
-
-
 
       console.log(jigsaw)
       jigsaw.forEach((element, index) => {
