@@ -94,6 +94,11 @@ footer {
   bottom: 0;
 }
 
+#app ul {
+  overflow-y: scroll;
+  height: 32em;
+}
+
 #stageBlock p {
   margin: 0.5em;
 }

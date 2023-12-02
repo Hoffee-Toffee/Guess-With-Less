@@ -87,7 +87,47 @@ function Round() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const categoryPrompts = ['Bear', 'Tiger', 'Walter White']
+    const categoryPrompts = [
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+      'Bear',
+      'Tiger',
+      'Walter White',
+    ]
     const shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
     setGameState({
       ...gameState,
