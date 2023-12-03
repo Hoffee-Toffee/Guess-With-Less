@@ -39,20 +39,43 @@ function Round(props: models.GameStateProps) {
   })
   console.log(categories)
 
+  const categories: Categories = {}
+
+  prompts.forEach((prompt) => {
+    if (categories[prompt.category]) {
+      categories[prompt.category].push(prompt)
+    } else {
+      categories[prompt.category] = [prompt]
+    }
+  })
+
+  //Triggers the first prompt to be created and checks for game over
+  if (gameState.prompts?.length || gameState.currentPrompt) {
+    checkGuessInfo()
+  } else if (gameState.guessInfo?.length && !gameState.currentPrompt) {
+    return (
+      <GameEnding
+        gameState={gameState}
+        setGameState={setGameState}
+        initialGameState={initialGameState}
+      />
+    )
+  }
+  //This function creates the first prompt.
+  //Handles if a guess was true or false
   function checkGuessInfo() {
     //creates initial first prompt
     if (!gameState.guessInfo?.length && !gameState.currentPrompt) {
       nextPrompt()
       return
     } else if (gameState.currentPrompt && gameState.guessInfo?.length) {
-      //if lastGuess wasCorrect next Prompt, if false Next Stage
-      const lastGuessIndex = gameState.guessInfo.length - 1
-      const lastGuess = gameState.guessInfo[lastGuessIndex]
+      const latestGuessIndex = gameState.guessInfo.length - 1
+      const latestGuess = gameState.guessInfo[latestGuessIndex]
       if (
-        lastGuess.stage === gameState.currentStage &&
-        gameState.currentRound === lastGuess.round
+        latestGuess.stage === gameState.currentStage &&
+        gameState.currentRound === latestGuess.round
       ) {
-        if (lastGuess.wasCorrect) {
+        if (latestGuess.wasCorrect) {
           nextPrompt()
         } else {
           nextStage()
@@ -64,7 +87,7 @@ function Round(props: models.GameStateProps) {
   function nextPrompt() {
     const promptLength = gameState.prompts.length
     if (promptLength) {
-      //choose random prompt. update current Prompt and remove current promp from gameState.prompts
+      //choose random prompt. update current Prompt and remove current prompt from gameState.prompts
       const prompts = gameState.prompts
       const currentPrompt = prompts.pop()
       setGameState({
@@ -123,6 +146,7 @@ function Round(props: models.GameStateProps) {
     )
   }
 
+  //Updates gameState without
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const categoryPrompts = categories[category]

@@ -16,6 +16,7 @@ export interface GuessInfo {
   guess: string
   wasCorrect: boolean
   round: number
+  prompt: Prompt['name']
 }
 
 export interface GameState {
