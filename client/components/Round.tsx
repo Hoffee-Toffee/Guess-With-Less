@@ -8,8 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import { StageResult } from './StageResult.js'
 
 function Round(props: models.GameStateProps) {
-  console.log(props)
-  const { gameState, setGameState } = props
+  const { gameState, setGameState, initialGameState } = props
 
   const [category, setCategory] = useState<string>('All')
 

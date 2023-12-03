@@ -36,7 +36,11 @@ export default function Game() {
           <button>Start</button>
         </form>
       ) : (
-        <Round gameState={gameState} setGameState={setGameState} />
+        <Round
+          gameState={gameState}
+          setGameState={setGameState}
+          initialGameState={initialGameState}
+        />
       )}
     </>
   )
