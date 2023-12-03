@@ -5,6 +5,6 @@ import * as Models from '../../models/prompts.ts'
 //   return db('pixray-prompts').select()
 // }
 
-// export async function getAllSdPrompts(db = connection): Promise<Models.Prompt[]> {
-//   return db('sd-prompts').select()
-// }
+export async function getAllSdPrompts(db = connection): Promise<Models.Prompt[]> {
+  return db('sd-prompts').select()
+}

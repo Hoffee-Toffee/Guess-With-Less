@@ -3,8 +3,12 @@ import * as models from '../../models/prompts.js'
 import { GuessForm } from './GuessForm.js'
 import { Stage } from './Stage.js'
 import { GameEnding } from './GameEnding.js'
+import * as api from '../apis/prompts.js'
+import { useQuery } from '@tanstack/react-query'
 
 function Round() {
+  const [category, setCategory] = useState<string>('all')
+
   const initialGameState = {
     currentPrompt: undefined,
     prompts: [],
@@ -16,6 +20,34 @@ function Round() {
 
   const [gameState, setGameState] = useState(initialGameState)
 
+  const {
+    data: prompts,
+    isError,
+    isLoading,
+  }: {
+    data: models.Prompt[] | undefined
+    isError: boolean
+    isLoading: boolean
+  } = useQuery({
+    queryKey: ['sd-prompts'],
+    queryFn: api.getAllSdPrompts,
+  })
+  if (isError || isLoading || !prompts) {
+    return <p>Stuff</p>
+  }
+
+  const categories: models.Categories = {'all': []}
+  prompts.forEach((prompt) => {
+    if (categories[prompt.category]) {
+      categories[prompt.category].push(prompt.name)
+    } else {
+      categories[prompt.category] = [prompt.name]
+    }
+    categories.all.push(prompt.name)
+  })
+  console.log(categories)
+
+  
   function checkGuessInfo() {
     //If guessinfo doesn't exist and no currentPrompt creates first prompt
     if (!gameState.guessInfo?.length && !gameState.currentPrompt) {
@@ -87,15 +119,7 @@ function Round() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const categoryPrompts = [
-      'Bear',
-      'Tiger',
-      'Walter White',
-      'Pug',
-      'Giraffe',
-      'Hippo',
-      'Bear',
-    ]
+    const categoryPrompts = categories[category]
     const shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
     setGameState({
       ...gameState,
@@ -105,10 +129,21 @@ function Round() {
     })
   }
 
+  async function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    setCategory(event.target.value)
+  }
+
   return (
     <>
-      {!gameState.currentStage ? (
+       {!gameState.currentStage ? (
         <form onSubmit={handleSubmit}>
+          <select onChange={handleChange}>
+            <option value="all">All</option>
+
+            {Object.keys(categories).map((category) => (
+              <option key={category}>{category}</option>
+            ))}
+          </select>
           <button>Start</button>
         </form>
       ) : (

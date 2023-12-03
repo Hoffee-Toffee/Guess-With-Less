@@ -38,3 +38,7 @@ export interface StageImageProps {
   stage: number
   jigsaw: number[]
 }
+
+export interface Categories {
+  [category: string ] : string[]
+}
