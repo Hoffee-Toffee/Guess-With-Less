@@ -25,6 +25,7 @@ export function GuessForm(props: models.GameStateProps) {
   }
 
   function logGuess(isCorrect: boolean) {
+    console.log(isCorrect)
     setGameState((prevGameState) => ({
       ...prevGameState,
       guessInfo: [
@@ -34,8 +35,10 @@ export function GuessForm(props: models.GameStateProps) {
           guess: guess,
           wasCorrect: isCorrect,
           round: prevGameState.currentRound as number,
+          prompt: currentPrompt as string,
         },
       ],
+      updated: false,
     }))
     setGuess('')
   }

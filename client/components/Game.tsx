@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import * as models from '../../models/prompts'
 import Round from './Round'
+import LiveRound from './LiveRound'
 
 export default function Game() {
   const initialGameState = {
@@ -35,6 +36,12 @@ export default function Game() {
           </select>
           <button>Start</button>
         </form>
+      ) : gameState.mode == 'Live' ? (
+        <LiveRound
+          gameState={gameState}
+          setGameState={setGameState}
+          initialGameState={initialGameState}
+        />
       ) : (
         <Round
           gameState={gameState}

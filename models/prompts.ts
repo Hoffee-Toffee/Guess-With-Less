@@ -25,9 +25,18 @@ export interface GameState {
   currentStage: number | undefined
   guessInfo: GuessInfo[]
   currentRound: number | undefined
+  currentEndpoint: Endpoint | undefined
+  stageStart: Date | undefined
   jigsaw: number[]
   stats: boolean
   mode: string
+}
+
+export interface Endpoint {
+  id: string
+  status: string
+  error: string | null
+  output: string[]
 }
 
 export interface GameStateProps {
