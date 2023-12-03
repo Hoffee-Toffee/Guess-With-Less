@@ -33,7 +33,7 @@ export function StageImage(props: models.StageImageProps) {
     }
     function jigBlurFn() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const size = stage == 6 ? 1 : Math.pow(3, stage * 0.75 + 0.25) / 243
+      const size = stage >= 4 ? 1 : Math.pow(3, stage * 0.25 + 3.25) / 243
       const w = canvas.width * size
       const h = canvas.height * size
 
