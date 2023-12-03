@@ -48,6 +48,8 @@ export function GuessForm(props: models.GameStateProps) {
       <form onSubmit={handleSubmit}>
         <label htmlFor="guess">Enter a guess: </label>
         <input
+          autoFocus
+          onFocus="this.select()"
           id="guess"
           type="text"
           value={guess}
