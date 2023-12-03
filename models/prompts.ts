@@ -19,12 +19,14 @@ export interface GuessInfo {
 }
 
 export interface GameState {
+  lastPrompt: string | undefined
   currentPrompt: string | undefined
   prompts: string[]
   currentStage: number | undefined
   guessInfo: GuessInfo[]
   currentRound: number | undefined
   jigsaw: number[]
+  stats: boolean
 }
 
 export interface GameStateProps {

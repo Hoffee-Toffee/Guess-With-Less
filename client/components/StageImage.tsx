@@ -20,12 +20,13 @@ export function StageImage(props: models.StageImageProps) {
     img.src = image
     let pieceIndices = [] //contains locations of all the pieces
     //If element === 1 add its index into pieceINdices array
-    jigsaw.forEach((element, index) => {
-      if (element === 1) {
-        pieceIndices.push(index)
-      }
-    })
-
+    if(jigsaw){
+      jigsaw.forEach((element, index) => {
+        if (element === 1) {
+          pieceIndices.push(index)
+        }
+      })
+    }
     function getRandomInt(max: number) {
       const chosenIndex = pieceIndices[Math.floor(Math.random() * max)]
       pieceIndices = pieceIndices.filter((element) => element !== chosenIndex)
@@ -33,15 +34,15 @@ export function StageImage(props: models.StageImageProps) {
     }
     function jigBlurFn() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const size = stage >= 4 ? 1 : Math.pow(3, stage * 0.25 + 3.25) / 243
+      const size = (stage >= 4 || !jigsaw) ? 1 : Math.pow(3, stage * 0.25 + 3.25) / 243
       const w = canvas.width * size
       const h = canvas.height * size
 
       console.log(size)
-
+      
       ctx.drawImage(img, 0, 0, w, h)
       ctx.drawImage(canvas, 0, 0, w, h, 0, 0, canvas.width, canvas.height)
-
+      if(!jigsaw) return 
       const amountToReveal = Math.floor(jigsaw.length / 6)
       console.log(amountToReveal)
       const amountToRevealArray = Array(amountToReveal).fill(amountToReveal)
