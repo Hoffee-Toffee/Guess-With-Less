@@ -93,6 +93,7 @@ function Round() {
       setGameState({
         ...gameState,
         currentPrompt: undefined,
+        lastPrompt: gameState.currentPrompt,
         stats: true,
       })
     }
@@ -106,7 +107,7 @@ function Round() {
         stats: false,
       })
     }, 3000)
-    return <StageResult gameState={gameState}/>
+    return <StageResult gameState={gameState} />
   }
   //If there aren't any stages left go to next Prompt
   function nextStage() {
