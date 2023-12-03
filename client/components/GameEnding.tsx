@@ -11,7 +11,7 @@ export function GameEnding({
   )
 
   function handleReset() {
-    setGameState(initialGameState as models.GameState) 
+    setGameState(initialGameState as models.GameState)
   }
 
   return (
@@ -19,13 +19,15 @@ export function GameEnding({
       <ul>
         {gameState.guessInfo.map((guess, i) => (
           <li key={i}>
-            You guessed {guess.guess} for {guess.prompt} on stage {guess.stage}
+            You {guess.wasCorrect || 'in'}correctly guessed {guess.guess} on
+            stage {guess.stage} of image {guess.round}
           </li>
         ))}
       </ul>
       <p>
         You guessed {gameState.guessInfo.length} times, to get {correct.length}{' '}
-        correct guesses. So you were correct every{' '}
+        correct guesses.
+        <br /> So you were correct for an average of 1 in{' '}
         {(gameState.guessInfo.length / correct.length).toLocaleString()}{' '}
         guesses.
       </p>

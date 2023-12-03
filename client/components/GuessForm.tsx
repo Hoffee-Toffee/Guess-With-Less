@@ -9,12 +9,12 @@ export function GuessForm(props: models.GameStateProps) {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    checkAnswer(currentPrompt?.name, guess)
+    checkAnswer(currentPrompt, guess)
     // setGuess('')
   }
 
   function checkAnswer(
-    correctName: models.Prompt['name'] | undefined,
+    correctName: string | undefined,
     guess: string | undefined,
   ) {
     if (correctName?.toLowerCase() === guess?.toLowerCase()) {
@@ -25,6 +25,7 @@ export function GuessForm(props: models.GameStateProps) {
   }
 
   function logGuess(isCorrect: boolean) {
+    console.log(isCorrect)
     setGameState((prevGameState) => ({
       ...prevGameState,
       guessInfo: [
@@ -34,9 +35,10 @@ export function GuessForm(props: models.GameStateProps) {
           guess: guess,
           wasCorrect: isCorrect,
           round: prevGameState.currentRound as number,
-          prompt: currentPrompt?.name as models.Prompt['name'],
+          prompt: currentPrompt as string,
         },
       ],
+      updated: false,
     }))
     setGuess('')
   }
@@ -44,8 +46,10 @@ export function GuessForm(props: models.GameStateProps) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="guess">Guess the Image!</label>
+        <label htmlFor="guess">Enter a guess: </label>
         <input
+          autoFocus
+          onFocus="this.select()"
           id="guess"
           type="text"
           value={guess}
@@ -53,7 +57,7 @@ export function GuessForm(props: models.GameStateProps) {
             setGuess(e.target.value)
           }
         />
-        <button type="submit">Submit Guess</button>
+        <button type="submit">Submit</button>
       </form>
     </>
   )
