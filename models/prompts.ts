@@ -27,11 +27,12 @@ export interface GameState {
   currentRound: number | undefined
   jigsaw: number[]
   stats: boolean
+  mode: string
 }
 
 export interface GameStateProps {
   gameState: GameState
-  setGameState: Dispatch<SetStateAction<GameState>>
+  setGameState?: Dispatch<SetStateAction<GameState>>
   initialGameState?: GameState
 }
 
@@ -42,5 +43,5 @@ export interface StageImageProps {
 }
 
 export interface Categories {
-  [category: string ] : string[]
+  [category: string]: string[]
 }

@@ -1,10 +1,10 @@
-import Round from './Round'
+import Game from './Game'
 
 function App() {
   return (
     <>
       <h1>Guess with Less!</h1>
-      <Round />
+      <Game />
       <footer>Text</footer>
     </>
   )

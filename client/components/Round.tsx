@@ -1,27 +1,17 @@
 import { FormEvent, useState } from 'react'
 import * as models from '../../models/prompts.js'
 import { GuessForm } from './GuessForm.js'
-import { Stage } from './Stage.js'
+import JigsawStage from './JigsawStage.js'
 import { GameEnding } from './GameEnding.js'
 import * as api from '../apis/prompts.js'
 import { useQuery } from '@tanstack/react-query'
 import { StageResult } from './StageResult.js'
 
-function Round() {
+function Round(props: models.GameStateProps) {
+  console.log(props)
+  const { gameState, setGameState } = props
+
   const [category, setCategory] = useState<string>('All')
-
-  const initialGameState = {
-    lastPrompt: undefined,
-    currentPrompt: undefined,
-    prompts: [],
-    currentStage: undefined,
-    guessInfo: [],
-    currentRound: undefined,
-    jigsaw: [],
-    stats: false,
-  } as models.GameState
-
-  const [gameState, setGameState] = useState(initialGameState)
 
   const {
     data: prompts,
@@ -155,6 +145,7 @@ function Round() {
     <>
       {!gameState.currentStage ? (
         <form onSubmit={handleSubmit}>
+          <p>Choose your category!</p>
           <select onChange={handleChange}>
             {Object.keys(categories).map((category) => (
               <option key={category}>{category}</option>
@@ -164,7 +155,9 @@ function Round() {
         </form>
       ) : (
         <>
-          <Stage gameState={gameState} setGameState={setGameState} />
+          {gameState.mode === 'Jigsaw' && (
+            <JigsawStage gameState={gameState} setGameState={setGameState} />
+          )}
           <GuessForm gameState={gameState} setGameState={setGameState} />
         </>
       )}
