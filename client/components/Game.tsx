@@ -11,6 +11,8 @@ export default function Game() {
     currentStage: undefined,
     guessInfo: [],
     currentRound: undefined,
+    currentEndpoint: undefined,
+    updated: false,
     jigsaw: [],
     stats: false,
     mode: '',

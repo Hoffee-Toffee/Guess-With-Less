@@ -27,7 +27,6 @@ function Round(props: models.GameStateProps) {
   if (isError || isLoading || !prompts) {
     return <p>Stuff</p>
   }
-  console.log(prompts)
   const categories: models.Categories = { All: [] }
   prompts.forEach((prompt) => {
     if (categories[prompt.category]) {
@@ -38,16 +37,6 @@ function Round(props: models.GameStateProps) {
     categories.All.push(prompt.name)
   })
   console.log(categories)
-
-  const categories: Categories = {}
-
-  prompts.forEach((prompt) => {
-    if (categories[prompt.category]) {
-      categories[prompt.category].push(prompt)
-    } else {
-      categories[prompt.category] = [prompt]
-    }
-  })
 
   //Triggers the first prompt to be created and checks for game over
   if (gameState.prompts?.length || gameState.currentPrompt) {
