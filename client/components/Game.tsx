@@ -21,26 +21,28 @@ export default function Game() {
   } as models.GameState
 
   const [gameState, setGameState] = useState(initialGameState)
-  const modes = ['Classic', 'Live', 'Jigsaw', 'Pixelated']
+  const modes = ['Classic', 'Live', 'Jigsaw', 'Pixelated', 'Multiplayer']
   const [mode, setMode] = useState<models.GameState['mode']>(modes[0])
-  setTimeout(async () => {
-    api
-      .getMultiplayer()
-      .then((multiplayerData) => {
-        if (
-          JSON.stringify(gameState.multiplayerData) !=
-          JSON.stringify(multiplayerData)
-        )
-          console.log(multiplayerData)
-        setGameState({
-          ...gameState,
-          multiplayerData,
-        })
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, 800)
+  // setTimeout(async () => {
+  //   api
+  //     .getMultiplayer()
+  //     .then((multiplayerData) => {
+  //       if (
+  //         JSON.stringify(gameState.multiplayerData) !=
+  //         JSON.stringify(multiplayerData)
+  //       )
+  //         console.log(multiplayerData)
+  //       setGameState({
+  //         ...gameState,
+  //         multiplayerData,
+  //       })
+  //     })
+  //     .catch((error) => {
+  //       console.log(error)
+  //     })
+  // }, 800)
+
+
 
   return (
     <>

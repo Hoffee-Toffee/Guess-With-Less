@@ -89,3 +89,11 @@ export async function getMultiplayer() {
   const response = await request(rootUrl + '/multiplayer')
   return response.body
 }
+
+
+export async function updateMultiplayer(data){
+  const response = await request
+  .post(rootUrl + '/multiplayer')
+  .send(data)
+  return response.body
+}

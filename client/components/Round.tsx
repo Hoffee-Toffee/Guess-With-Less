@@ -29,11 +29,8 @@ function Round(props: models.GameStateProps) {
         case 'Classic':
           return api.getAllPrompts()
 
-        case 'Jigsaw':
-          return api.getAllSdPrompts()
-
         default:
-          return []
+          return api.getAllSdPrompts()
       }
     },
   })
@@ -185,7 +182,7 @@ function Round(props: models.GameStateProps) {
           {gameState.mode === 'Classic' && (
             <ClassicStage gameState={gameState} setGameState={setGameState} />
           )}
-          {gameState.mode === 'Jigsaw' && (
+          {['Jigsaw', 'Multiplayer'].includes(gameState.mode) && (
             <JigsawStage gameState={gameState} setGameState={setGameState} />
           )}
           <GuessForm gameState={gameState} setGameState={setGameState} />

@@ -1,7 +1,7 @@
 export async function up(knex) {
   return knex.schema.createTable('multiplayer', (table) => {
     table.increments('id').primary()
-    table.string('text')
+    table.string('prompts')
   })
 }
 
