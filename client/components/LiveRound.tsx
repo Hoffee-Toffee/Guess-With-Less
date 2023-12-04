@@ -56,7 +56,6 @@ function LiveRound(props: models.GameStateProps) {
             handleSubmit()
             return
           }
-          console.log(newData.status)
 
           setGameState({
             ...gameState,

@@ -37,22 +37,17 @@ export function StageImage(props: models.StageImageProps) {
       const size = (stage >= 4 || !jigsaw) ? 1 : Math.pow(3, stage * 0.25 + 3.25) / 243
       const w = canvas.width * size
       const h = canvas.height * size
-
-      console.log(size)
       
       ctx.drawImage(img, 0, 0, w, h)
       ctx.drawImage(canvas, 0, 0, w, h, 0, 0, canvas.width, canvas.height)
       if(!jigsaw) return 
       const amountToReveal = Math.floor(jigsaw.length / 6)
-      console.log(amountToReveal)
       const amountToRevealArray = Array(amountToReveal).fill(amountToReveal)
       amountToRevealArray.forEach((_) => {
         const piecesToChange1 = getRandomInt(pieceIndices.length)
-        console.log(piecesToChange1)
         jigsaw[piecesToChange1] = 0
       })
 
-      console.log(jigsaw)
       jigsaw.forEach((element, index) => {
         if (element === 1) {
           const rowLength = Math.sqrt(jigsaw.length)
