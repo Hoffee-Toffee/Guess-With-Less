@@ -21,7 +21,7 @@ export function GameEnding({
   }
 
   function handleSubmit(e) {
-    e.preventDefault
+    e.preventDefault()
     api.addToLeaderboard({
       username,
       correct: correctLength,

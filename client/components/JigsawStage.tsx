@@ -5,7 +5,6 @@ export default function JigsawStage(props: models.GameStateProps) {
   const { gameState } = props
   const image = `/images/${gameState.currentPrompt.name}.png`
 
-  console.log(image)
 
   const roundStyle = {
     width:

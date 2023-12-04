@@ -36,7 +36,6 @@ export default function Game() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     const clickedMode = e.currentTarget.id
-    console.log(clickedMode.split(' '))
 
     if (clickedMode.includes('Leaderboard')) {
       const modeLeaderBrd = clickedMode.replace(' Leaderboard', '')

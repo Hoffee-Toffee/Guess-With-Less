@@ -39,6 +39,7 @@ canvas {
   display: flex;
   flex-direction: column;
   text-align: center;
+  transform: translateX(calc(50vw - 50%)) translateY(calc(50vh - 50%));
 }
 
 #bar {
@@ -133,11 +134,6 @@ form select {
 }
 
 body {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 100vh;
   font-family: 'Cyber', sans-serif;
   background: linear-gradient(90deg, #f5ed00 70%, #e6de00 70%), #fff700;
 }

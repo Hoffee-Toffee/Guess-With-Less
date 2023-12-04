@@ -25,7 +25,6 @@ export function GuessForm(props: models.GameStateProps) {
   }
 
   function logGuess(isCorrect: boolean) {
-    console.log(isCorrect)
     setGameState((prevGameState) => ({
       ...prevGameState,
       guessInfo: [
@@ -49,7 +48,8 @@ export function GuessForm(props: models.GameStateProps) {
         <label htmlFor="guess">Enter a guess: </label>
         <input
           autoFocus
-          onFocus="this.select()"
+          onFocus='this.select()'
+          autoComplete="off"
           id="guess"
           type="text"
           value={guess}
@@ -59,8 +59,8 @@ export function GuessForm(props: models.GameStateProps) {
         />
         <button className="cybr-btn" type="submit">Submit
         <span aria-hidden>_</span>
-        <span aria-hidden class="cybr-btn__glitch">_\-?-_*</span>
-        <span aria-hidden class="cybr-btn__tag">#6U3S</span></button>
+        <span aria-hidden className="cybr-btn__glitch">_\-?-_*</span>
+        <span aria-hidden className="cybr-btn__tag">#6U3S</span></button>
       </form>
     </>
   )
