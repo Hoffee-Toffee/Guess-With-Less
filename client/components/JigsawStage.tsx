@@ -3,6 +3,7 @@ import { StageImage } from './StageImage'
 
 export default function JigsawStage(props: models.GameStateProps) {
   const { gameState } = props
+  console.log(gameState)
   const image = `/images/${gameState.currentPrompt.name}.png`
 
 

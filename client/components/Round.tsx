@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useCallback, useEffect, useState } from 'react'
 import * as models from '../../models/prompts.js'
 import { GuessForm } from './GuessForm.js'
 import { GameEnding } from './GameEnding.js'
@@ -35,6 +35,75 @@ function Round(props: models.GameStateProps) {
       }
     },
   })
+
+  //This function creates the first prompt.
+  //Handles if a guess was true or false
+  function checkGuessInfo() {
+    //creates initial first prompt
+    if (!gameState.guessInfo?.length && !gameState.currentPrompt) {
+      nextPrompt()
+      return
+    } else if (gameState.currentPrompt && gameState.guessInfo?.length) {
+      const latestGuessIndex = gameState.guessInfo.length - 1
+      const latestGuess = gameState.guessInfo[latestGuessIndex]
+      if (
+        latestGuess.stage === gameState.currentStage &&
+        gameState.currentRound === latestGuess.round
+      ) {
+        if (latestGuess.wasCorrect) {
+          nextPrompt()
+        } else {
+          nextStage()
+        }
+      }
+    }
+  }
+
+  const nextPrompt = useCallback(() => {
+    setGameState((prevGameState) => {
+      const promptLength = prevGameState.prompts.length
+      if (promptLength) {
+        //choose random prompt. update current Prompt and remove current prompt from gameState.prompts
+        //const currentPrompt = prompts.pop() //happening twice
+        return {
+          ...prevGameState,
+          lastPrompt: prevGameState.currentPrompt,
+          currentPrompt: prevGameState.prompts.at(-1),
+          prompts: prevGameState.prompts.slice(0, -1),
+          currentStage: 1,
+          currentRound: (prevGameState.currentRound || 0) + 1,
+          jigsaw: Array(16).fill(1),
+          stats: true,
+        }
+        //If there are no prompts left, sets currentPrompt to undefined
+      } else {
+        console.log(`I should only be happening at the end`)
+        return {
+          ...prevGameState,
+          currentPrompt: undefined,
+          lastPrompt: prevGameState.currentPrompt,
+          stats: true,
+        }
+      }
+    })
+  }, [setGameState])
+
+  // const { stats, currentRound } = gameState
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (stats && currentRound != 1) {
+  //       setGameState((prev) => ({
+  //         ...prev,
+  //         stats: false,
+  //       }))
+  //     }
+  //   }, 2000)
+
+  //   return () => {
+  //     clearTimeout(timer)
+  //   }
+  // }, [stats, currentRound, setGameState])
+
   if (isError || isLoading || !prompts) {
     return <p>Stuff</p>
   }
@@ -60,63 +129,8 @@ function Round(props: models.GameStateProps) {
       />
     )
   }
-  //This function creates the first prompt.
-  //Handles if a guess was true or false
-  function checkGuessInfo() {
-    //creates initial first prompt
-    if (!gameState.guessInfo?.length && !gameState.currentPrompt) {
-      nextPrompt()
-      return
-    } else if (gameState.currentPrompt && gameState.guessInfo?.length) {
-      const latestGuessIndex = gameState.guessInfo.length - 1
-      const latestGuess = gameState.guessInfo[latestGuessIndex]
-      if (
-        latestGuess.stage === gameState.currentStage &&
-        gameState.currentRound === latestGuess.round
-      ) {
-        if (latestGuess.wasCorrect) {
-          nextPrompt()
-        } else {
-          nextStage()
-        }
-      }
-    }
-  }
-
-  function nextPrompt() {
-    const promptLength = gameState.prompts.length
-    if (promptLength) {
-      //choose random prompt. update current Prompt and remove current prompt from gameState.prompts
-      const prompts = gameState.prompts
-      const currentPrompt = prompts.pop()
-      setGameState({
-        ...gameState,
-        lastPrompt: gameState.currentPrompt,
-        currentPrompt,
-        prompts,
-        currentStage: 1,
-        currentRound: (gameState.currentRound || 0) + 1,
-        jigsaw: Array(16).fill(1),
-        stats: true,
-      })
-      //If there are no prompts left, sets currentPrompt to undefined
-    } else {
-      setGameState({
-        ...gameState,
-        currentPrompt: undefined,
-        lastPrompt: gameState.currentPrompt,
-        stats: true,
-      })
-    }
-  }
 
   if (gameState.stats && gameState.currentRound != 1) {
-    setTimeout(() => {
-      setGameState({
-        ...gameState,
-        stats: false,
-      })
-    }, 2000)
     return <StageResult gameState={gameState} />
   }
   //If there aren't any stages left go to next Prompt
@@ -149,7 +163,7 @@ function Round(props: models.GameStateProps) {
   //Updates gameState without
   async function handleSubmit(e: React.DOMAttributes<HTMLButtonElement>) {
     e.preventDefault()
-    const categoryPrompts = categories[e.target.id]//issue here
+    const categoryPrompts = categories[e.target.id] //issue here
     console.log('I am category prompts log', categoryPrompts)
     let shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
     shufflePrompts = shufflePrompts.filter((_, index) => index <= 8)
@@ -165,16 +179,26 @@ function Round(props: models.GameStateProps) {
   return (
     <>
       {!gameState.currentStage ? (
-        <form className='categoryForm'>
+        <form className="categoryForm">
           <h2>Choose a Category!</h2>
           <div>
             {Object.keys(categories).map((category, index) => (
-              <button key={category} id={category} onClick={handleSubmit} className="cybr-btn">
-              {category}<span aria-hidden>_</span>
-              <span aria-hidden className="cybr-btn__glitch">_\-?-_*</span>
-              <span aria-hidden className="cybr-btn__tag">#{index + 1}{index + 4}</span>
-            </button>
-            
+              <button
+                key={category}
+                id={category}
+                onClick={handleSubmit}
+                className="cybr-btn"
+              >
+                {category}
+                <span aria-hidden>_</span>
+                <span aria-hidden className="cybr-btn__glitch">
+                  _\-?-_*
+                </span>
+                <span aria-hidden className="cybr-btn__tag">
+                  #{index + 1}
+                  {index + 4}
+                </span>
+              </button>
             ))}
           </div>
         </form>

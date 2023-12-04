@@ -48,7 +48,7 @@ export function GuessForm(props: models.GameStateProps) {
         <label htmlFor="guess">Enter a guess: </label>
         <input
           autoFocus
-          onFocus='this.select()'
+         
           autoComplete="off"
           id="guess"
           type="text"
