@@ -57,7 +57,10 @@ export function GuessForm(props: models.GameStateProps) {
             setGuess(e.target.value)
           }
         />
-        <button type="submit">Submit</button>
+        <button className="cybr-btn" type="submit">Submit
+        <span aria-hidden>_</span>
+        <span aria-hidden class="cybr-btn__glitch">_\-?-_*</span>
+        <span aria-hidden class="cybr-btn__tag">#6U3S</span></button>
       </form>
     </>
   )

@@ -119,7 +119,7 @@ function Round(props: models.GameStateProps) {
         ...gameState,
         stats: false,
       })
-    }, 3000)
+    }, 2000)
     return <StageResult gameState={gameState} />
   }
   //If there aren't any stages left go to next Prompt
@@ -171,14 +171,18 @@ function Round(props: models.GameStateProps) {
   return (
     <>
       {!gameState.currentStage ? (
-        <form onSubmit={handleSubmit}>
-          <p>Choose your category!</p>
-          <select onChange={handleChange}>
-            {Object.keys(categories).map((category) => (
-              <option key={category}>{category}</option>
+        <form className='categoryForm' onSubmit={handleSubmit}>
+          <h2>Choose a Category!</h2>
+          <div>
+            {Object.keys(categories).map((category, index) => (
+              <button id={category} onClick={handleSubmit} class="cybr-btn">
+              {category}<span aria-hidden>_</span>
+              <span aria-hidden class="cybr-btn__glitch">_\-?-_*</span>
+              <span aria-hidden class="cybr-btn__tag">#{index + 1}{index + 4}</span>
+            </button>
+            
             ))}
-          </select>
-          <button>Start</button>
+          </div>
         </form>
       ) : (
         <>

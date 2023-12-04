@@ -20,24 +20,33 @@ export default function Game() {
   } as models.GameState
 
   const [gameState, setGameState] = useState(initialGameState)
-  const modes = ['Classic', 'Live', 'Jigsaw', 'Pixelated']
+  const modes = ['Classic', 'Live', 'Jigsaw', 'Pixelated', 'Leaderboard']
   const [mode, setMode] = useState<models.GameState['mode']>(modes[0])
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    setGameState({
+      ...gameState,
+      mode: e.target.id
+    })
+  }
+
   return (
     <>
       {!gameState.mode ? (
-        <form
+        <form className='modeForm'
           onSubmit={(e) => {
-            e.preventDefault
-            setGameState({ ...gameState, mode })
+            e.preventDefault()
           }}
         >
-          <p>Choose your mode!</p>
-          <select onChange={(e) => setMode(e.target.value)}>
-            {modes.map((mode) => (
-              <option key={mode}>{mode}</option>
+          <h2>Choose your mode!</h2>
+          <div>
+            {modes.map((mode, index) => (
+              <button id={mode} onClick={handleSubmit} class="cybr-btn">
+              {mode}<span aria-hidden>_</span>
+              <span aria-hidden class="cybr-btn__glitch">_\-?-_*</span>
+              <span aria-hidden class="cybr-btn__tag">#{index + 1}{index + 4}</span>
+            </button>
             ))}
-          </select>
-          <button>Start</button>
+          </div>
         </form>
       ) : gameState.mode == 'Live' ? (
         <LiveRound
