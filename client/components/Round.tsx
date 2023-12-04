@@ -183,7 +183,7 @@ function Round(props: models.GameStateProps) {
           {gameState.mode === 'Classic' && (
             <ClassicStage gameState={gameState} setGameState={setGameState} />
           )}
-          {gameState.mode === 'Jigsaw' && (
+          {['Jigsaw', 'Multiplayer'].includes(gameState.mode) && (
             <JigsawStage gameState={gameState} setGameState={setGameState} />
           )}
           {gameState.mode === 'Pixelated' && (
