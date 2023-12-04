@@ -33,7 +33,7 @@ canvas {
   min-height: 50em;
   height: 100%;
   align-items: center;
-  outline: solid darkblue;
+  outline: solid #746cbe;
   border-radius: 1em;
   display: flex;
   flex-direction: column;
@@ -72,7 +72,7 @@ canvas {
 }
 
 h1, footer {
-  background-color: lightgray;
+  background-color: #746cbe;
   width: 100%;
   padding: 0.5em 0em;
   margin: 0;
@@ -111,6 +111,12 @@ form {
 }
 
 form input, button {
-  border: 2px solid darkmagenta;
+  border-color: rgb(135, 135, 135);
+  border: 2px solid ;
   border-radius: 0.25em;
+  background-color: #746cbe;
+}
+
+form select {
+  background-color: #746cbe;
 }
