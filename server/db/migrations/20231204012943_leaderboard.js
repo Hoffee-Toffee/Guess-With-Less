@@ -5,6 +5,7 @@ export async function up(knex) {
     table.integer('correct')
     table.integer('totalGuesses')
     table.string('mode')
+    table.integer('gameId')
   })
 }
 
