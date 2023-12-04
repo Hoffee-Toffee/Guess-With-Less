@@ -80,20 +80,21 @@ export async function addToLeaderboard(gameData: models.GameData) {
   return response.body
 }
 
-export async function getLeaderboard() {
-  const response = await request(rootUrl + '/leaderboard')
+export async function getLeaderboard(gameId) {
+  const response = await request(
+    rootUrl + '/leaderboard' + (gameId && `/${gameId}`),
+  )
   return response.body
 }
 
-export async function getMultiplayer() {
-  const response = await request(rootUrl + '/multiplayer')
+export async function getMultiplayer(gameId) {
+  const response = await request(rootUrl + '/multiplayer/' + gameId)
   return response.body
 }
 
-
-export async function updateMultiplayer(data){
+export async function addMultiplayerGame(prompts) {
   const response = await request
-  .post(rootUrl + '/multiplayer')
-  .send(data)
+    .post(rootUrl + '/multiplayer')
+    .send({ prompts: JSON.stringify(prompts) })
   return response.body
 }

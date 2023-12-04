@@ -20,10 +20,11 @@ export default function Game() {
     stats: false,
     mode: '',
     multiplayerData: [],
+    gameId: undefined,
   } as models.GameState
 
   const [gameState, setGameState] = useState(initialGameState)
-
+  console.log(gameState)
   const [showLeaderboard, setShowLeaderboard] = useState(false)
   const modes = [
     'Classic',
@@ -35,6 +36,7 @@ export default function Game() {
     'Pixelated',
     'Pixelated Leaderboard',
     'Multiplayer',
+    'Join Multiplayer',
   ]
   const [mode, setMode] = useState<models.GameState['mode']>(modes[0])
 
@@ -72,7 +74,6 @@ export default function Game() {
   //       console.log(error)
   //     })
   // }, 800)
-
 
   return (
     <>

@@ -149,7 +149,7 @@ function Round(props: models.GameStateProps) {
   //Updates gameState without
   async function handleSubmit(e: React.DOMAttributes<HTMLButtonElement>) {
     e.preventDefault()
-    const categoryPrompts = categories[e.target.id]//issue here
+    const categoryPrompts = categories[e.target.id] //issue here
     console.log('I am category prompts log', categoryPrompts)
     let shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
     shufflePrompts = shufflePrompts.filter((_, index) => index <= 8)
@@ -159,31 +159,72 @@ function Round(props: models.GameStateProps) {
       prompts: shufflePrompts,
       currentStage: 1,
       currentRound: 0,
+      gameId: await api.addMultiplayerGame(shufflePrompts),
     })
+  }
+
+  async function handleJoin(e: any) {
+    e.preventDefault()
+    const gameId = e.target.children[1].value
+    api
+      .getMultiplayer(gameId)
+      .then((res) => {
+        if (res) {
+          setGameState({
+            ...gameState,
+            prompts: res.prompts,
+            currentStage: 1,
+            currentRound: 0,
+            gameId,
+          })
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+      })
   }
 
   return (
     <>
       {!gameState.currentStage ? (
-        <form className='categoryForm'>
-          <h2>Choose a Category!</h2>
-          <div>
-            {Object.keys(categories).map((category, index) => (
-              <button key={category} id={category} onClick={handleSubmit} className="cybr-btn">
-              {category}<span aria-hidden>_</span>
-              <span aria-hidden className="cybr-btn__glitch">_\-?-_*</span>
-              <span aria-hidden className="cybr-btn__tag">#{index + 1}{index + 4}</span>
-            </button>
-            
-            ))}
-          </div>
-        </form>
+        gameState.mode == 'Join Multiplayer' ? (
+          <form className="categoryForm" onSubmit={handleJoin}>
+            <h2>Enter Lobby Code</h2>
+            <input type="text" />
+          </form>
+        ) : (
+          <form className="categoryForm">
+            <h2>Choose a Category!</h2>
+            <div>
+              {Object.keys(categories).map((category, index) => (
+                <button
+                  key={category}
+                  id={category}
+                  onClick={handleSubmit}
+                  className="cybr-btn"
+                >
+                  {category}
+                  <span aria-hidden>_</span>
+                  <span aria-hidden className="cybr-btn__glitch">
+                    _\-?-_*
+                  </span>
+                  <span aria-hidden className="cybr-btn__tag">
+                    #{index + 1}
+                    {index + 4}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </form>
+        )
       ) : (
         <>
           {gameState.mode === 'Classic' && (
             <ClassicStage gameState={gameState} setGameState={setGameState} />
           )}
-          {['Jigsaw', 'Multiplayer'].includes(gameState.mode) && (
+          {['Jigsaw', 'Multiplayer', 'Join Multiplayer'].includes(
+            gameState.mode,
+          ) && (
             <JigsawStage gameState={gameState} setGameState={setGameState} />
           )}
           {gameState.mode === 'Pixelated' && (
