@@ -31,6 +31,7 @@ export interface GameState {
   jigsaw: number[]
   stats: boolean
   mode: string
+  multiplayerData: []
 }
 
 export interface Endpoint {

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import * as models from '../../models/prompts'
 import Round from './Round'
 import LiveRound from './LiveRound'
-
+import * as api from '../apis/prompts'
 export default function Game() {
   const initialGameState = {
     lastPrompt: undefined,
@@ -17,11 +17,31 @@ export default function Game() {
     jigsaw: [],
     stats: false,
     mode: '',
+    multiplayerData: [],
   } as models.GameState
 
   const [gameState, setGameState] = useState(initialGameState)
   const modes = ['Classic', 'Live', 'Jigsaw', 'Pixelated']
   const [mode, setMode] = useState<models.GameState['mode']>(modes[0])
+  setTimeout(async () => {
+    api
+      .getMultiplayer()
+      .then((multiplayerData) => {
+        if (
+          JSON.stringify(gameState.multiplayerData) !=
+          JSON.stringify(multiplayerData)
+        )
+          console.log(multiplayerData)
+        setGameState({
+          ...gameState,
+          multiplayerData,
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, 800)
+
   return (
     <>
       {!gameState.mode ? (
