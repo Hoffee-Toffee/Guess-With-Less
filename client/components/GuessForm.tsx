@@ -9,7 +9,7 @@ export function GuessForm(props: models.GameStateProps) {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    checkAnswer(currentPrompt, guess)
+    checkAnswer(currentPrompt.name, guess)
     // setGuess('')
   }
 

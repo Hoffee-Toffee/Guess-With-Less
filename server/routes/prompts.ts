@@ -109,4 +109,20 @@ router.get('/sd', async (req, res) => {
   }
 })
 
+router.get('/', async (req, res) => {
+  try {
+    const prompts: models.Prompt[] = await db.getAllPixrayPrompts()
+
+    res.json(
+      prompts.map((prompt) => ({
+        ...prompt,
+        images: JSON.parse(prompt.images),
+      })),
+    )
+  } catch (error) {
+    error
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
+
 export default router

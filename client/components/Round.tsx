@@ -1,11 +1,13 @@
 import { FormEvent, useState } from 'react'
 import * as models from '../../models/prompts.js'
 import { GuessForm } from './GuessForm.js'
-import JigsawStage from './JigsawStage.js'
 import { GameEnding } from './GameEnding.js'
 import * as api from '../apis/prompts.js'
 import { useQuery } from '@tanstack/react-query'
 import { StageResult } from './StageResult.js'
+
+import JigsawStage from './JigsawStage.js'
+import ClassicStage from './ClassicStage.js'
 
 function Round(props: models.GameStateProps) {
   const { gameState, setGameState, initialGameState } = props
@@ -21,8 +23,19 @@ function Round(props: models.GameStateProps) {
     isError: boolean
     isLoading: boolean
   } = useQuery({
-    queryKey: ['sd-prompts'],
-    queryFn: api.getAllSdPrompts,
+    queryKey: ['prompts'],
+    queryFn: () => {
+      switch (gameState.mode) {
+        case 'Classic':
+          return api.getAllPrompts()
+
+        case 'Jigsaw':
+          return api.getAllSdPrompts()
+
+        default:
+          return []
+      }
+    },
   })
   if (isError || isLoading || !prompts) {
     return <p>Stuff</p>
@@ -30,13 +43,12 @@ function Round(props: models.GameStateProps) {
   const categories: models.Categories = { All: [] }
   prompts.forEach((prompt) => {
     if (categories[prompt.category]) {
-      categories[prompt.category].push(prompt.name)
+      categories[prompt.category].push(prompt)
     } else {
-      categories[prompt.category] = [prompt.name]
+      categories[prompt.category] = [prompt]
     }
-    categories.All.push(prompt.name)
+    categories.All.push(prompt)
   })
-  console.log(categories)
 
   //Triggers the first prompt to be created and checks for game over
   if (gameState.prompts?.length || gameState.currentPrompt) {
@@ -79,6 +91,7 @@ function Round(props: models.GameStateProps) {
       //choose random prompt. update current Prompt and remove current prompt from gameState.prompts
       const prompts = gameState.prompts
       const currentPrompt = prompts.pop()
+      console.log(prompts, currentPrompt)
       setGameState({
         ...gameState,
         lastPrompt: gameState.currentPrompt,
@@ -99,7 +112,6 @@ function Round(props: models.GameStateProps) {
       })
     }
   }
-  console.log(gameState)
 
   if (gameState.stats && gameState.currentRound != 1) {
     setTimeout(() => {
@@ -112,7 +124,9 @@ function Round(props: models.GameStateProps) {
   }
   //If there aren't any stages left go to next Prompt
   function nextStage() {
-    if (6 === gameState.currentStage) {
+    if (
+      (gameState.currentPrompt.images?.length || 6) === gameState.currentStage
+    ) {
       nextPrompt()
     } else {
       setGameState({
@@ -139,8 +153,8 @@ function Round(props: models.GameStateProps) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const categoryPrompts = categories[category]
-    let shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
-    shufflePrompts = shufflePrompts.filter((_, index) => index <= 5)
+    const shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
+
     setGameState({
       ...gameState,
       prompts: shufflePrompts,
@@ -167,6 +181,9 @@ function Round(props: models.GameStateProps) {
         </form>
       ) : (
         <>
+          {gameState.mode === 'Classic' && (
+            <ClassicStage gameState={gameState} setGameState={setGameState} />
+          )}
           {gameState.mode === 'Jigsaw' && (
             <JigsawStage gameState={gameState} setGameState={setGameState} />
           )}

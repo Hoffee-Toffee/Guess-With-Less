@@ -1,9 +1,9 @@
 import { FormEvent, useState } from 'react'
-import * as models from '../../models/prompts.js'
-import * as api from '../apis/prompts.js'
-import { GuessForm } from './GuessForm.js'
-import LiveStage from './LiveStage.js'
-import { GameEnding } from './GameEnding.js'
+import * as models from '../../models/prompts'
+import * as api from '../apis/prompts'
+import { GuessForm } from './GuessForm'
+import LiveStage from './LiveStage'
+import { GameEnding } from './GameEnding'
 
 function LiveRound(props: models.GameStateProps) {
   const { gameState, setGameState, initialGameState } = props

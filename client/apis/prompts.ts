@@ -15,6 +15,18 @@ export function getAllSdPrompts(): Promise<models.Prompt[] | Error> {
     })
 }
 
+export function getAllPrompts(): Promise<models.Prompt[] | Error> {
+  return request
+    .get(rootUrl + '/')
+    .then((res) => {
+      return res.body
+    })
+    .catch((error) => {
+      console.error(error)
+      return error
+    })
+}
+
 export function makeImageRequest(prompt: string) {
   return request
     .post(rootUrl + '/make')

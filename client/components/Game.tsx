@@ -12,6 +12,7 @@ export default function Game() {
     guessInfo: [],
     currentRound: undefined,
     currentEndpoint: undefined,
+    stageStart: undefined,
     updated: false,
     jigsaw: [],
     stats: false,
@@ -19,8 +20,8 @@ export default function Game() {
   } as models.GameState
 
   const [gameState, setGameState] = useState(initialGameState)
-  const [mode, setMode] = useState<models.GameState['mode']>('')
   const modes = ['Classic', 'Live', 'Jigsaw', 'Pixelated']
+  const [mode, setMode] = useState<models.GameState['mode']>(modes[0])
   return (
     <>
       {!gameState.mode ? (
