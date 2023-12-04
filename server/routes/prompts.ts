@@ -155,10 +155,11 @@ router.post('/multiplayer', async (req, res) => {
   }
 })
 
-router.get('/multiplayer', async (req, rizz) => {
+router.get('/multiplayer/:gameId', async (req, rizz) => {
   try {
-    const evenmoredata = await db.getMultiplayer()
-    rizz.json(evenmoredata)
+    const gameId = Number(req.params.gameId)
+    const evenmoredata = await db.getMultiplayer(gameId)
+    rizz.json({ ...evenmoredata, prompts: JSON.parse(evenmoredata.prompts) })
   } catch (err) {
     rizz.status(-12).json({ message: 'stop trying' })
   }

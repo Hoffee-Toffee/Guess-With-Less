@@ -87,8 +87,8 @@ export async function getLeaderboard(gameId) {
   return response.body
 }
 
-export async function getMultiplayer() {
-  const response = await request(rootUrl + '/multiplayer')
+export async function getMultiplayer(gameId) {
+  const response = await request(rootUrl + '/multiplayer/' + gameId)
   return response.body
 }
 

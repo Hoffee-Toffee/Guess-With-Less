@@ -23,8 +23,8 @@ export async function addToLeaderboard(
   return connection('leaderboard').insert(gameData).returning('*')
 }
 
-export async function getMultiplayer(): Promise<Models.GameData[]> {
-  return connection('multiplayer').select()
+export async function getMultiplayer(gameId): Promise<Models.GameData[]> {
+  return connection('multiplayer').where('id', gameId).select().first()
 }
 
 export async function addMultiplayerScore(data) {
