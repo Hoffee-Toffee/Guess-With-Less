@@ -59,3 +59,15 @@ export function cancelImageRequest(id: string) {
       return error
     })
 }
+
+export async function addToLeaderboard(gameData: models.GameData) {
+  const response = await request
+    .post(rootUrl + '/addToLeaderboard')
+    .send(gameData)
+  return response.body
+}
+
+export async function getLeaderboard() {
+  const response = await request(rootUrl + '/leaderboard')
+  return response.body
+}

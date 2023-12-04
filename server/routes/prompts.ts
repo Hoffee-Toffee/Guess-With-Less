@@ -109,4 +109,24 @@ router.get('/sd', async (req, res) => {
   }
 })
 
+router.get('/leaderboard', async (req, res) => {
+  try {
+    const leaderboard: models.GameData[] = await db.getLeaderboard()
+    res.json(leaderboard)
+  } catch (error) {
+    error
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
+router.post('/addToLeaderboard', async (req, res) => {
+  const gameData = req.body
+  try {
+    const dataToAdd = await db.addToLeaderboard(gameData)
+    res.json(dataToAdd)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: `Add to leaderboard is not working` })
+  }
+})
+
 export default router
