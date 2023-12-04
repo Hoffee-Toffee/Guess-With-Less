@@ -42,7 +42,7 @@ export interface Endpoint {
 
 export interface GameStateProps {
   gameState: GameState
-  setGameState?: Dispatch<SetStateAction<GameState>>
+  setGameState: Dispatch<SetStateAction<GameState>>
   initialGameState?: GameState
 }
 
@@ -50,6 +50,13 @@ export interface StageImageProps {
   image: string
   stage: number
   jigsaw: number[]
+}
+
+export interface GameData {
+  username: string
+  correct: number
+  totalGuesses: number
+  mode: string
 }
 
 export interface Categories {
