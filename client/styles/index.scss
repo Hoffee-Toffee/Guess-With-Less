@@ -60,7 +60,8 @@ canvas {
   display: block;
   position: absolute;
   padding-left: 1em;
-  margin-left: -0.5em;
+  margin-left: -0.8em;
+  margin-top: -0.27em;
 }
 
 #stage {
@@ -148,7 +149,8 @@ body .cybr-btn + .cybr-btn {
 .cybr-btn {
   --primary: hsl(var(--primary-hue), 85%, calc(var(--primary-lightness, 50) * 1%));
   --shadow-primary: hsl(var(--shadow-primary-hue), 90%, 50%);
-  --primary-hue: 0;
+  --primary-hue: 5678;
+  // --primary-hue: 0;
   --primary-lightness: 50;
   --color: hsl(0, 0%, 100%);
   --font-size: 26px;
@@ -409,5 +411,16 @@ body .cybr-btn + .cybr-btn {
 }
 
 .cybr-btn:nth-of-type(2) {
-  --primary-hue: 260;
+  --primary-hue: 130;
+}
+
+.cybr-btn:nth-of-type(4) {
+  --primary-hue: 130;
+}
+
+.cybr-btn:nth-of-type(6) {
+  --primary-hue: 130;
+}
+.cybr-btn:nth-of-type(8) {
+  --primary-hue: 130;
 }

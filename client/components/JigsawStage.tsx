@@ -21,8 +21,12 @@ export default function JigsawStage(props: models.GameStateProps) {
 
   return (
     <div id="stageBlock">
-      <p>Stage: {`${gameState.currentStage}`}</p>
-      <p>Round: {`${gameState.currentRound}`}</p>
+      <p style={{ backgroundColor: '#746cbec9', outline: '1px solid #746cbe' }}>
+        Stage: {`${gameState.currentStage}`}
+      </p>
+      <p style={{ backgroundColor: '#746cbec9', outline: '1px solid #746cbe' }}>
+        Round: {`${gameState.currentRound}`}
+      </p>
       <StageImage
         image={image}
         stage={gameState.currentStage as number}

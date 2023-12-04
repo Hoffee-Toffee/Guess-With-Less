@@ -10,12 +10,35 @@ function App() {
         'background-image: url(https://i.gifer.com/J4o.gif)')
   return (
     <>
-      <h1>Guess with Less!</h1>
+      <h1
+        style={
+          theme === 'dark'
+            ? {
+                backgroundImage:
+                  'url(https://cdn.dribbble.com/users/119530/screenshots/3433250/comp4.gif)',
+              }
+            : {
+                backgroundImage: 'url(https://i.gifer.com/J4o.gif)',
+                color: 'white',
+              }
+        }
+      >
+        Guess with Less!
+      </h1>
       <Game />
       <footer
-        style={{
-          backgroundImage: 'linear-gradient(45deg, black, transparent)',
-        }}
+        style={
+          theme === 'dark'
+            ? {
+                backgroundImage:
+                  'url(https://cdn.dribbble.com/users/119530/screenshots/3433250/comp4.gif)',
+                position: 'static',
+              }
+            : {
+                backgroundImage: 'url(https://i.gifer.com/J4o.gif)',
+                position: 'static',
+              }
+        }
       >
         <button
           onClick={(e) => {

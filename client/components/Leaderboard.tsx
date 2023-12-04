@@ -38,19 +38,42 @@ export default function Leaderboard(props: Props) {
   }
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: 'rgb(116 108 190 / 41%)',
+        outline: '1px solid #746cbe',
+        padding: '1em',
+      }}
+    >
       {/* {leaderboard?.map((game, i) => (
         <p key={i}>
           {game.username} - {game.mode} - {game.correct} / {game.totalGuesses}
         </p>
       ))} */}
-
+      <h2>Leaderboard for {gameMode}</h2>
+      <p
+        style={{
+          backgroundColor: 'rgb(87 184 123)',
+          color: 'rgb(116 108 190 / 41%)',
+          outline: '1px solid #746cbe',
+          padding: '2px',
+        }}
+      >
+        Name - Gamemode - Correct / Total Guesses
+      </p>
       {sortedBoard?.map((game, i) => (
-        <p key={i}>
+        <p
+          key={i}
+          style={{
+            color: 'rgb(87 184 123)',
+            backgroundColor: 'rgb(116 108 190 / 41%)',
+            outline: '1px solid #746cbe',
+            padding: '2px',
+          }}
+        >
           {game.username} - {game.mode} - {game.correct} / {game.totalGuesses}
         </p>
       ))}
-      <p>{gameModeBoard?.length}</p>
-    </>
+    </div>
   )
 }
