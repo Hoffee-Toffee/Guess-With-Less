@@ -4,22 +4,22 @@ import { useEffect, useState } from 'react'
 
 interface Props {
   gameMode: string
-  sortBy: string
+  gameId?: string
 }
 export default function Leaderboard(props: Props) {
-  const { gameMode, sortBy } = props
+  const { gameMode, gameId } = props
 
   const [leaderboard, setLeaderboard] = useState<models.GameData[] | undefined>(
     [],
   )
-  async function getLeaderboard() {
-    const leaderboardData: models.GameData[] = await api.getLeaderboard()
+  async function getLeaderboard(gameId) {
+    const leaderboardData: models.GameData[] = await api.getLeaderboard(gameId)
     setLeaderboard(leaderboardData)
   }
 
   useEffect(() => {
     async function fetchStats() {
-      await getLeaderboard()
+      await getLeaderboard(gameId)
     }
     fetchStats()
   }, [leaderboard])

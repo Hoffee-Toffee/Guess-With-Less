@@ -149,7 +149,7 @@ function Round(props: models.GameStateProps) {
   //Updates gameState without
   async function handleSubmit(e: React.DOMAttributes<HTMLButtonElement>) {
     e.preventDefault()
-    const categoryPrompts = categories[e.target.id]//issue here
+    const categoryPrompts = categories[e.target.id] //issue here
     console.log('I am category prompts log', categoryPrompts)
     let shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
     shufflePrompts = shufflePrompts.filter((_, index) => index <= 8)
@@ -159,22 +159,33 @@ function Round(props: models.GameStateProps) {
       prompts: shufflePrompts,
       currentStage: 1,
       currentRound: 0,
+      gameId: await api.addMultiplayerGame(shufflePrompts),
     })
   }
 
   return (
     <>
       {!gameState.currentStage ? (
-        <form className='categoryForm'>
+        <form className="categoryForm">
           <h2>Choose a Category!</h2>
           <div>
             {Object.keys(categories).map((category, index) => (
-              <button key={category} id={category} onClick={handleSubmit} className="cybr-btn">
-              {category}<span aria-hidden>_</span>
-              <span aria-hidden className="cybr-btn__glitch">_\-?-_*</span>
-              <span aria-hidden className="cybr-btn__tag">#{index + 1}{index + 4}</span>
-            </button>
-            
+              <button
+                key={category}
+                id={category}
+                onClick={handleSubmit}
+                className="cybr-btn"
+              >
+                {category}
+                <span aria-hidden>_</span>
+                <span aria-hidden className="cybr-btn__glitch">
+                  _\-?-_*
+                </span>
+                <span aria-hidden className="cybr-btn__tag">
+                  #{index + 1}
+                  {index + 4}
+                </span>
+              </button>
             ))}
           </div>
         </form>

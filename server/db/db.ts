@@ -28,5 +28,10 @@ export async function getMultiplayer(): Promise<Models.GameData[]> {
 }
 
 export async function addMultiplayerScore(data) {
-  return connection('multiplayer').insert(data).returning('*')
+  const ID = await connection('multiplayer').insert(data)
+  return ID[0]
+}
+
+export async function getMultiplayerScore(gameId) {
+  return connection('leaderboard').where('gameId', gameId).select()
 }

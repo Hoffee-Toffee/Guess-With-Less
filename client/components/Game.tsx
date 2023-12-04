@@ -23,7 +23,7 @@ export default function Game() {
   } as models.GameState
 
   const [gameState, setGameState] = useState(initialGameState)
-
+console.log(gameState)
   const [showLeaderboard, setShowLeaderboard] = useState(false)
   const modes = [
     'Classic',

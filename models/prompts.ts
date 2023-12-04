@@ -32,6 +32,7 @@ export interface GameState {
   stats: boolean
   mode: string
   multiplayerData: []
+  gameId: number | undefined
 }
 
 export interface Endpoint {

@@ -163,4 +163,16 @@ router.get('/multiplayer', async (req, rizz) => {
     rizz.status(-12).json({ message: 'stop trying' })
   }
 })
+
+router.get('/leaderboard/:gameId', async (req, res) => {
+  try {
+    const gameId = Number(req.params.gameId)
+    const leaderboard: models.GameData[] = await db.getMultiplayerScore(gameId)
+    res.json(leaderboard)
+  } catch (error) {
+    error
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
+
 export default router
