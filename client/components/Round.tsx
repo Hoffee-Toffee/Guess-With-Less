@@ -153,7 +153,8 @@ function Round(props: models.GameStateProps) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const categoryPrompts = categories[category]
-    const shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
+    let shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
+    shufflePrompts = shufflePrompts.filter((_, index) => index <= 6)
 
     setGameState({
       ...gameState,

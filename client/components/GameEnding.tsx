@@ -54,10 +54,8 @@ export function GameEnding({
         <input
           type="text"
           maxLength={4}
-          onChange={(e) => setUsername(e.target.value)}
-        >
-          ????
-        </input>
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}/>
         <button>Save</button>
       </form>
       <Leaderboard />

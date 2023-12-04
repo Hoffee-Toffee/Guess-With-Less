@@ -17,7 +17,6 @@ export default function Game() {
     jigsaw: [],
     stats: false,
     mode: '',
-    stageStart: new Date(),
   } as models.GameState
 
   const [gameState, setGameState] = useState(initialGameState)
