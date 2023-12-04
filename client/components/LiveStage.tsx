@@ -7,8 +7,12 @@ export default function LiveStage(props: models.GameStateProps) {
 
   return (
     <div>
-      <p>Current Stage: {output?.length}</p>
-      <p>Status: {gameState.currentEndpoint?.status}</p>
+      <p style={{ backgroundColor: '#746cbec9', outline: '1px solid #746cbe' }}>
+        Current Stage: {output?.length}
+      </p>
+      <p style={{ backgroundColor: '#746cbec9', outline: '1px solid #746cbe' }}>
+        Status: {gameState.currentEndpoint?.status}
+      </p>
       <p>
         {/* {new Date().getMilliseconds() -
           (gameState.stageStart?.getMilliseconds() || 0)} */}

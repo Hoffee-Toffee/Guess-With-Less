@@ -20,7 +20,8 @@ export function GameEnding({
     setGameState(initialGameState as models.GameState)
   }
 
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault()
     api.addToLeaderboard({
       username,
       correct: correctLength,
@@ -55,10 +56,11 @@ export function GameEnding({
           type="text"
           maxLength={4}
           value={username}
-          onChange={(e) => setUsername(e.target.value)}/>
+          onChange={(e) => setUsername(e.target.value)}
+        />
         <button>Save</button>
       </form>
-      <Leaderboard />
+      <Leaderboard gameMode={gameState.mode} />
     </>
   )
 }

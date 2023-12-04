@@ -50,7 +50,6 @@ async function imageRequest(
 router.post('/make', async (req, res) => {
   try {
     const { prompt }: { prompt: string } = req.body
-    console.log(prompt)
 
     // Send off request
     // Get back the data

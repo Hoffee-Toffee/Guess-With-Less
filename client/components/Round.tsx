@@ -8,6 +8,7 @@ import { StageResult } from './StageResult.js'
 
 import JigsawStage from './JigsawStage.js'
 import ClassicStage from './ClassicStage.js'
+import PixelatedStage from './PixelatedStage.js'
 
 function Round(props: models.GameStateProps) {
   const { gameState, setGameState, initialGameState } = props
@@ -48,7 +49,7 @@ function Round(props: models.GameStateProps) {
   })
 
   //Triggers the first prompt to be created and checks for game over
-  if (gameState.prompts?.length || gameState.currentPrompt) {
+  if (gameState.prompts?.length || gameState.currentPrompt || gameState.stats) {
     checkGuessInfo()
   } else if (gameState.guessInfo?.length && !gameState.currentPrompt) {
     return (
@@ -88,7 +89,6 @@ function Round(props: models.GameStateProps) {
       //choose random prompt. update current Prompt and remove current prompt from gameState.prompts
       const prompts = gameState.prompts
       const currentPrompt = prompts.pop()
-      console.log(prompts, currentPrompt)
       setGameState({
         ...gameState,
         lastPrompt: gameState.currentPrompt,
@@ -116,7 +116,7 @@ function Round(props: models.GameStateProps) {
         ...gameState,
         stats: false,
       })
-    }, 3000)
+    }, 2000)
     return <StageResult gameState={gameState} />
   }
   //If there aren't any stages left go to next Prompt
@@ -147,12 +147,13 @@ function Round(props: models.GameStateProps) {
   }
 
   //Updates gameState without
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    const categoryPrompts = categories[category]
+  async function handleSubmit(e: React.DOMAttributes<HTMLButtonElement>) {
+    e.preventDefault()
+    const categoryPrompts = categories[e.target.id]//issue here
+    console.log('I am category prompts log', categoryPrompts)
     let shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
-    shufflePrompts = shufflePrompts.filter((_, index) => index <= 6)
-
+    shufflePrompts = shufflePrompts.filter((_, index) => index <= 8)
+    console.log('I am shuffle prompts log', shufflePrompts)
     setGameState({
       ...gameState,
       prompts: shufflePrompts,
@@ -161,21 +162,21 @@ function Round(props: models.GameStateProps) {
     })
   }
 
-  async function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setCategory(event.target.value)
-  }
-
   return (
     <>
       {!gameState.currentStage ? (
-        <form onSubmit={handleSubmit}>
-          <p>Choose your category!</p>
-          <select onChange={handleChange}>
-            {Object.keys(categories).map((category) => (
-              <option key={category}>{category}</option>
+        <form className='categoryForm'>
+          <h2>Choose a Category!</h2>
+          <div>
+            {Object.keys(categories).map((category, index) => (
+              <button key={category} id={category} onClick={handleSubmit} className="cybr-btn">
+              {category}<span aria-hidden>_</span>
+              <span aria-hidden className="cybr-btn__glitch">_\-?-_*</span>
+              <span aria-hidden className="cybr-btn__tag">#{index + 1}{index + 4}</span>
+            </button>
+            
             ))}
-          </select>
-          <button>Start</button>
+          </div>
         </form>
       ) : (
         <>
@@ -184,6 +185,9 @@ function Round(props: models.GameStateProps) {
           )}
           {['Jigsaw', 'Multiplayer'].includes(gameState.mode) && (
             <JigsawStage gameState={gameState} setGameState={setGameState} />
+          )}
+          {gameState.mode === 'Pixelated' && (
+            <PixelatedStage gameState={gameState} setGameState={setGameState} />
           )}
           <GuessForm gameState={gameState} setGameState={setGameState} />
         </>
