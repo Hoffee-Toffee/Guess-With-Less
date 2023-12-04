@@ -8,6 +8,7 @@ import { StageResult } from './StageResult.js'
 
 import JigsawStage from './JigsawStage.js'
 import ClassicStage from './ClassicStage.js'
+import PixelatedStage from './PixelatedStage.js'
 
 function Round(props: models.GameStateProps) {
   const { gameState, setGameState, initialGameState } = props
@@ -29,11 +30,8 @@ function Round(props: models.GameStateProps) {
         case 'Classic':
           return api.getAllPrompts()
 
-        case 'Jigsaw':
-          return api.getAllSdPrompts()
-
         default:
-          return []
+          return api.getAllSdPrompts()
       }
     },
   })
@@ -187,6 +185,9 @@ function Round(props: models.GameStateProps) {
           )}
           {gameState.mode === 'Jigsaw' && (
             <JigsawStage gameState={gameState} setGameState={setGameState} />
+          )}
+          {gameState.mode === 'Pixelated' && (
+            <PixelatedStage gameState={gameState} setGameState={setGameState} />
           )}
           <GuessForm gameState={gameState} setGameState={setGameState} />
         </>
