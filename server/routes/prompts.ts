@@ -113,11 +113,28 @@ router.get('/leaderboard', async (req, res) => {
   try {
     const leaderboard: models.GameData[] = await db.getLeaderboard()
     res.json(leaderboard)
-  } catch (error) {
+    } catch (error) {
     error
     res.status(500).json({ message: 'Something went wrong' })
   }
 })
+
+router.get('/', async (req, res) => {
+  try {
+    const prompts: models.Prompt[] = await db.getAllPixrayPrompts()
+
+    res.json(
+      prompts.map((prompt) => ({
+        ...prompt,
+        images: JSON.parse(prompt.images),
+      })),
+    )
+    } catch (error) {
+    error
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
+
 router.post('/addToLeaderboard', async (req, res) => {
   const gameData = req.body
   try {
@@ -128,5 +145,6 @@ router.post('/addToLeaderboard', async (req, res) => {
     res.status(500).json({ message: `Add to leaderboard is not working` })
   }
 })
+
 
 export default router
