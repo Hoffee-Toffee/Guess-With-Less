@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useEffect, useState } from 'react'
+import { FormEvent } from 'react'
 import * as models from '../../models/prompts.js'
 import { GuessForm } from './GuessForm.js'
 import { GameEnding } from './GameEnding.js'
@@ -9,8 +9,6 @@ import { StageResult } from './StageResult.js'
 import JigsawStage from './JigsawStage.js'
 import ClassicStage from './ClassicStage.js'
 import PixelatedStage from './PixelatedStage.js'
-
-import Leaderboard from './Leaderboard.js'
 
 export default function Round(props: models.GameStateProps) {
   const { gameState, initialGameState, setGameState } = props
@@ -28,7 +26,7 @@ export default function Round(props: models.GameStateProps) {
     queryFn: api.getData,
   })
 
-  if (isError || isLoading || !prompts) {
+  if (isError || isLoading || !data) {
     return <p>Stuff</p>
   }
 
@@ -152,7 +150,7 @@ export default function Round(props: models.GameStateProps) {
 
   if (gameState.stats) {
     setTimeout(() => {
-      setGameState(prev => ({
+      setGameState((prev) => ({
         ...prev,
         stats: false,
       }))
