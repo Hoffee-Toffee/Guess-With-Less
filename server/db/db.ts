@@ -13,7 +13,6 @@ export async function getAllSdPrompts(
   return db('sd-prompts').select()
 }
 
-
 export async function getLeaderboard(): Promise<Models.GameData[]> {
   return connection('leaderboard').select()
 }
@@ -24,3 +23,15 @@ export async function addToLeaderboard(
   return connection('leaderboard').insert(gameData).returning('*')
 }
 
+export async function getMultiplayer(gameId): Promise<Models.GameData[]> {
+  return connection('multiplayer').where('id', gameId).select().first()
+}
+
+export async function addMultiplayerScore(data) {
+  const ID = await connection('multiplayer').insert(data)
+  return ID[0]
+}
+
+export async function getMultiplayerScore(gameId) {
+  return connection('leaderboard').where('gameId', gameId).select()
+}

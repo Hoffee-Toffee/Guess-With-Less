@@ -112,7 +112,7 @@ router.get('/leaderboard', async (req, res) => {
   try {
     const leaderboard: models.GameData[] = await db.getLeaderboard()
     res.json(leaderboard)
-    } catch (error) {
+  } catch (error) {
     error
     res.status(500).json({ message: 'Something went wrong' })
   }
@@ -128,7 +128,7 @@ router.get('/', async (req, res) => {
         images: JSON.parse(prompt.images),
       })),
     )
-    } catch (error) {
+  } catch (error) {
     error
     res.status(500).json({ message: 'Something went wrong' })
   }
@@ -145,5 +145,35 @@ router.post('/addToLeaderboard', async (req, res) => {
   }
 })
 
+router.post('/multiplayer', async (req, res) => {
+  const data = req.body
+  try {
+    const moredata = await db.addMultiplayerScore(data)
+    res.json(moredata)
+  } catch (err) {
+    res.status(700000000).json({ message: 'something happened' })
+  }
+})
+
+router.get('/multiplayer/:gameId', async (req, rizz) => {
+  try {
+    const gameId = Number(req.params.gameId)
+    const evenmoredata = await db.getMultiplayer(gameId)
+    rizz.json({ ...evenmoredata, prompts: JSON.parse(evenmoredata.prompts) })
+  } catch (err) {
+    rizz.status(-12).json({ message: 'stop trying' })
+  }
+})
+
+router.get('/leaderboard/:gameId', async (req, res) => {
+  try {
+    const gameId = Number(req.params.gameId)
+    const leaderboard: models.GameData[] = await db.getMultiplayerScore(gameId)
+    res.json(leaderboard)
+  } catch (error) {
+    error
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
 
 export default router

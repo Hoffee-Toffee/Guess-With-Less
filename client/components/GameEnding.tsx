@@ -27,6 +27,7 @@ export function GameEnding({
       correct: correctLength,
       totalGuesses,
       mode: gameState.mode,
+      // gameId: gameState.gameId,
     })
   }
 
@@ -60,7 +61,7 @@ export function GameEnding({
         />
         <button>Save</button>
       </form>
-      <Leaderboard gameMode={gameState.mode} />
+      <Leaderboard gameMode={gameState.mode} gameId={gameState?.gameId} />
     </>
   )
 }

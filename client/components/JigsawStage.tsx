@@ -20,7 +20,7 @@ export default function JigsawStage(props: models.GameStateProps) {
   }
 
   return (
-    <div id="stageBlock">
+    <div id="stageBlock"> {gameState.gameId && <p>Lobby Code: {gameState.gameId}</p>}
       <p style={{ backgroundColor: '#746cbec9', outline: '1px solid #746cbe' }}>
         Stage: {`${gameState.currentStage}`}
       </p>

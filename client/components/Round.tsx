@@ -15,28 +15,30 @@ export default function Round(props: models.GameStateProps) {
   const { gameState, initialGameState, setGameState } = props
 
   const {
-    data: prompts,
+    data,
     isError,
     isLoading,
   }: {
-    data: models.Prompt[] | undefined
+    data: models.Prompt[][] | undefined
     isError: boolean
     isLoading: boolean
   } = useQuery({
     queryKey: ['prompts'],
-    queryFn: () => {
-      switch (gameState.mode) {
-        case 'Classic':
-          return api.getAllPrompts()
-
-        default:
-          return api.getAllSdPrompts()
-      }
-    },
+    queryFn: api.getData,
   })
 
   if (isError || isLoading || !prompts) {
     return <p>Stuff</p>
+  }
+
+  let prompts
+  switch (gameState.mode) {
+    case 'Classic':
+      prompts = data['Classic']
+      break
+
+    default:
+      prompts = data['Default']
   }
 
   const categories: models.Categories = { All: [] }
@@ -170,6 +172,27 @@ export default function Round(props: models.GameStateProps) {
     }))
   }
 
+  async function handleJoin(e: any) {
+    e.preventDefault()
+    const gameId = e.target.children[1].value
+    api
+      .getMultiplayer(gameId)
+      .then((res) => {
+        if (res) {
+          setGameState({
+            ...gameState,
+            prompts: res.prompts,
+            currentStage: 1,
+            currentRound: 0,
+            gameId,
+          })
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }
+
   return (
     <>
       {gameState.gameHasStarted ? (
@@ -177,7 +200,9 @@ export default function Round(props: models.GameStateProps) {
           {gameState.mode === 'Classic' && (
             <ClassicStage gameState={gameState} setGameState={setGameState} />
           )}
-          {gameState.mode === 'Jigsaw' && (
+          {['Jigsaw', 'Multiplayer', 'Join Multiplayer'].includes(
+            gameState.mode,
+          ) && (
             <JigsawStage gameState={gameState} setGameState={setGameState} />
           )}
           {gameState.mode === 'Pixelated' && (

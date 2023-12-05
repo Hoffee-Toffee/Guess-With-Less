@@ -34,6 +34,8 @@ export interface GameState {
   gameHasStarted: boolean
   newGuess: boolean
   gameIsOver: boolean
+  multiplayerData: []
+  gameId: number | undefined
 }
 
 export interface Endpoint {

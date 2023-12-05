@@ -3,6 +3,7 @@ import * as models from '../../models/prompts'
 import Round from './Round'
 import LiveRound from './LiveRound'
 import Leaderboard from './Leaderboard'
+import * as api from '../apis/prompts'
 
 export default function Game() {
   const initialGameState = {
@@ -21,9 +22,12 @@ export default function Game() {
     gameHasStarted: false,
     newGuess: false,
     gameIsOver: false,
+    multiplayerData: [],
+    gameId: undefined,
   } as models.GameState
 
   const [gameState, setGameState] = useState(initialGameState)
+  console.log(gameState)
   const [showLeaderboard, setShowLeaderboard] = useState(false)
   const modes = [
     'Classic',
@@ -34,6 +38,8 @@ export default function Game() {
     'Jigsaw Leaderboard',
     'Pixelated',
     'Pixelated Leaderboard',
+    'Multiplayer',
+    'Join Multiplayer',
   ]
   const [mode, setMode] = useState<models.GameState['mode']>(modes[0])
 
@@ -52,6 +58,25 @@ export default function Game() {
       setShowLeaderboard(false)
     }
   }
+
+  // setTimeout(async () => {
+  //   api
+  //     .getMultiplayer()
+  //     .then((multiplayerData) => {
+  //       if (
+  //         JSON.stringify(gameState.multiplayerData) !=
+  //         JSON.stringify(multiplayerData)
+  //       )
+  //         console.log(multiplayerData)
+  //       setGameState({
+  //         ...gameState,
+  //         multiplayerData,
+  //       })
+  //     })
+  //     .catch((error) => {
+  //       console.log(error)
+  //     })
+  // }, 800)
 
   return (
     <>

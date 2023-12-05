@@ -1,5 +1,6 @@
 import request from 'superagent'
 import * as models from '../../models/prompts'
+import { getMultiplayer } from '../../server/db/db'
 
 const rootUrl = '/api/v1/prompts'
 
@@ -25,6 +26,13 @@ export function getAllPrompts(): Promise<models.Prompt[] | Error> {
       console.error(error)
       return error
     })
+}
+
+export async function getData() {
+  return {
+    Classic: await getAllPrompts(),
+    Default: await getAllSdPrompts(),
+  }
 }
 
 export function makeImageRequest(prompt: string) {
@@ -79,7 +87,21 @@ export async function addToLeaderboard(gameData: models.GameData) {
   return response.body
 }
 
-export async function getLeaderboard() {
-  const response = await request(rootUrl + '/leaderboard')
+export async function getLeaderboard(gameId) {
+  const response = await request(
+    rootUrl + '/leaderboard' + (gameId && `/${gameId}`),
+  )
+  return response.body
+}
+
+export async function getMultiplayer(gameId) {
+  const response = await request(rootUrl + '/multiplayer/' + gameId)
+  return response.body
+}
+
+export async function addMultiplayerGame(prompts) {
+  const response = await request
+    .post(rootUrl + '/multiplayer')
+    .send({ prompts: JSON.stringify(prompts) })
   return response.body
 }
