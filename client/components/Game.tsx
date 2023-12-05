@@ -3,7 +3,6 @@ import * as models from '../../models/prompts'
 import Round from './Round'
 import LiveRound from './LiveRound'
 import Leaderboard from './Leaderboard'
-import * as api from '../apis/prompts'
 
 export default function Game() {
   const initialGameState = {
@@ -43,7 +42,7 @@ export default function Game() {
   ]
   const [mode, setMode] = useState<models.GameState['mode']>(modes[0])
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLButtonElement>) {
     const clickedMode = e.currentTarget.id
 
     if (clickedMode.includes('Leaderboard')) {
@@ -59,28 +58,9 @@ export default function Game() {
     }
   }
 
-  // setTimeout(async () => {
-  //   api
-  //     .getMultiplayer()
-  //     .then((multiplayerData) => {
-  //       if (
-  //         JSON.stringify(gameState.multiplayerData) !=
-  //         JSON.stringify(multiplayerData)
-  //       )
-  //         console.log(multiplayerData)
-  //       setGameState({
-  //         ...gameState,
-  //         multiplayerData,
-  //       })
-  //     })
-  //     .catch((error) => {
-  //       console.log(error)
-  //     })
-  // }, 800)
-
   return (
     <>
-      {showLeaderboard && <Leaderboard gameMode={mode} sortBy={''} />}
+      {showLeaderboard && <Leaderboard gameMode={mode} />}
 
       {!gameState.mode ? (
         <form

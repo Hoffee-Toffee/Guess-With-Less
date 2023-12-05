@@ -97,12 +97,13 @@ function LiveRound(props: models.GameStateProps) {
   }
 
   async function handleCancel() {
-    api.cancelImageRequest(gameState.currentEndpoint.id)
+    if (gameState.currentEndpoint)
+      api.cancelImageRequest(gameState.currentEndpoint.id)
   }
 
   //If there aren't any stages left go to next Prompt
   function nextStage() {
-    const maxStages = gameState.currentPrompt?.images.length
+    const maxStages = gameState.currentPrompt?.images?.length
     if (maxStages === gameState.currentStage) {
       nextPrompt()
     } else {

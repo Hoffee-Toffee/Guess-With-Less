@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 interface Props {
   gameMode: string
-  gameId?: string
+  gameId?: number
 }
 export default function Leaderboard(props: Props) {
   const { gameMode, gameId } = props
@@ -12,7 +12,7 @@ export default function Leaderboard(props: Props) {
   const [leaderboard, setLeaderboard] = useState<models.GameData[] | undefined>(
     [],
   )
-  async function getLeaderboard(gameId) {
+  async function getLeaderboard(gameId?: number) {
     const leaderboardData: models.GameData[] = await api.getLeaderboard(gameId)
     setLeaderboard(leaderboardData)
   }
@@ -22,7 +22,7 @@ export default function Leaderboard(props: Props) {
       await getLeaderboard(gameId)
     }
     fetchStats()
-  }, [leaderboard])
+  }, [gameId, leaderboard])
 
   const gameModeBoard = leaderboard?.filter((game) => game.mode === gameMode)
 

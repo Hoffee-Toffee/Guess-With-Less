@@ -9,6 +9,7 @@ import { StageResult } from './StageResult.js'
 import JigsawStage from './JigsawStage.js'
 import ClassicStage from './ClassicStage.js'
 import PixelatedStage from './PixelatedStage.js'
+
 import Leaderboard from './Leaderboard.js'
 
 export default function Round(props: models.GameStateProps) {
@@ -19,7 +20,7 @@ export default function Round(props: models.GameStateProps) {
     isError,
     isLoading,
   }: {
-    data: models.Prompt[][] | undefined
+    data: models.APIData | undefined
     isError: boolean
     isLoading: boolean
   } = useQuery({
@@ -172,9 +173,11 @@ export default function Round(props: models.GameStateProps) {
     }))
   }
 
-  async function handleJoin(e: any) {
+  async function handleJoin(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const gameId = e.target.children[1].value
+    const target = e.target as HTMLFormElement
+    const input = target.children[1] as HTMLInputElement
+    const gameId = Number(input.value)
     api
       .getMultiplayer(gameId)
       .then((res) => {

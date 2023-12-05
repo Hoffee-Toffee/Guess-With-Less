@@ -1,6 +1,5 @@
 import request from 'superagent'
 import * as models from '../../models/prompts'
-import { getMultiplayer } from '../../server/db/db'
 
 const rootUrl = '/api/v1/prompts'
 
@@ -87,19 +86,19 @@ export async function addToLeaderboard(gameData: models.GameData) {
   return response.body
 }
 
-export async function getLeaderboard(gameId) {
+export async function getLeaderboard(gameId?: number) {
   const response = await request(
-    rootUrl + '/leaderboard' + (gameId && `/${gameId}`),
+    rootUrl + (gameId ? `/leaderboard/${gameId}` : '/leaderboard'),
   )
   return response.body
 }
 
-export async function getMultiplayer(gameId) {
+export async function getMultiplayer(gameId?: number) {
   const response = await request(rootUrl + '/multiplayer/' + gameId)
   return response.body
 }
 
-export async function addMultiplayerGame(prompts) {
+export async function addMultiplayerGame(prompts: models.Prompt[]) {
   const response = await request
     .post(rootUrl + '/multiplayer')
     .send({ prompts: JSON.stringify(prompts) })

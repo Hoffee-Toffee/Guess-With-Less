@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent } from 'react'
+import { useState, FormEvent } from 'react'
 import * as models from '../../models/prompts'
 import * as api from '../apis/prompts'
 import Leaderboard from './Leaderboard'
@@ -20,15 +20,16 @@ export function GameEnding({
     setGameState(initialGameState as models.GameState)
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     api.addToLeaderboard({
       username,
       correct: correctLength,
       totalGuesses,
       mode: gameState.mode,
-      // gameId: gameState.gameId,
+      gameId: gameState.gameId || undefined,
     })
+    setGameState({ ...gameState })
   }
 
   return (

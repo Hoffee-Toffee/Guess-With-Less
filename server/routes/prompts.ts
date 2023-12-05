@@ -11,7 +11,7 @@ const endpoint = 'https://api.replicate.com/v1/predictions'
 async function imageRequest(
   type: string,
   value: string,
-): Promise<models.Endpoint | void> {
+): Promise<models.Endpoint> {
   let res
   switch (type) {
     case 'GET':
@@ -44,6 +44,8 @@ async function imageRequest(
         .set('Authorization', 'token ' + process.env.TOKEN)
 
       return res.body as models.Endpoint
+    default:
+      return null as unknown as models.Endpoint
   }
 }
 
