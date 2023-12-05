@@ -22,18 +22,30 @@ canvas {
   -ms-interpolation-mode: nearest-neighbor;
 }
 .modeForm{
-  padding: 5px;
+}
+.modeForm div{
+  display: flex;
+  flex-wrap: wrap;
+}
+.modeForm button{
+  flex: 10%;
+  margin: 1em;
 }
 
 .categoryForm{
   padding: 5px;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 #app {
-  position: absolute;
-  top: 20px;
+  padding-top: 10;
   max-width: 900px;
+  max-height: 95vh;
   min-height: 50em;
+  overflow-y: scroll;
   height: 100%;
   align-items: center;
   outline: solid #746cbe;
@@ -158,6 +170,8 @@ form select {
   background-color: #746cbe;
 }
 
+
+
 @font-face {
   font-family: Cyber;
   src: url("https://assets.codepen.io/605876/Blender-Pro-Bold.otf");
@@ -211,8 +225,8 @@ body .cybr-btn + .cybr-btn {
   font-weight: 700;
   border: 0;
   min-width: 300px;
-  height: 75px;
-  line-height: 75px;
+  height: 65px;
+  line-height: 65px;
   transition: background 0.2s;
 }
 
