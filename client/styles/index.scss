@@ -111,12 +111,13 @@ h1 {
 }
 
 footer {
-  position: sticky;
+  position: fixed;
   border-bottom-left-radius:1em;
   border-bottom-right-radius: 1em;
   margin-top: 5em;
   border-top: solid grey;
   bottom: 0;
+  padding-top: 1em;
 }
 
 #app ul {
@@ -228,6 +229,7 @@ body .cybr-btn + .cybr-btn {
   position: relative;
   font-weight: 700;
   border: 0;
+  max-width: 570px;
   min-width: 300px;
   height: 65px;
   line-height: 65px;

@@ -16,6 +16,8 @@ export function GameEnding({
 
   const totalGuesses = gameState.guessInfo.length
 
+  const percent = Math.floor(correct.length *100) / totalGuesses
+
   function handleReset() {
     setGameState(initialGameState as models.GameState)
   }
@@ -48,6 +50,7 @@ export function GameEnding({
         <br /> So you were correct for an average of 1 in{' '}
         {(gameState.guessInfo.length / correct.length).toLocaleString()}{' '}
         guesses.
+        You got {percent}{'%'} right lol
       </p>
       <button onClick={handleReset}>Reset</button>
 
