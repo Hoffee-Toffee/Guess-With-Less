@@ -74,45 +74,11 @@ function LiveRound(props: models.GameStateProps) {
       })
   }
 
-  function nextPrompt() {
-    const promptLength = gameState.prompts.length
-    if (promptLength) {
-      //choose random prompt. update current Prompt and remove current prompt from gameState.prompts
-      const prompts = gameState.prompts
-      const currentPrompt = prompts.pop()
-      setGameState({
-        ...gameState,
-        currentPrompt,
-        prompts,
-        currentStage: 1,
-        currentRound: (gameState.currentRound || 0) + 1,
-      })
-      //If there are no prompts left, sets currentPrompt to undefined
-    } else {
-      setGameState({
-        ...gameState,
-        currentPrompt: undefined,
-      })
-    }
-  }
-
   async function handleCancel() {
     if (gameState.currentEndpoint)
       api.cancelImageRequest(gameState.currentEndpoint.id)
   }
 
-  //If there aren't any stages left go to next Prompt
-  function nextStage() {
-    const maxStages = gameState.currentPrompt?.images?.length
-    if (maxStages === gameState.currentStage) {
-      nextPrompt()
-    } else {
-      setGameState({
-        ...gameState,
-        currentStage: (gameState.currentStage || 0) + 1,
-      })
-    }
-  }
 
   //Updates gameState without
   async function handleSubmit(
@@ -122,7 +88,11 @@ function LiveRound(props: models.GameStateProps) {
     const currentPrompt: string = prompt && event ? prompt : pickPrompt()
     setGameState({
       ...gameState,
-      currentPrompt,
+      currentPrompt: {
+        name: currentPrompt,
+        id: 0,
+        category: '',
+      },
       currentStage: 0,
       currentRound: 0,
       guessInfo: [],

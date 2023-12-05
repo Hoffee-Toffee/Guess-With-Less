@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import * as models from '../../models/prompts'
 
 export function StageImage(props: models.StageImageProps) {
-  useEffect(() => logic(props))
+  useEffect(() => logic(props), [props.stage])
 
   return <canvas id="canvas" width="500" height="500" />
   function logic(props: models.StageImageProps) {
@@ -18,9 +18,9 @@ export function StageImage(props: models.StageImageProps) {
     // wait until image is actually available
     img.onload = jigBlurFn
     img.src = image
-    let pieceIndices = [] //contains locations of all the pieces
+    let pieceIndices: number[] = [] //contains locations of all the pieces
     //If element === 1 add its index into pieceINdices array
-    if(jigsaw){
+    if (jigsaw) {
       jigsaw.forEach((element, index) => {
         if (element === 1) {
           pieceIndices.push(index)
@@ -34,18 +34,20 @@ export function StageImage(props: models.StageImageProps) {
     }
     function jigBlurFn() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const size = (stage >= 4 || !jigsaw) ? 1 : Math.pow(3, stage * 0.25 + 3.25) / 243
+      const size =
+        stage >= 4 || !jigsaw ? 1 : Math.pow(3, stage * 0.25 + 3.25) / 243
       const w = canvas.width * size
       const h = canvas.height * size
-      
+
       ctx.drawImage(img, 0, 0, w, h)
       ctx.drawImage(canvas, 0, 0, w, h, 0, 0, canvas.width, canvas.height)
-      if(!jigsaw) return 
+      if (!jigsaw) return
       const amountToReveal = Math.floor(jigsaw.length / 6)
       const amountToRevealArray = Array(amountToReveal).fill(amountToReveal)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       amountToRevealArray.forEach((_) => {
-        const piecesToChange1 = getRandomInt(pieceIndices.length)
-        jigsaw[piecesToChange1] = 0
+        const piecesToChange = getRandomInt(pieceIndices.length)
+        jigsaw[piecesToChange] = 0
       })
 
       jigsaw.forEach((element, index) => {

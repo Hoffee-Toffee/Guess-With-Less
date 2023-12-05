@@ -4,7 +4,7 @@ import * as models from '../../models/prompts'
 export default function PixelatedStage(props: models.GameStateProps) {
   const { gameState } = props
   const { currentStage: stage } = gameState
-  const image = `/images/${gameState.currentPrompt.name}.png`
+  const image = `/images/${gameState.currentPrompt?.name}.png`
   console.log(image)
 
   useEffect(() => logic())
@@ -23,7 +23,8 @@ export default function PixelatedStage(props: models.GameStateProps) {
 
     function pixelate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const size = stage == 6 ? 1 : Math.pow(3, stage * 0.75 + 0.25) / 243
+      const size =
+        stage == 6 ? 1 : Math.pow(3, (stage as number) * 0.75 + 0.25) / 243
       const w = canvas.width * size
       const h = canvas.height * size
 
@@ -54,7 +55,7 @@ export default function PixelatedStage(props: models.GameStateProps) {
   }
 
   const stageStyle = {
-    width: 500 - (500 / 5) * (gameState.currentStage - 1) + 'px',
+    width: 500 - (500 / 5) * ((gameState.currentStage as number) - 1) + 'px',
   }
 
   return (

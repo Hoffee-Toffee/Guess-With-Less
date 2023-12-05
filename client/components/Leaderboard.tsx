@@ -18,10 +18,10 @@ export default function Leaderboard(props: Props) {
   }
 
   useEffect(() => {
-    async function fetchStats() {
+    async function fetchshowSummary() {
       await getLeaderboard(gameId)
     }
-    fetchStats()
+    fetchshowSummary()
   }, [gameId, leaderboard])
 
   const gameModeBoard = leaderboard?.filter((game) => game.mode === gameMode)

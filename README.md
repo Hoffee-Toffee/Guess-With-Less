@@ -151,7 +151,7 @@ We will use prompts such as "Panda", and save the body of the response into a lo
 - Actually requesting the API and generating the image as you play the game
 - Choose difficulty (longer prompts)
 - Dark mode
-- Shows game information at the end of a game - stats like you took 3 seconds on average to guess!, or you guessed 6 times on round 3, and only twice on round 5
+- Shows game information at the end of a game - showSummary like you took 3 seconds on average to guess!, or you guessed 6 times on round 3, and only twice on round 5
 
 ### Wireframes
 ![image](https://github.com/roa-2023/guess-with-less/assets/142761066/b42eda7c-b297-46ad-9365-acb3569707ba)

@@ -26,8 +26,12 @@ export default function Round(props: models.GameStateProps) {
     queryFn: api.getData,
   })
 
-  if (isError || isLoading || !data) {
-    return <p>Stuff</p>
+  if (isError || !data) {
+    return <p>Error</p>
+  }
+
+  if (isLoading) {
+    return <img alt="loading spinner" src="https://i.gifer.com/Mr3W.gif" />
   }
 
   let prompts
@@ -55,8 +59,8 @@ export default function Round(props: models.GameStateProps) {
       case 0:
         setGameState((prev) => ({
           ...prev,
-          currentPrompt: prev.prompts.at(-1),
-          prompts: prev.prompts.slice(0, -1),
+          currentPrompt: prev.prompts?.at(-1),
+          prompts: prev.prompts?.slice(0, -1),
           currentRound: prev.currentRound + 1,
           jigsaw: Array(16).fill(1),
         }))
@@ -83,14 +87,14 @@ export default function Round(props: models.GameStateProps) {
   }
 
   function guessHandler() {
-    if (gameState.currentStage >= 5) {
+    if ((gameState.currentStage || 0) >= 5) {
       setGameState((prev) => ({
         ...prev,
         currentPrompt: prev.prompts.at(-1),
         prompts: prev.prompts.slice(0, -1),
         currentRound: prev.currentRound + 1,
         jigsaw: Array(16).fill(1),
-        stats: true,
+        showSummary: true,
         currentStage: 0,
         newGuess: false,
       }))
@@ -103,7 +107,7 @@ export default function Round(props: models.GameStateProps) {
             prompts: prev.prompts.slice(0, -1),
             currentRound: prev.currentRound + 1,
             jigsaw: Array(16).fill(1),
-            stats: true,
+            showSummary: true,
             currentStage: 0,
             newGuess: false,
           }))
@@ -112,7 +116,7 @@ export default function Round(props: models.GameStateProps) {
           setGameState((prev) => ({
             ...prev,
             newGuess: false,
-            currentStage: prev.currentStage + 1,
+            currentStage: (prev.currentStage || 0) + 1,
           }))
 
           break
@@ -138,7 +142,7 @@ export default function Round(props: models.GameStateProps) {
     guessHandler()
   }
 
-  if (gameState.gameIsOver) {
+  if (gameState.gameIsOver && !gameState.showSummary) {
     return (
       <GameEnding
         gameState={gameState}
@@ -148,11 +152,11 @@ export default function Round(props: models.GameStateProps) {
     )
   }
 
-  if (gameState.stats) {
+  if (gameState.showSummary) {
     setTimeout(() => {
       setGameState((prev) => ({
         ...prev,
-        stats: false,
+        showSummary: false,
       }))
     }, 2000)
     return <StageResult gameState={gameState} setGameState={setGameState} />
@@ -160,7 +164,8 @@ export default function Round(props: models.GameStateProps) {
 
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault()
-    const promptsByMode: models.Prompt[] = categories[e.target.id]
+    const target = e.target as HTMLElement
+    const promptsByMode: models.Prompt[] = categories[target.id]
     // shuffling prompts
     promptsByMode?.sort(() => Math.random() - 0.5)
     //
@@ -211,6 +216,11 @@ export default function Round(props: models.GameStateProps) {
           )}
           <GuessForm gameState={gameState} setGameState={setGameState} />
         </>
+      ) : gameState.mode == 'Join Multiplayer' ? (
+        <form className="categoryForm" onSubmit={handleJoin}>
+          <h2>Enter Lobby Code</h2>
+          <input type="text" />
+        </form>
       ) : (
         <form className="categoryForm">
           <h2>Choose a Category!</h2>

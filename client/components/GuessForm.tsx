@@ -35,7 +35,6 @@ export function GuessForm(props: models.GameStateProps) {
           wasCorrect: isCorrect,
           round: prevGameState.currentRound as number,
           prompt: currentPrompt as models.Prompt,
-          prompt: currentPrompt?.name as string,
         },
       ],
       newGuess: true,
@@ -49,10 +48,6 @@ export function GuessForm(props: models.GameStateProps) {
       <form onSubmit={handleSubmit}>
         <label htmlFor="guess">Enter a guess: </label>
         <input
-          autoFocus
-
-          // autoFocus
-          // onFocus='this.select()'
           autoComplete="off"
           id="guess"
           type="text"

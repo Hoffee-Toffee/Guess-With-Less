@@ -28,13 +28,12 @@ export interface GuessInfo {
 export interface GameState {
   currentPrompt: Prompt | undefined
   prompts: Prompt[]
-  currentStage: number | undefined
+  currentStage: number
   guessInfo: GuessInfo[]
   currentRound: number
   currentEndpoint: Endpoint | undefined
-  stageStart: Date | undefined
   jigsaw: number[]
-  stats: boolean
+  showSummary: boolean
   mode: string
   gameHasStarted: boolean
   newGuess: boolean
@@ -60,7 +59,7 @@ export interface GameStateProps {
 export interface StageImageProps {
   image: string
   stage: number
-  jigsaw: number[]
+  jigsaw?: number[]
 }
 
 export interface GameData {
