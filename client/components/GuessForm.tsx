@@ -47,10 +47,10 @@ export function GuessForm(props: models.GameStateProps) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="guess">Enter a guess: </label>
+        <label className="enterGuess" htmlFor="guess">Enter a guess: </label>
         <input
+          className="guessInput"
           autoFocus
-
           // autoFocus
           // onFocus='this.select()'
           autoComplete="off"

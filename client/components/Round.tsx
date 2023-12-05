@@ -114,15 +114,7 @@ export default function Round(props: models.GameStateProps) {
             newGuess: false,
             currentStage: prev.currentStage + 1,
           }))
-
           break
-        // roundHandler()
-
-        // guess was incorrect
-        // last available guess
-        // return StageResult
-
-        // first guess?
         default:
           console.log('guess', gameState.guessInfo.at(-1))
       }
