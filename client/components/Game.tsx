@@ -58,7 +58,7 @@ export default function Game() {
   }
 
   return (
-    <>
+    <main>
       {showLeaderboard && <Leaderboard gameMode={mode} />}
 
       {!gameState.mode ? (
@@ -103,6 +103,6 @@ export default function Game() {
           initialGameState={initialGameState}
         />
       )}
-    </>
+    </main>
   )
 }
