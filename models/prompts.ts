@@ -26,17 +26,19 @@ export interface GuessInfo {
 }
 
 export interface GameState {
-  lastPrompt: Prompt | undefined
   currentPrompt: Prompt | undefined
   prompts: Prompt[]
   currentStage: number | undefined
   guessInfo: GuessInfo[]
-  currentRound: number | undefined
+  currentRound: number
   currentEndpoint: Endpoint | undefined
   stageStart: Date | undefined
   jigsaw: number[]
   stats: boolean
   mode: string
+  gameHasStarted: boolean
+  newGuess: boolean
+  gameIsOver: boolean
   multiplayerData: []
   gameId?: number
   updated: boolean
