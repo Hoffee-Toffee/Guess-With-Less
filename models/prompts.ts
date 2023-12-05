@@ -4,6 +4,7 @@ export interface Prompt {
   id: number
   name: string
   category: string
+  images?: string[]
 }
 
 export interface PromptData {
@@ -11,18 +12,23 @@ export interface PromptData {
   category: string
 }
 
+export interface APIData {
+  Default: Prompt[]
+  Classic: Prompt[]
+}
+
 export interface GuessInfo {
   stage: number
   guess: string
   wasCorrect: boolean
   round: number
-  prompt: Prompt['name']
+  prompt: Prompt
 }
 
 export interface GameState {
-  lastPrompt: string | undefined
-  currentPrompt: string | undefined
-  prompts: string[]
+  lastPrompt: Prompt | undefined
+  currentPrompt: Prompt | undefined
+  prompts: Prompt[]
   currentStage: number | undefined
   guessInfo: GuessInfo[]
   currentRound: number | undefined
@@ -32,7 +38,8 @@ export interface GameState {
   stats: boolean
   mode: string
   multiplayerData: []
-  gameId: number | undefined
+  gameId?: number
+  updated: boolean
 }
 
 export interface Endpoint {
@@ -59,8 +66,9 @@ export interface GameData {
   correct: number
   totalGuesses: number
   mode: string
+  gameId?: number
 }
 
 export interface Categories {
-  [category: string]: string[]
+  [category: string]: Prompt[]
 }

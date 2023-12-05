@@ -1,4 +1,3 @@
-import { FormEvent, useState } from 'react'
 import * as models from '../../models/prompts.js'
 import { GuessForm } from './GuessForm.js'
 import { GameEnding } from './GameEnding.js'
@@ -9,18 +8,17 @@ import { StageResult } from './StageResult.js'
 import JigsawStage from './JigsawStage.js'
 import ClassicStage from './ClassicStage.js'
 import PixelatedStage from './PixelatedStage.js'
+import { FormEvent, MouseEventHandler, SetStateAction } from 'react'
 
 function Round(props: models.GameStateProps) {
   const { gameState, setGameState, initialGameState } = props
-
-  const [category, setCategory] = useState<string>('All')
 
   const {
     data,
     isError,
     isLoading,
   }: {
-    data: models.Prompt[][] | undefined
+    data: models.APIData | undefined
     isError: boolean
     isLoading: boolean
   } = useQuery({
@@ -107,7 +105,7 @@ function Round(props: models.GameStateProps) {
         currentPrompt,
         prompts,
         currentStage: 1,
-        currentRound: gameState.currentRound + 1,
+        currentRound: (gameState.currentRound || 0) + 1,
         jigsaw: Array(16).fill(1),
         stats: true,
       })
@@ -129,11 +127,11 @@ function Round(props: models.GameStateProps) {
         stats: false,
       })
     }, 2000)
-    return <StageResult gameState={gameState} />
+    return <StageResult gameState={gameState} setGameState={setGameState} />
   }
   //If there aren't any stages left go to next Prompt
   function nextStage() {
-    const stages = gameState.currentPrompt.images
+    const stages = gameState.currentPrompt?.images
       ? gameState.currentPrompt.images.length
       : 6
     if (stages === gameState.currentStage) {
@@ -160,12 +158,13 @@ function Round(props: models.GameStateProps) {
   }
 
   //Updates gameState without
-  async function handleSubmit(e: React.DOMAttributes<HTMLButtonElement>) {
+  async function handleSubmit(e: MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault()
-    const categoryPrompts = categories[e.target.id] //issue here
+    const categoryPrompts = categories[e.target.id]
     let shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
     shufflePrompts = shufflePrompts.filter((_, index) => index <= 8)
-    if (gameState.mode !== 'Classic') shufflePrompts.splice(-1, 0, undefined)
+    if (gameState.mode !== 'Classic')
+      shufflePrompts.splice(-1, 0, undefined as unknown as models.Prompt)
     setGameState({
       ...gameState,
       prompts: shufflePrompts,
@@ -178,9 +177,11 @@ function Round(props: models.GameStateProps) {
     })
   }
 
-  async function handleJoin(e: any) {
+  async function handleJoin(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const gameId = e.target.children[1].value
+    const target = e.target as HTMLFormElement
+    const input = target.children[1] as HTMLInputElement
+    const gameId = Number(input.value)
     api
       .getMultiplayer(gameId)
       .then((res) => {

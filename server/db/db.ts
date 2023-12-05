@@ -19,19 +19,21 @@ export async function getLeaderboard(): Promise<Models.GameData[]> {
 
 export async function addToLeaderboard(
   gameData: Models.GameData,
-): Promise<Models.GameData> {
+): Promise<Models.GameData[]> {
   return connection('leaderboard').insert(gameData).returning('*')
 }
 
-export async function getMultiplayer(gameId): Promise<Models.GameData[]> {
+export async function getMultiplayer(
+  gameId: number,
+): Promise<Models.GameData[]> {
   return connection('multiplayer').where('id', gameId).select().first()
 }
 
-export async function addMultiplayerScore(data) {
+export async function addMultiplayerScore(data: Models.GameData) {
   const ID = await connection('multiplayer').insert(data)
   return ID[0]
 }
 
-export async function getMultiplayerScore(gameId) {
+export async function getMultiplayerScore(gameId: number) {
   return connection('leaderboard').where('gameId', gameId).select()
 }
