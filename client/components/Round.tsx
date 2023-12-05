@@ -16,28 +16,33 @@ function Round(props: models.GameStateProps) {
   const [category, setCategory] = useState<string>('All')
 
   const {
-    data: prompts,
+    data,
     isError,
     isLoading,
   }: {
-    data: models.Prompt[] | undefined
+    data: models.Prompt[][] | undefined
     isError: boolean
     isLoading: boolean
   } = useQuery({
     queryKey: ['prompts'],
-    queryFn: () => {
-      switch (gameState.mode) {
-        case 'Classic':
-          return api.getAllPrompts()
-
-        default:
-          return api.getAllSdPrompts()
-      }
-    },
+    queryFn: api.getData,
   })
-  if (isError || isLoading || !prompts) {
+  if (isError || isLoading || !data) {
     return <p>Stuff</p>
   }
+
+  let prompts
+  switch (gameState.mode) {
+    case 'Classic':
+      prompts = data['Classic']
+      break
+
+    default:
+      prompts = data['Default']
+  }
+
+  console.log(prompts)
+
   const categories: models.Categories = { All: [] }
   prompts.forEach((prompt) => {
     if (categories[prompt.category]) {
@@ -49,7 +54,11 @@ function Round(props: models.GameStateProps) {
   })
 
   //Triggers the first prompt to be created and checks for game over
-  if (gameState.prompts?.length || gameState.currentPrompt || gameState.stats) {
+  console.log(JSON.stringify(gameState, null, 2))
+  if (
+    (gameState.prompts?.length || gameState.currentPrompt) &&
+    gameState.stats
+  ) {
     checkGuessInfo()
   } else if (gameState.guessInfo?.length && !gameState.currentPrompt) {
     return (
@@ -66,7 +75,6 @@ function Round(props: models.GameStateProps) {
     //creates initial first prompt
     if (!gameState.guessInfo?.length && !gameState.currentPrompt) {
       nextPrompt()
-      return
     } else if (gameState.currentPrompt && gameState.guessInfo?.length) {
       const latestGuessIndex = gameState.guessInfo.length - 1
       const latestGuess = gameState.guessInfo[latestGuessIndex]
@@ -95,7 +103,7 @@ function Round(props: models.GameStateProps) {
         currentPrompt,
         prompts,
         currentStage: 1,
-        currentRound: (gameState.currentRound || 0) + 1,
+        currentRound: gameState.currentRound + 1,
         jigsaw: Array(16).fill(1),
         stats: true,
       })
@@ -151,10 +159,9 @@ function Round(props: models.GameStateProps) {
   async function handleSubmit(e: React.DOMAttributes<HTMLButtonElement>) {
     e.preventDefault()
     const categoryPrompts = categories[e.target.id] //issue here
-    console.log('I am category prompts log', categoryPrompts)
     let shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
     shufflePrompts = shufflePrompts.filter((_, index) => index <= 8)
-    console.log('I am shuffle prompts log', shufflePrompts)
+    if (gameState.mode !== 'Classic') shufflePrompts.splice(2, 0, undefined)
     setGameState({
       ...gameState,
       prompts: shufflePrompts,
