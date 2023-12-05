@@ -50,8 +50,6 @@ export function GuessForm(props: models.GameStateProps) {
         <input
           className="guessInput"
           autoFocus
-          // autoFocus
-          // onFocus='this.select()'
           autoComplete="off"
           id="guess"
           type="text"

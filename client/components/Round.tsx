@@ -108,7 +108,7 @@ export default function Round(props: models.GameStateProps) {
             currentRound: prev.currentRound + 1,
             jigsaw: Array(16).fill(1),
             showSummary: true,
-            currentStage: 0,
+            currentStage: 1,
             newGuess: false,
           }))
           break

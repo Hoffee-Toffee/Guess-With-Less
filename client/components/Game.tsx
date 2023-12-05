@@ -75,7 +75,7 @@ export default function Game() {
                 key={index}
                 id={mode}
                 onClick={handleSubmit}
-                className="cybr-btn"
+                className={mode.endsWith('Leaderboard') ?"neon" : "cybr-btn"}
               >
                 {mode}
                 <span aria-hidden>_</span>
