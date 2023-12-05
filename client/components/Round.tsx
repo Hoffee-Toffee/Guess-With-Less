@@ -121,9 +121,10 @@ function Round(props: models.GameStateProps) {
   }
   //If there aren't any stages left go to next Prompt
   function nextStage() {
-    if (
-      (gameState.currentPrompt.images?.length || 6) === gameState.currentStage
-    ) {
+    const stages = gameState.currentPrompt.images
+      ? gameState.currentPrompt.images.length
+      : 6
+    if (stages === gameState.currentStage) {
       nextPrompt()
     } else {
       setGameState({
@@ -159,7 +160,7 @@ function Round(props: models.GameStateProps) {
       prompts: shufflePrompts,
       currentStage: 1,
       currentRound: 0,
-      gameId: await api.addMultiplayerGame(shufflePrompts),
+      // gameId: await api.addMultiplayerGame(shufflePrompts),
     })
   }
 
