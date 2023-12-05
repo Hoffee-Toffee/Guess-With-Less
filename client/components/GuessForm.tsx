@@ -45,7 +45,7 @@ export function GuessForm(props: models.GameStateProps) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='guessForm'>
         <label className="enterGuess" htmlFor="guess">Enter a guess: </label>
         <input
           className="guessInput"

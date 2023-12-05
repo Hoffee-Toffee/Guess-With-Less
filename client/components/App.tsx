@@ -39,7 +39,7 @@ function App() {
               }
         }
       >
-        <button
+        <button 
           onClick={(e) => {
             e.preventDefault
             theme === 'light' ? setTheme('dark') : setTheme('light')
