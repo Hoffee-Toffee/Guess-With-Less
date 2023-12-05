@@ -30,7 +30,9 @@ canvas {
 }
 
 #app {
-  max-width: 600px;
+  position: absolute;
+  top: 20px;
+  max-width: 900px;
   min-height: 50em;
   height: 100%;
   align-items: center;
@@ -42,9 +44,14 @@ canvas {
   transform: translateX(calc(50vw - 50%)) translateY(calc(50vh - 50%));
 }
 
+input[type="text"] {
+  font-size:28px;
+  font-family: 'Cyber' sans-serif;
+}
+
 #bar {
   width: 500px;
-  height: 1em;
+  height: 17px;
   background-color: lightgrey;
   border: white solid 5px;
   border-radius: 1em;
@@ -88,11 +95,11 @@ h1 {
 }
 
 footer {
+  position: sticky;
   border-bottom-left-radius:1em;
   border-bottom-right-radius: 1em;
-  margin-top: 1em;
+  margin-top: 5em;
   border-top: solid grey;
-  position: absolute;
   bottom: 0;
 }
 
@@ -101,8 +108,36 @@ footer {
   height: 32em;
 }
 
+#stageBlock{
+  display: flexbox;
+  direction: vertical;
+  justify-content: center;
+  align-items: center;
+}
+
 #stageBlock p {
-  margin: 0.5em;
+  background-color: #746cbec9;
+  outline: 2px solid rgb(89, 0, 92);
+  margin: .8em;
+  font-size: 20px;
+  font-family: 'Cyber', sans-serif;
+  src: url("https://assets.codepen.io/605876/Blender-Pro-Bold.otf");
+  font-display: swap;
+}
+
+#stageBlock p {
+  background-color: #746cbec9;
+  outline: 2px solid rgb(89, 0, 92);
+  margin: .8em;
+  src: url("https://assets.codepen.io/605876/Blender-Pro-Bold.otf");
+  font-display: swap;
+}
+
+.enterGuess{
+  position: relative;
+  top: 15px;
+  font-size: 30px;
+  font-family: 'Cyber', sans-serif;
 }
 
 form {

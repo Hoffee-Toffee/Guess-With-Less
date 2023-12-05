@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import * as models from '../../models/prompts'
 
 export function StageImage(props: models.StageImageProps) {
-  useEffect(() => logic(props))
+  useEffect(() => logic(props),[props.stage,props.image])
 
   return <canvas id="canvas" width="500" height="500" />
   function logic(props: models.StageImageProps) {
