@@ -9,15 +9,17 @@ export default function Game() {
     lastPrompt: undefined,
     currentPrompt: undefined,
     prompts: [],
-    currentStage: undefined,
+    currentStage: 0,
     guessInfo: [],
-    currentRound: undefined,
+    currentRound: 0,
     currentEndpoint: undefined,
     stageStart: undefined,
     updated: false,
     jigsaw: [],
     stats: false,
     mode: '',
+    gameHasStarted: false,
+    newGuess: false,
   } as models.GameState
 
   const [gameState, setGameState] = useState(initialGameState)

@@ -23,14 +23,16 @@ export interface GameState {
   lastPrompt: string | undefined
   currentPrompt: string | undefined
   prompts: string[]
-  currentStage: number | undefined
+  currentStage: number
   guessInfo: GuessInfo[]
-  currentRound: number | undefined
+  currentRound: number
   currentEndpoint: Endpoint | undefined
   stageStart: Date | undefined
   jigsaw: number[]
   stats: boolean
   mode: string
+  gameHasStarted: boolean
+  newGuess: boolean
 }
 
 export interface Endpoint {
