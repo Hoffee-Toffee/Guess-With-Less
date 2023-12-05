@@ -22,7 +22,7 @@ function App() {
               }
         }
       >
-        Guess with Less!
+        GUESS WITH LESS!
       </h1>
       <Game />
       <footer
