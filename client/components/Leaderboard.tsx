@@ -30,9 +30,9 @@ export default function Leaderboard(props: Props) {
 
   function compare(a: { correct: number }, b: { correct: number }) {
     if (a.correct < b.correct) {
-      return -1
-    } else if (a.correct > b.correct) {
       return 1
+    } else if (a.correct > b.correct) {
+      return -1
     }
     return 0
   }
@@ -53,8 +53,8 @@ export default function Leaderboard(props: Props) {
       <h2>Leaderboard for {gameMode}</h2>
       <p
         style={{
-          backgroundColor: 'rgb(87 184 123)',
-          color: 'rgb(116 108 190 / 41%)',
+          backgroundColor: 'rgb(116 108 190 / 96%)',
+          color: 'rgb(87 184 123)',
           outline: '1px solid #746cbe',
           padding: '2px',
         }}
@@ -65,8 +65,8 @@ export default function Leaderboard(props: Props) {
         <p
           key={i}
           style={{
-            color: 'rgb(87 184 123)',
-            backgroundColor: 'rgb(116 108 190 / 41%)',
+            backgroundColor: 'rgb(116 108 190 / 96%)',
+            color: '#ffffff',
             outline: '1px solid #746cbe',
             padding: '2px',
           }}

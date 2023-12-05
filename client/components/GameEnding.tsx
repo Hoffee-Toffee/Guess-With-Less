@@ -21,7 +21,7 @@ export function GameEnding({
   }
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
+    // e.preventDefault()
     api.addToLeaderboard({
       username,
       correct: correctLength,
@@ -49,18 +49,38 @@ export function GameEnding({
         {(gameState.guessInfo.length / correct.length).toLocaleString()}{' '}
         guesses.
       </p>
-      <button onClick={handleReset}>Reset</button>
+      <button onClick={handleReset} className="cybr-btn">
+        Reset
+        <span aria-hidden>_</span>
+        <span aria-hidden className="cybr-btn__glitch">
+          _\-?-_*
+        </span>
+        <span aria-hidden className="cybr-btn__tag">
+          #{+1}
+          {+4}
+        </span>
+      </button>
 
-      <form onSubmit={handleSubmit}>
-        <p>Save this game to the leaderboard!</p>
-        <label htmlFor="username">Username</label>
+      <form onSubmit={handleSubmit} id="gameEnding">
+        <p style={{ maxWidth: '300px' }}>Save this game to the leaderboard!</p>
         <input
+          className="textInput"
           type="text"
           maxLength={4}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <button>Save</button>
+        <button className="cybr-btn">
+          Save
+          <span aria-hidden>_</span>
+          <span aria-hidden className="cybr-btn__glitch">
+            _\-?-_*
+          </span>
+          <span aria-hidden className="cybr-btn__tag">
+            #{+1}
+            {+4}
+          </span>
+        </button>
       </form>
       <Leaderboard gameMode={gameState.mode} gameId={gameState?.gameId} />
     </>

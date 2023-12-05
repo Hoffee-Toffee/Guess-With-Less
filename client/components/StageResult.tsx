@@ -6,6 +6,7 @@ export function StageResult(props: models.GameStateProps) {
   const latestGuess = gameState.guessInfo.at(-1) as models.GuessInfo
   const vowels = ['A', 'E', 'I', 'O', 'U']
   const useAn = vowels.includes(latestGuess.prompt.name.charAt(0))
+  const prompt = gameState.guessInfo.at(-1).prompt
   return (
     <div id="stageBlock">
       <p>
@@ -18,7 +19,9 @@ export function StageResult(props: models.GameStateProps) {
         {gameState.guessInfo.at(-1).wasCorrect ? `Correct!` : 'Incorrect :('}
       </p>
       <StageImage
-        image={`/images/${gameState.guessInfo.at(-1).prompt.name}.png`}
+        image={
+          prompt.images ? prompt.images.at(-1) : `/images/${prompt.name}.png`
+        }
         stage={gameState.currentStage as number}
       />
     </div>

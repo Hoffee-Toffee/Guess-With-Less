@@ -7,7 +7,7 @@ export default function ClassicStage(props: models.GameStateProps) {
       <p>Current Stage: {`${gameState.currentStage}`}</p>
       <p>Current Round: {`${gameState.currentRound}`}</p>
       <img
-        src={gameState.currentPrompt?.images?.at(-1)}
+        src={gameState.currentPrompt?.images[gameState.currentStage]}
         alt="mystery to guess"
       ></img>
     </div>
