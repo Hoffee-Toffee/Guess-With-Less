@@ -60,7 +60,11 @@ function Round(props: models.GameStateProps) {
     gameState.stats
   ) {
     checkGuessInfo()
-  } else if (gameState.guessInfo?.length && !gameState.currentPrompt) {
+  } else if (
+    gameState.guessInfo?.length &&
+    !gameState.currentPrompt &&
+    !gameState.stats
+  ) {
     return (
       <GameEnding
         gameState={gameState}
@@ -161,13 +165,16 @@ function Round(props: models.GameStateProps) {
     const categoryPrompts = categories[e.target.id] //issue here
     let shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
     shufflePrompts = shufflePrompts.filter((_, index) => index <= 8)
-    if (gameState.mode !== 'Classic') shufflePrompts.splice(2, 0, undefined)
+    if (gameState.mode !== 'Classic') shufflePrompts.splice(-1, 0, undefined)
     setGameState({
       ...gameState,
       prompts: shufflePrompts,
       currentStage: 1,
       currentRound: 0,
-      // gameId: await api.addMultiplayerGame(shufflePrompts),
+      gameId:
+        gameState.mode == 'Multiplayer'
+          ? await api.addMultiplayerGame(shufflePrompts)
+          : undefined,
     })
   }
 

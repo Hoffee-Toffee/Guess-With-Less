@@ -87,9 +87,9 @@ export async function addToLeaderboard(gameData: models.GameData) {
   return response.body
 }
 
-export async function getLeaderboard(gameId) {
+export async function getLeaderboard(gameId: string | undefined) {
   const response = await request(
-    rootUrl + '/leaderboard' + (gameId && `/${gameId}`),
+    rootUrl + (gameId ? `/leaderboard/${gameId}` : '/leaderboard'),
   )
   return response.body
 }
