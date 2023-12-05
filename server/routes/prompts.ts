@@ -3,7 +3,11 @@ import * as models from '../../models/prompts.ts'
 import * as db from '../db/db.ts'
 import request from 'superagent'
 import dotenv from 'dotenv'
-dotenv.config()
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  const envConfig = dotenv.config()
+  if (envConfig.error) throw envConfig.error
+}
 
 const router = Router()
 const endpoint = 'https://api.replicate.com/v1/predictions'
