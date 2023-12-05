@@ -21,8 +21,8 @@ export interface GuessInfo {
 
 export interface GameState {
   lastPrompt: string | undefined
-  currentPrompt: string | undefined
-  prompts: string[]
+  currentPrompt: Prompt | undefined
+  prompts: Prompt[]
   currentStage: number
   guessInfo: GuessInfo[]
   currentRound: number
@@ -33,6 +33,7 @@ export interface GameState {
   mode: string
   gameHasStarted: boolean
   newGuess: boolean
+  gameIsOver: boolean
 }
 
 export interface Endpoint {
@@ -62,5 +63,5 @@ export interface GameData {
 }
 
 export interface Categories {
-  [category: string]: string[]
+  [category: string]: Prompt[]
 }

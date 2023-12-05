@@ -20,6 +20,7 @@ export default function Game() {
     mode: '',
     gameHasStarted: false,
     newGuess: false,
+    gameIsOver: false,
   } as models.GameState
 
   const [gameState, setGameState] = useState(initialGameState)

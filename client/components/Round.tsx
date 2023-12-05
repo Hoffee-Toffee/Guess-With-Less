@@ -9,6 +9,7 @@ import { StageResult } from './StageResult.js'
 import JigsawStage from './JigsawStage.js'
 import ClassicStage from './ClassicStage.js'
 import PixelatedStage from './PixelatedStage.js'
+import Leaderboard from './Leaderboard.js'
 
 export default function Round(props: models.GameStateProps) {
   const { gameState, initialGameState, setGameState } = props
@@ -61,13 +62,13 @@ export default function Round(props: models.GameStateProps) {
         break
       case 4:
         // ^ this is how many rounds there are per playthrough
-        return (
-          <GameEnding
-            gameState={gameState}
-            setGameState={setGameState}
-            initialGameState={initialGameState}
-          />
-        )
+        setGameState((prev) => ({
+          ...prev,
+          currentRound: 0,
+          currentStage: 0,
+          gameIsOver: true,
+        }))
+        break
       default:
         console.log('i have been called, I am default case in roundhandler')
       // setGameState((prev) => ({
@@ -81,51 +82,84 @@ export default function Round(props: models.GameStateProps) {
   }
 
   function guessHandler() {
-    switch (gameState.guessInfo.at(-1)?.wasCorrect) {
-      // guess was correct
-      // return StageResult
-      case true:
-        setGameState((prev) => ({
-          ...prev,
-          currentPrompt: prev.prompts.at(-1),
-          prompts: prev.prompts.slice(0, -1),
-          currentRound: prev.currentRound + 1,
-          jigsaw: Array(16).fill(1),
-          stats: true,
-          currentStage: 0,
-          newGuess: false,
-        }))
-        break
-      case false: 
-        setGameState((prev) => ({
-          ...prev,
-          currentStage: prev.currentStage,
-        }))
-        break
-      // roundHandler()
+    if (gameState.currentStage >= 5) {
+      setGameState((prev) => ({
+        ...prev,
+        currentPrompt: prev.prompts.at(-1),
+        prompts: prev.prompts.slice(0, -1),
+        currentRound: prev.currentRound + 1,
+        jigsaw: Array(16).fill(1),
+        stats: true,
+        currentStage: 0,
+        newGuess: false,
+      }))
+    } else {
+      switch (gameState.guessInfo.at(-1)?.wasCorrect) {
+        case true:
+          setGameState((prev) => ({
+            ...prev,
+            currentPrompt: prev.prompts.at(-1),
+            prompts: prev.prompts.slice(0, -1),
+            currentRound: prev.currentRound + 1,
+            jigsaw: Array(16).fill(1),
+            stats: true,
+            currentStage: 0,
+            newGuess: false,
+          }))
+          break
+        case false:
+          setGameState((prev) => ({
+            ...prev,
+            newGuess: false,
+            currentStage: prev.currentStage + 1,
+          }))
 
-      // guess was incorrect
-      // last available guess
-      // return StageResult
+          break
+        // roundHandler()
 
-      // first guess?
-      default:
-        console.log('guess', gameState.guessInfo.at(-1))
+        // guess was incorrect
+        // last available guess
+        // return StageResult
+
+        // first guess?
+        default:
+          console.log('guess', gameState.guessInfo.at(-1))
+      }
     }
   }
 
   if (gameState.gameHasStarted) {
     roundHandler()
-    console.log('round', gameState.currentRound)
+    console.log('round', gameState.currentPrompt)
   }
 
   if (gameState.newGuess) {
     guessHandler()
   }
 
+  if (gameState.gameIsOver) {
+    return (
+      <GameEnding
+        gameState={gameState}
+        setGameState={setGameState}
+        initialGameState={initialGameState}
+      />
+    )
+  }
+
+  if (gameState.stats) {
+    setTimeout(() => {
+      setGameState(prev => ({
+        ...prev,
+        stats: false,
+      }))
+    }, 2000)
+    return <StageResult gameState={gameState} setGameState={setGameState} />
+  }
+
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault()
-    const promptsByMode = categories[e.target.id]
+    const promptsByMode: models.Prompt[] = categories[e.target.id]
     // shuffling prompts
     promptsByMode?.sort(() => Math.random() - 0.5)
     //

@@ -34,7 +34,7 @@ export function GuessForm(props: models.GameStateProps) {
           guess: guess,
           wasCorrect: isCorrect,
           round: prevGameState.currentRound as number,
-          prompt: currentPrompt as string,
+          prompt: currentPrompt?.name as string,
         },
       ],
       newGuess: true,
