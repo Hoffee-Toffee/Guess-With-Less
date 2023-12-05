@@ -27,7 +27,7 @@ export function GameEnding({
       correct: correctLength,
       totalGuesses,
       mode: gameState.mode,
-      gameId: gameState.gameId,
+      // gameId: gameState.gameId,
     })
   }
 

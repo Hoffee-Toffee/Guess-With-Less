@@ -28,6 +28,13 @@ export function getAllPrompts(): Promise<models.Prompt[] | Error> {
     })
 }
 
+export async function getData() {
+  return {
+    Classic: await getAllPrompts(),
+    Default: await getAllSdPrompts(),
+  }
+}
+
 export function makeImageRequest(prompt: string) {
   return request
     .post(rootUrl + '/make')

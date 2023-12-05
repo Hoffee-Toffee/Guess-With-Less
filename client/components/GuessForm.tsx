@@ -47,8 +47,8 @@ export function GuessForm(props: models.GameStateProps) {
       <form onSubmit={handleSubmit}>
         <label htmlFor="guess">Enter a guess: </label>
         <input
-          autoFocus
-          onFocus='this.select()'
+          // autoFocus
+          // onFocus='this.select()'
           autoComplete="off"
           id="guess"
           type="text"
@@ -57,10 +57,16 @@ export function GuessForm(props: models.GameStateProps) {
             setGuess(e.target.value)
           }
         />
-        <button className="cybr-btn" type="submit">Submit
-        <span aria-hidden>_</span>
-        <span aria-hidden className="cybr-btn__glitch">_\-?-_*</span>
-        <span aria-hidden className="cybr-btn__tag">#6U3S</span></button>
+        <button className="cybr-btn" type="submit">
+          Submit
+          <span aria-hidden>_</span>
+          <span aria-hidden className="cybr-btn__glitch">
+            _\-?-_*
+          </span>
+          <span aria-hidden className="cybr-btn__tag">
+            #6U3S
+          </span>
+        </button>
       </form>
     </>
   )
