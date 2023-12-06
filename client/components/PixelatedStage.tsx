@@ -60,8 +60,10 @@ export default function PixelatedStage(props: models.GameStateProps) {
 
   return (
     <div id="stageBlock">
-      <p>Stage: {`${gameState.currentStage}`}</p>
-      <p>Round: {`${gameState.currentRound}`}</p>
+      <p>
+        ROUND_{gameState.currentRound}
+        {' : '} STAGE_{gameState.currentStage + 1}
+      </p>
       <canvas id="canvas" width="500" height="500" />{' '}
       <div id="bar">
         <span id="round" style={roundStyle} />
