@@ -161,11 +161,31 @@ export default function Round(props: models.GameStateProps) {
     // shuffling prompts
     promptsByMode?.sort(() => Math.random() - 0.5)
     //
-    setGameState((prev) => ({
-      ...prev,
-      prompts: promptsByMode,
-      gameHasStarted: true,
-    }))
+    if (gameState.mode == 'Multiplayer') {
+      api
+        .addMultiplayerGame(promptsByMode)
+        .then((res) => {
+          if (res) {
+            setGameState({
+              ...gameState,
+              prompts: promptsByMode,
+              currentStage: 1,
+              currentRound: 0,
+              gameId: res,
+              gameHasStarted: true,
+            })
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    } else {
+      setGameState((prev) => ({
+        ...prev,
+        prompts: promptsByMode,
+        gameHasStarted: true,
+      }))
+    }
   }
 
   async function handleJoin(e: FormEvent<HTMLFormElement>) {
@@ -183,6 +203,7 @@ export default function Round(props: models.GameStateProps) {
             currentStage: 1,
             currentRound: 0,
             gameId,
+            gameHasStarted: true,
           })
         }
       })

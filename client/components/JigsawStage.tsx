@@ -14,15 +14,17 @@ export default function JigsawStage(props: models.GameStateProps) {
   }
 
   const stageStyle = {
-    width: 500 - (500 / 5) * ((gameState.currentStage || 0)) + 'px',
+    width: 500 - (500 / 5) * (gameState.currentStage || 0) + 'px',
   }
 
   return (
     <div id="stageBlock">
       {' '}
       {gameState.gameId && <p>Lobby Code: {gameState.gameId}</p>}
-      <p>STAGE_ {`${gameState.currentStage}`}</p>
-      <p>ROUND_ {`${gameState.currentRound}`}</p>
+      <p>
+        ROUND_{gameState.currentRound}
+        {' : '} STAGE_{gameState.currentStage + 1}
+      </p>
       <StageImage
         image={image}
         stage={gameState.currentStage as number}

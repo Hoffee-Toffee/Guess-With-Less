@@ -60,8 +60,17 @@ main {
 
 }
 input[type='text'] {
-  font-size: 28px;
-  font-family: 'Cyber' sans-serif;
+    font-size: 28px;
+    color: rgb(0, 0, 0);
+    background-color: rgba(116, 108, 190, 0.41);
+    outline: rgba(103, 58, 183, 0.6705882353) solid 1px;
+    padding: 5px;
+    text-transform: uppercase;
+    transition: 0.5s;
+    letter-spacing: 4px;
+    overflow: hidden;
+    font-family: Cyber;
+  
 }
 #bar {
   width: 500px;
@@ -83,7 +92,7 @@ input[type='text'] {
   position: absolute;
   padding-left: 1em;
   margin-left: -0.8em;
-  margin-top: -0.27em;
+  margin-top: -.2799em;
 }
 #stage {
   background-color: rgba(0, 68, 255, 0.5019607843);
@@ -131,17 +140,48 @@ footer {
   src: url('https://assets.codepen.io/605876/Blender-Pro-Bold.otf');
   font-display: swap;
 }
-// #stageBlock p {
-//   background-color: rgba(116, 108, 190, 0.7882352941);
-//   outline: 2px solid rgb(89, 0, 92);
-//   margin: 0.8em;
-//   src: url('https://assets.codepen.io/605876/Blender-Pro-Bold.otf');
-//   font-display: swap;
-// }
+
+h2,
+p,
+.guessForm {
+  color: rgb(0, 0, 0);
+  background-color: rgba(116, 108, 190, 0.41);
+  outline: rgb(116, 108, 190) solid 1px;
+  padding: 5px;
+  text-transform: uppercase;
+  transition: 0.5s;
+  letter-spacing: 4px;
+  overflow: hidden;
+  font-family: Cyber;
+  margin: 10px;
+}
+.guessInput {
+  font-family: Cyber;
+  background-color: rgba(103, 58, 183, 0.6705882353);
+}
+footer button {
+  border-radius: 20px;
+  width: 70px;
+  height: auto;
+  padding: 10px;
+  background-color: rgba(116, 108, 190, 0.76);
+  font-size: 22px;
+}
+
+#gameEnding {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px
+}
+
+
+
 .enterGuess {
   position: relative;
-  top: 15px;
-  font-size: 30px;
+  top: 18px;
+  font-size: 26px;
   font-family: 'Cyber', sans-serif;
 }
 form {
@@ -549,9 +589,11 @@ body .cybr-btn + .cybr-btn {
 }
 .cybr-btn:nth-of-type(2) {
   --primary-hue: 130;
+  --primary: hsl( var(--primary-hue), 65%, calc(var(--primary-lightness, 50) * 1%) );
 }
 .cybr-btn:nth-of-type(4) {
   --primary-hue: 130;
+  --primary: hsl( var(--primary-hue), 65%, calc(var(--primary-lightness, 50) * 1%) );
 }
 .cybr-btn:nth-of-type(6) {
   --primary-hue: 130;
@@ -662,38 +704,4 @@ body .cybr-btn + .cybr-btn {
   100% {
     bottom: 100%;
   }
-}
-
-h2,
-p,
-.guessForm {
-  color: rgb(0, 0, 0);
-  background-color: rgba(116, 108, 190, 0.41);
-  outline: rgb(116, 108, 190) solid 1px;
-  padding: 5px;
-    text-transform: uppercase;
-    transition: 0.5s;
-    letter-spacing: 4px;
-    overflow: hidden;
-    font-family: Cyber;
-}
-.guessInput {
-  font-family: Cyber;
-  background-color: rgba(103, 58, 183, 0.6705882353);
-}
-footer button {
-  border-radius: 20px;
-  width: 70px;
-  height: auto;
-  padding: 10px;
-  background-color: rgba(116, 108, 190, 0.76);
-  font-size: 22px;
-}
-
-#gameEnding {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  flex-direction: column;
-  margin: 10px
 }
