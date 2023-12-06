@@ -1,11 +1,11 @@
 export async function seed(knex) {
   // Deletes ALL existing entries
-  await knex('prompts').del()
+  await knex('pixray-prompts').del()
 
   // Inserts seed entries
-  await knex('prompts').insert([
+  await knex('pixray-prompts').insert([
     {
-      id: 2,
+      id: 1,
       name: 'apple',
       category: 'fruit',
       images: `[
@@ -28,7 +28,7 @@ export async function seed(knex) {
     ]`,
     },
     {
-      id: 3,
+      id: 2,
       name: 'watermelon',
       category: 'fruit',
       images: `[
@@ -51,7 +51,7 @@ export async function seed(knex) {
     ]`,
     },
     {
-      id: 6,
+      id: 3,
       name: 'octopus',
       category: 'animal',
       images: `[

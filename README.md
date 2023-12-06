@@ -151,7 +151,7 @@ We will use prompts such as "Panda", and save the body of the response into a lo
 - Actually requesting the API and generating the image as you play the game
 - Choose difficulty (longer prompts)
 - Dark mode
-- Shows game information at the end of a game - stats like you took 3 seconds on average to guess!, or you guessed 6 times on round 3, and only twice on round 5
+- Shows game information at the end of a game - showSummary like you took 3 seconds on average to guess!, or you guessed 6 times on round 3, and only twice on round 5
 
 ### Wireframes
 ![image](https://github.com/roa-2023/guess-with-less/assets/142761066/b42eda7c-b297-46ad-9365-acb3569707ba)
@@ -163,6 +163,6 @@ We will use prompts such as "Panda", and save the body of the response into a lo
 
 - I want to dunk on my friends and show them how good I am at guessing images when theyre super blurry. I want to be able to choose what category of image I'll have to guess. 
 
-- As a user I want to be able to choose from multiple gamemodes to get a different flavour on the classic Guess With Less experience. 
+- As a user I want to be able to choose from multiple gamemodes to get a different flavour on the Classic Guess With Less experience. 
 
 

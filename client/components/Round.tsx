@@ -1,104 +1,140 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent } from 'react'
 import * as models from '../../models/prompts.js'
+import { GuessForm } from './GuessForm.js'
+import { GameEnding } from './GameEnding.js'
 import * as api from '../apis/prompts.js'
 import { useQuery } from '@tanstack/react-query'
-import { GuessForm } from './GuessForm.js'
-import { Stage } from './Stage.js'
-import { GameEnding } from './GameEnding.js'
-interface Categories {
-  [category: string]: models.Prompt[]
-}
+import { StageResult } from './StageResult.js'
 
-function Round() {
-  const [category, setCategory] = useState<string | null>(null)
+import JigsawStage from './JigsawStage.js'
+import ClassicStage from './ClassicStage.js'
+import PixelatedStage from './PixelatedStage.js'
 
-  const initialGameState = {
-    currentPrompt: undefined,
-    prompts: [],
-    currentStage: undefined,
-    guessInfo: [],
-    currentRound: undefined,
-  } as models.GameState
-
-  const [gameState, setGameState] = useState(initialGameState)
+export default function Round(props: models.GameStateProps) {
+  const { gameState, initialGameState, setGameState } = props
 
   const {
-    data: prompts,
+    data,
     isError,
     isLoading,
   }: {
-    data: models.Prompt[] | undefined
+    data: models.APIData | undefined
     isError: boolean
     isLoading: boolean
   } = useQuery({
     queryKey: ['prompts'],
-    queryFn: api.getAllPrompts,
+    queryFn: api.getData,
   })
 
-  if (isError || isLoading || !prompts) {
-    return <p>Stuff</p>
+  if (isError || !data) {
+    return <p>Error</p>
   }
 
-  function checkGuessInfo() {
-    //If guessinfo doesn't exist and no currentPrompt creates first prompt
-    if (!gameState.guessInfo?.length && !gameState.currentPrompt) {
-      nextPrompt()
-      return
-    } else if (gameState.currentPrompt && gameState.guessInfo?.length) {
-      //if lastGuess wasCorrect next Prompt, if false Next Stage
-      const lastGuessIndex = gameState.guessInfo.length - 1
-      const lastGuess = gameState.guessInfo[lastGuessIndex]
-      if (
-        lastGuess.stage === gameState.currentStage &&
-        gameState.currentRound === lastGuess.round
-      ) {
-        if (lastGuess.wasCorrect) {
-          nextPrompt()
-        } else {
-          nextStage()
-        }
+  if (isLoading) {
+    return <img alt="loading spinner" src="https://i.gifer.com/Mr3W.gif" />
+  }
+
+  let prompts
+  switch (gameState.mode) {
+    case 'Classic':
+      prompts = data['Classic']
+      break
+
+    default:
+      prompts = data['Default']
+  }
+
+  const categories: models.Categories = { All: [] }
+  prompts.forEach((prompt) => {
+    if (categories[prompt.category]) {
+      categories[prompt.category].push(prompt)
+    } else {
+      categories[prompt.category] = [prompt]
+    }
+    categories.All.push(prompt)
+  })
+
+  function roundHandler() {
+    switch (gameState.currentRound) {
+      case 0:
+        setGameState((prev) => ({
+          ...prev,
+          currentPrompt: prev.prompts?.at(-1),
+          prompts: prev.prompts?.slice(0, -1),
+          currentRound: prev.currentRound + 1,
+          jigsaw: Array(16).fill(1),
+        }))
+        break
+      case 7:
+        // ^ this is how many rounds there are per playthrough
+        setGameState((prev) => ({
+          ...prev,
+          currentRound: 0,
+          currentStage: 0,
+          gameIsOver: true,
+        }))
+        break
+      default:
+        console.log('i have been called, I am default case in roundhandler')
+      // setGameState((prev) => ({
+      //   ...prev,
+      //   currentPrompt: prev.prompts.at(-1),
+      //   prompts: prev.prompts.slice(0, -1),
+      //   currentRound: prev.currentRound + 1,
+      //   jigsaw: Array(16).fill(1),
+      // }))
+    }
+  }
+
+  function guessHandler() {
+    if ((gameState.currentStage || 0) >= 5) {
+      setGameState((prev) => ({
+        ...prev,
+        currentPrompt: prev.prompts.at(-1),
+        prompts: prev.prompts.slice(0, -1),
+        currentRound: prev.currentRound + 1,
+        jigsaw: Array(16).fill(1),
+        showSummary: true,
+        currentStage: 0,
+        newGuess: false,
+      }))
+    } else {
+      switch (gameState.guessInfo.at(-1)?.wasCorrect) {
+        case true:
+          setGameState((prev) => ({
+            ...prev,
+            currentPrompt: prev.prompts.at(-1),
+            prompts: prev.prompts.slice(0, -1),
+            currentRound: prev.currentRound + 1,
+            jigsaw: Array(16).fill(1),
+            showSummary: true,
+            currentStage: 1,
+            newGuess: false,
+          }))
+          break
+        case false:
+          setGameState((prev) => ({
+            ...prev,
+            newGuess: false,
+            currentStage: (prev.currentStage || 0) + 1,
+          }))
+          break
+        default:
+          console.log('guess', gameState.guessInfo.at(-1))
       }
     }
   }
 
-  function nextPrompt() {
-    const promptLength = gameState.prompts.length
-    if (promptLength) {
-      //choose random prompt. update current Prompt and remove current promp from gameState.prompts
-      const prompts = gameState.prompts
-      const currentPrompt = prompts.pop()
-      setGameState({
-        ...gameState,
-        currentPrompt,
-        prompts,
-        currentStage: 1,
-        currentRound: (gameState.currentRound || 0) + 1,
-      })
-      //If there are no prompts left, sets currentPrompt to undefined
-    } else {
-      setGameState({
-        ...gameState,
-        currentPrompt: undefined,
-      })
-    }
+  if (gameState.gameHasStarted) {
+    roundHandler()
+    console.log('round', gameState.currentPrompt)
   }
 
-  //If there aren't any stages left go to next Prompt
-  function nextStage() {
-    const maxStages = gameState.currentPrompt?.images.length
-    if (maxStages === gameState.currentStage) {
-      nextPrompt()
-    } else {
-      setGameState({
-        ...gameState,
-        currentStage: (gameState.currentStage || 0) + 1,
-      })
-    }
+  if (gameState.newGuess) {
+    guessHandler()
   }
 
-  if (gameState.prompts?.length || gameState.currentPrompt) {
-    checkGuessInfo()
-  } else if (gameState.guessInfo?.length && !gameState.currentPrompt) {
+  if (gameState.gameIsOver && !gameState.showSummary) {
     return (
       <GameEnding
         gameState={gameState}
@@ -108,53 +144,121 @@ function Round() {
     )
   }
 
-  const categories: Categories = {}
-
-  prompts.forEach((prompt) => {
-    if (categories[prompt.category]) {
-      categories[prompt.category].push(prompt)
-    } else {
-      categories[prompt.category] = [prompt]
-    }
-  })
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    const categoryPrompts = category ? categories[category] : prompts
-    const shufflePrompts = categoryPrompts?.sort(() => Math.random() - 0.5)
-    setGameState({
-      ...gameState,
-      prompts: shufflePrompts as models.Prompt[],
-      currentStage: 1,
-      currentRound: 0,
-    })
+  if (gameState.showSummary) {
+    setTimeout(() => {
+      setGameState((prev) => ({
+        ...prev,
+        showSummary: false,
+      }))
+    }, 2000)
+    return <StageResult gameState={gameState} setGameState={setGameState} />
   }
 
-  async function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setCategory(event.target.value)
+  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault()
+    const target = e.target as HTMLElement
+    const promptsByMode: models.Prompt[] = categories[target.id]
+    // shuffling prompts
+    promptsByMode?.sort(() => Math.random() - 0.5)
+    //
+    if (gameState.mode == 'Multiplayer') {
+      api
+        .addMultiplayerGame(promptsByMode)
+        .then((res) => {
+          if (res) {
+            setGameState({
+              ...gameState,
+              prompts: promptsByMode,
+              currentStage: 1,
+              currentRound: 0,
+              gameId: res,
+              gameHasStarted: true,
+            })
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    } else {
+      setGameState((prev) => ({
+        ...prev,
+        prompts: promptsByMode,
+        gameHasStarted: true,
+      }))
+    }
+  }
+
+  async function handleJoin(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const target = e.target as HTMLFormElement
+    const input = target.children[1] as HTMLInputElement
+    const gameId = Number(input.value)
+    api
+      .getMultiplayer(gameId)
+      .then((res) => {
+        if (res) {
+          setGameState({
+            ...gameState,
+            prompts: res.prompts,
+            currentStage: 1,
+            currentRound: 0,
+            gameId,
+            gameHasStarted: true,
+          })
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+      })
   }
 
   return (
     <>
-      {!gameState.currentStage ? (
-        <form onSubmit={handleSubmit}>
-          <select onChange={handleChange}>
-            <option value="">All</option>
-
-            {Object.keys(categories).map((category) => (
-              <option key={category}>{category}</option>
-            ))}
-          </select>
-          <button>Start</button>
-        </form>
-      ) : (
+      {gameState.gameHasStarted ? (
         <>
-          <Stage gameState={gameState} setGameState={setGameState} />
+          {gameState.mode === 'Classic' && (
+            <ClassicStage gameState={gameState} setGameState={setGameState} />
+          )}
+          {['Jigsaw', 'Multiplayer', 'Join Multiplayer'].includes(
+            gameState.mode,
+          ) && (
+            <JigsawStage gameState={gameState} setGameState={setGameState} />
+          )}
+          {gameState.mode === 'Pixelated' && (
+            <PixelatedStage gameState={gameState} setGameState={setGameState} />
+          )}
           <GuessForm gameState={gameState} setGameState={setGameState} />
         </>
+      ) : gameState.mode == 'Join Multiplayer' ? (
+        <form className="categoryForm" onSubmit={handleJoin}>
+          <h2>Enter Lobby Code</h2>
+          <input type="text" />
+        </form>
+      ) : (
+        <form className="categoryForm">
+          <h2>Choose a Category!</h2>
+          <div>
+            {Object.keys(categories).map((category, index) => (
+              <button
+                key={category}
+                id={category}
+                onClick={handleSubmit}
+                className="cybr-btn"
+              >
+                {category}
+                <span aria-hidden>_</span>
+                <span aria-hidden className="cybr-btn__glitch">
+                  _\-?-_*
+                </span>
+                <span aria-hidden className="cybr-btn__tag">
+                  #{index + 1}
+                  {index + 4}
+                </span>
+              </button>
+            ))}
+          </div>
+        </form>
       )}
     </>
   )
 }
-
-export default Round
