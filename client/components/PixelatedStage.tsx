@@ -24,7 +24,9 @@ export default function PixelatedStage(props: models.GameStateProps) {
     function pixelate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       const size =
-        stage == 6 ? 1 : Math.pow(3, (stage as number) * 0.75 + 0.25) / 243
+        stage == 6
+          ? 1
+          : Math.pow(3, ((stage as number) + 1) * 0.75 + 0.25) / 243
       const w = canvas.width * size
       const h = canvas.height * size
 
@@ -55,7 +57,7 @@ export default function PixelatedStage(props: models.GameStateProps) {
   }
 
   const stageStyle = {
-    width: 500 - (500 / 5) * ((gameState.currentStage as number) - 1) + 'px',
+    width: 500 - (500 / 5) * (gameState.currentStage as number) + 'px',
   }
 
   return (

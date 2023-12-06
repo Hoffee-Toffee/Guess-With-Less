@@ -9,7 +9,7 @@ export default function JigsawStage(props: models.GameStateProps) {
     width:
       500 -
       (500 / (gameState.prompts?.length + (gameState.currentRound || 0) - 1)) *
-        ((gameState.currentRound || 0) - 1) +
+        ((gameState.currentRound - 1 || 0)) +
       'px',
   }
 
@@ -22,8 +22,7 @@ export default function JigsawStage(props: models.GameStateProps) {
       {' '}
       {gameState.gameId && <p>Lobby Code: {gameState.gameId}</p>}
       <p>
-        ROUND_{gameState.currentRound}
-        {' : '} STAGE_{gameState.currentStage + 1}
+       ROUND_{gameState.currentRound}{' : '}  STAGE_{gameState.currentStage}
       </p>
       <StageImage
         image={image}

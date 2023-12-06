@@ -28,14 +28,14 @@ export default function Game() {
   console.log(gameState)
   const [showLeaderboard, setShowLeaderboard] = useState(false)
   const modes = [
-    'Classic',
-    'Classic Leaderboard',
-    'Live',
-    'Live Leaderboard',
     'Jigsaw',
     'Jigsaw Leaderboard',
     'Pixelated',
     'Pixelated Leaderboard',
+    'Classic',
+    'Classic Leaderboard',
+    'Live',
+    'Live Leaderboard',
     'Multiplayer',
     'Join Multiplayer',
   ]
@@ -75,7 +75,7 @@ export default function Game() {
                 key={index}
                 id={mode}
                 onClick={handleSubmit}
-                className={mode.endsWith('Leaderboard') ?"neon" : "cybr-btn"}
+                className={mode.endsWith('Leaderboard') ? 'neon' : 'cybr-btn'}
               >
                 {mode}
                 <span aria-hidden>_</span>

@@ -65,7 +65,7 @@ export default function Round(props: models.GameStateProps) {
           jigsaw: Array(16).fill(1),
         }))
         break
-      case 4:
+      case 7:
         // ^ this is how many rounds there are per playthrough
         setGameState((prev) => ({
           ...prev,

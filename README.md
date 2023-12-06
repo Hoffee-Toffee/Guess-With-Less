@@ -163,6 +163,6 @@ We will use prompts such as "Panda", and save the body of the response into a lo
 
 - I want to dunk on my friends and show them how good I am at guessing images when theyre super blurry. I want to be able to choose what category of image I'll have to guess. 
 
-- As a user I want to be able to choose from multiple gamemodes to get a different flavour on the classic Guess With Less experience. 
+- As a user I want to be able to choose from multiple gamemodes to get a different flavour on the Classic Guess With Less experience. 
 
 
