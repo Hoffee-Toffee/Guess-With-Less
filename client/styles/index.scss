@@ -115,12 +115,14 @@ h1 {
   border-bottom: solid #03e9f4;
 }
 footer {
+
   position: sticky;
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
   margin-top: 5em;
   border-top: solid #03e9f4;
   bottom: 0;
+  padding-top: 1em;
 }
 #app ul {
   overflow-y: scroll;
@@ -348,6 +350,7 @@ body .cybr-btn + .cybr-btn {
   position: relative;
   font-weight: 700;
   border: 0;
+  max-width: 570px;
   min-width: 300px;
   height: 65px;
   line-height: 65px;

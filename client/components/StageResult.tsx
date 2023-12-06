@@ -7,6 +7,7 @@ export function StageResult(props: models.GameStateProps) {
   const vowels = ['A', 'E', 'I', 'O', 'U']
   const useAn = vowels.includes(latestGuess.prompt.name.charAt(0))
   const prompt = gameState.guessInfo.at(-1).prompt
+
   return (
     <div id="stageBlock">
       <p>

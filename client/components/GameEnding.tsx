@@ -18,6 +18,7 @@ export function GameEnding({
 
   const percent = Math.floor((correctLength * 100) / totalGuesses)
 
+
   function handleReset() {
     setGameState(initialGameState as models.GameState)
   }
@@ -51,6 +52,7 @@ export function GameEnding({
         {(gameState.guessInfo.length / correct.length).toLocaleString()}{' '}
         guesses.<br></br>
         You got {percent}{'%'} Right
+
       </p>
       <button onClick={handleReset} className="cybr-btn">
         Reset

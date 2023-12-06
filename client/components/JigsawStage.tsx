@@ -3,7 +3,7 @@ import { StageImage } from './StageImage'
 
 export default function JigsawStage(props: models.GameStateProps) {
   const { gameState } = props
-  const image = `/images/${gameState.currentPrompt.name}.png`
+  const image = `/images/${gameState.currentPrompt?.name}.png`
 
   const roundStyle = {
     width:
