@@ -89,13 +89,14 @@ input[type='text'] {
   width: 500px;
   height: 1em;
   display: block;
-  position: absolute;
+  position: relative;
   padding-left: 1em;
   margin-left: -0.8em;
   margin-top: -.2799em;
 }
 #stage {
   background-color: rgba(0, 68, 255, 0.5019607843);
+  margin-top: -1em;
 }
 #round {
   background-color: rgba(255, 68, 0, 0.5019607843);

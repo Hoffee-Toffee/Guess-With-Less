@@ -11,10 +11,8 @@ export function StageResult(props: models.GameStateProps) {
     <div id="stageBlock">
       <p>
         It was {useAn ? 'an ' : 'a '}
-        {latestGuess.prompt.name}
-      </p>
-      <p>You guessed {`${gameState.guessInfo.at(-1)?.guess}`}</p>
-      <p>
+        {latestGuess.prompt.name}<br></br>
+        You guessed: {`${gameState.guessInfo.at(-1)?.guess}`}<br></br>
         You were{' '}
         {gameState.guessInfo.at(-1).wasCorrect ? `Correct!` : 'Incorrect :('}
       </p>
